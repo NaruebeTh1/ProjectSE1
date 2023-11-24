@@ -79,7 +79,7 @@ const App: React.FC = () => {
           
         </Sider>
         <Layout>
-            <Header style={{ padding: 0, background: 'red' }}>
+            <Header style={{ padding: 0, background: 'gray' }}>
               <div style={{textAlign: 'center', fontSize: '32px', fontWeight: 'bold'}}>
                 Topic of this page
               </div>
