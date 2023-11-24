@@ -18,6 +18,8 @@ import ParcelInfoSummary from "./pages/parcelInfoSum/parcelInfoSummary";
 import MyParcelList from './pages/parcelList/myParcelList';
 import PinkUpParcelList from './pages/pinkUpParcel/pinkUpParcelList';
 
+import logoImage from './assets/images.png';
+
 
 const { Header, Content, Footer, Sider } = Layout;
 
@@ -74,14 +76,20 @@ const App: React.FC = () => {
               </div>
           )}
 
-          <Menu theme="dark" style={{ marginTop: '20px'}} items={items} defaultSelectedKeys={["parcelList"]} mode="inline">
+          <Menu theme="dark" style={{ marginTop: '20px'}} items={items}  mode="inline">
           </Menu>
+          {/* defaultSelectedKeys={["parcelList"]} */}
           
         </Sider>
         <Layout>
             <Header style={{ padding: 0, background: 'gray' }}>
-              <div style={{textAlign: 'center', fontSize: '32px', fontWeight: 'bold'}}>
-                Topic of this page
+              <div style={{textAlign: 'center', fontSize: '32px', fontWeight: 'bold', display: 'flex', 
+                           alignItems: 'center', justifyContent: 'center'}}>
+
+                <img src={logoImage} alt="Logo" 
+                     style={{ width: '100px', height: '50px', marginRight: '20px', marginTop:'center'}} />
+
+                Easy school management
               </div>
             </Header>
 

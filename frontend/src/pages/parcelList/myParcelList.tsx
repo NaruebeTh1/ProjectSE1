@@ -14,14 +14,14 @@ export default function MyParcelList() {
   return (
     <> 
     
-      <div style={{fontSize:'20px'}}>
+      <div style={{fontSize:'20px', fontWeight: 'bold'}}>
         รายการพัสดุโรงเรียน
       </div>
 
       <Button
         style={{fontSize:'16px', marginTop:30, textAlign:'center', display: 'flex', 
                 alignItems: 'center', justifyContent: 'center', backgroundColor: '#45a',
-                color: '#ffffff',  border: 'none', borderRadius: '5px', 
+                color: '#ffffff',  border: 'none', borderRadius: '7px', 
                 padding: '20px 20px'}} >
         <PlusOutlined />
         เพิ่มรายการพัสดุ
