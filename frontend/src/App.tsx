@@ -98,7 +98,7 @@ const App: React.FC = () => {
 
               <Breadcrumb style={{ margin: "16px 0" }} />
 
-            <div style={{padding: 24,minHeight: "100%",background: colorBgContainer,}}>
+            <div style={{padding: 24,minHeight: "100%",background: colorBgContainer}}>
 
 
 

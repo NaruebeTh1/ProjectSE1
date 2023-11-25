@@ -3,6 +3,7 @@ import {
   PlusOutlined,
   FileDoneOutlined,
   SearchOutlined,
+  DeleteOutlined,
 } from '@ant-design/icons';
 import { Avatar, Card, Layout, Menu, Space, Button, Divider} from 'antd';
 import {
@@ -50,6 +51,28 @@ const data: DataType[] = [
     age: 40,
     address: 'London',
   },
+
+  {
+    key: '5',
+    name: 'Jim Red',
+    age: 40,
+    address: 'London',
+  },
+
+  {
+    key: '6',
+    name: 'Jim Red',
+    age: 40,
+    address: 'London',
+  },
+
+  {
+    key: '7',
+    name: 'Jim Red',
+    age: 40,
+    address: 'London',
+  },
+
 ];
 
 export default function MyParcelList() {
@@ -102,17 +125,7 @@ export default function MyParcelList() {
           >
             Reset
           </Button>
-          <Button
-            type="link"
-            size="small"
-            onClick={() => {
-              confirm({ closeDropdown: false });
-              setSearchText((selectedKeys as string[])[0]);
-              setSearchedColumn(dataIndex);
-            }}
-          >
-            Filter
-          </Button>
+          
           <Button
             type="link"
             size="small"
@@ -158,6 +171,8 @@ export default function MyParcelList() {
       key: 'name',
       width: '10%',
       align: 'center',
+      sorter: (a, b) => a.address.length - b.address.length,
+      sortDirections: ['descend', 'ascend'],
       
     },
     {
@@ -166,7 +181,8 @@ export default function MyParcelList() {
       key: 'name',
       width: '10%',
       align: 'center',
-      ...getColumnSearchProps('name'),
+      sorter: (a, b) => a.address.length - b.address.length,
+      sortDirections: ['descend', 'ascend'],
     },
     {
       title: 'ชื่อรายการพัสดุ',
@@ -210,16 +226,16 @@ export default function MyParcelList() {
       render: (record) => (
 
         <Space >
-          <Button >
+          <Button style={{backgroundColor: '#FF9F2D',color: '#ffffff'}}>
               นำเข้าพัสดุ
           </Button>
 
-          <Button >
+          <Button style={{backgroundColor: '#FF6060',color: '#ffffff'}}>
               แก้ไข
           </Button>
 
           <Button >
-              ลบ
+            <DeleteOutlined style={{color: 'red'}}/>
           </Button>
         </Space>
 
@@ -248,7 +264,9 @@ export default function MyParcelList() {
         
         <Table 
                 columns={columns} 
-                dataSource={data}/>
+                dataSource={data}
+                pagination={{ pageSize: 4 }}
+                size='small'/>
         
       </Card>
 
