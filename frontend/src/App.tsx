@@ -82,7 +82,7 @@ const App: React.FC = () => {
           
         </Sider>
         <Layout>
-            <Header style={{ padding: 0, background: 'gray' }}>
+            <Header style={{ padding: 0, background: '#3498db', color: '#fff' }}>
               <div style={{textAlign: 'center', fontSize: '32px', fontWeight: 'bold', display: 'flex', 
                            alignItems: 'center', justifyContent: 'center'}}>
 
@@ -90,6 +90,7 @@ const App: React.FC = () => {
                      style={{ width: '100px', height: '50px', marginRight: '20px', marginTop:'center'}} />
 
                 Easy school management
+
               </div>
             </Header>
 

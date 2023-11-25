@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import {
   PlusOutlined,
+  FileDoneOutlined,
 
 } from '@ant-design/icons';
 import { Avatar, Card, Layout, Menu, Space, Button} from 'antd';
@@ -14,7 +15,8 @@ export default function MyParcelList() {
   return (
     <> 
     
-      <div style={{fontSize:'20px', fontWeight: 'bold'}}>
+      <div style={{display: 'flex', alignItems: 'center',fontSize:'24px', fontWeight: 'bold'}}>
+        <FileDoneOutlined style={{fontSize: '40px', color: 'black', marginRight:5}} />
         รายการพัสดุโรงเรียน
       </div>
 
