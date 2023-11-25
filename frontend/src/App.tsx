@@ -113,7 +113,7 @@ const App: React.FC = () => {
 
           </Content>
 
-          <Footer style={{ textAlign: 'center', position: 'fixed', bottom: 0, width: '100%'}}>
+          <Footer style={{ textAlign: 'center', position: 'relative', bottom: 0, width: '100%'}}>
             <Space>
               <div style={{fontWeight: 'bold'}}> 
                 Project SE ©2023 School Management System 
