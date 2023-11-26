@@ -10,7 +10,6 @@ import {
   Link,
 } from "react-router-dom";
 
-
 import Highlighter from "react-highlight-words";
 import type { InputRef } from 'antd';
 import { Input, Table } from 'antd';
@@ -18,7 +17,7 @@ import type { ColumnType, ColumnsType } from 'antd/es/table';
 import type { FilterConfirmProps } from 'antd/es/table/interface';
 
 const layout = {
-  labelCol: { span: 8 },
+  labelCol: { span: 4 },
   wrapperCol: { span: 16 },
 };
 
@@ -291,9 +290,13 @@ export default function MyParcelList() {
         เพิ่มรายการพัสดุ
       </Button>
         <Modal open={isModalOpen} onOk={handleOk} onCancel={handleCancel}
-               title="กรอกข้อมูลรายการพัสดุ" style={{fontSize:'16px',textAlign:'center', 
-                      minWidth: 800}} 
-               okText="บันทึกข้อมูลรายการพัสดุ" cancelText="ยกเลิก">
+               title={<span style={{ color: '#FF4B4B', fontSize:20 }}> กรอกข้อมูลรายการพัสดุ </span>}
+               style={{fontSize:'16px',textAlign:'center', minWidth: 800}} 
+               okText= {<span style={{ color: 'white'}}> บันทึกข้อมูล </span>}
+               okButtonProps={{ style: { background: '#0BB6DC', borderColor: '#0BB6DC' } }}
+               cancelText= {<span style={{ color: 'white'}}> ยกเลิก </span>}
+               cancelButtonProps={{ style: { background: '#FF4B4B', borderColor: '#FF4B4B' } }}>
+                
           <Form
               {...layout}
               name="nest-messages"

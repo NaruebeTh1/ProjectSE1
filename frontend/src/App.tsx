@@ -15,6 +15,8 @@ import {
 import { Avatar, Breadcrumb, Layout, Menu, Space, theme } from "antd";
 
 import logoImage from './assets/images.png';
+
+import LoginUser from "./pages/loginPage/loginPage";
 import ParcelInfoSummary from "./pages/parcelInfoSum/parcelInfoSummary";
 import MyParcelList from './pages/parcelList/myParcelList';
 import PinkUpParcelList from './pages/pinkUpParcel/pinkUpParcelList';
@@ -79,7 +81,7 @@ const App: React.FC = () => {
 
           <Menu theme="dark" style={{ marginTop: '20px'}} items={items}  mode="inline">
           </Menu>
-          {/* defaultSelectedKeys={["parcelList"]} */}
+          
           
         </Sider>
         <Layout>
@@ -104,6 +106,7 @@ const App: React.FC = () => {
 
 
             <Routes>
+              <Route path="/" element={<LoginUser/>} />
               <Route path="/pages/parcelInfoSummary" element={<ParcelInfoSummary />} />
               <Route path="/pages/myParcelList" element={<MyParcelList />} />
               <Route path="/pages/pinkUpParcelList" element={<PinkUpParcelList />} />
@@ -129,3 +132,46 @@ const App: React.FC = () => {
 };
 
 export default App;
+
+
+
+
+
+
+
+
+
+
+// import React, {  } from "react";
+// import {
+//   BrowserRouter as Router,
+//   Routes,
+//   Route,
+// } from "react-router-dom";
+
+
+// import LoginUser from "./pages/loginPage/loginPage";
+// import ParcelInfoSummary from "./pages/parcelInfoSum/parcelInfoSummary";
+// import MyParcelList from './pages/parcelList/myParcelList';
+// import PinkUpParcelList from './pages/pinkUpParcel/pinkUpParcelList';
+
+
+
+
+// const App: React.FC = () => {
+  
+
+
+//   return (
+//     <Router>
+//             <Routes>
+//               <Route path="/" element={<LoginUser/>} />
+//               <Route path="/pages/parcelInfoSummary" element={<ParcelInfoSummary />} />
+//               <Route path="/pages/myParcelList" element={<MyParcelList />} />
+//               <Route path="/pages/pinkUpParcelList" element={<PinkUpParcelList />} />
+//             </Routes>
+//     </Router>
+//   );
+// };
+
+// export default App;
