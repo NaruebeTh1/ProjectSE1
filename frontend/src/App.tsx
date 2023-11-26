@@ -14,11 +14,12 @@ import {
 } from '@ant-design/icons';
 import { Avatar, Breadcrumb, Layout, Menu, Space, theme } from "antd";
 
+import logoImage from './assets/images.png';
 import ParcelInfoSummary from "./pages/parcelInfoSum/parcelInfoSummary";
 import MyParcelList from './pages/parcelList/myParcelList';
 import PinkUpParcelList from './pages/pinkUpParcel/pinkUpParcelList';
 
-import logoImage from './assets/images.png';
+
 
 
 const { Header, Content, Footer, Sider } = Layout;
