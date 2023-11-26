@@ -29,16 +29,16 @@ type School struct {
 
 type Personnel struct {
 	gorm.Model
-	TitleNamePersonnel 	string
-	FirstNamePersonnel 	string
-	LastNamePersonnel 	string
+	TitleName 			string
+	FirstName 			string
+	LastName			string
 	PersonnelTel 		string
 	PersonnelPicture 	string
 
 	// FK PositionId, DepartmentId, GenderId 
 	// this here
 
-	//FK go to PinkUpParcelListId, CourseId, ReservePlace
+	//FK go to PinkUpParcelList, Course, ReservePlace
 
 }
 
