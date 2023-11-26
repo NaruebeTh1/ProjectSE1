@@ -5,7 +5,7 @@ import {
   SearchOutlined,
   DeleteOutlined,
 } from '@ant-design/icons';
-import { Avatar, Card, Layout, Menu, Space, Button, Divider} from 'antd';
+import { Avatar, Card, Layout, Menu, Space, Button, Modal, Form, message, InputNumber} from 'antd';
 import {
   Link,
 } from "react-router-dom";
@@ -16,6 +16,11 @@ import type { InputRef } from 'antd';
 import { Input, Table } from 'antd';
 import type { ColumnType, ColumnsType } from 'antd/es/table';
 import type { FilterConfirmProps } from 'antd/es/table/interface';
+
+const layout = {
+  labelCol: { span: 8 },
+  wrapperCol: { span: 16 },
+};
 
 interface DataType {
   key: string;
@@ -75,12 +80,37 @@ const data: DataType[] = [
 
 ];
 
+
+
+
+const onFinish = (values: any) => {
+  console.log(values);
+};
+
+
 export default function MyParcelList() {
 
 
   const [searchText, setSearchText] = useState('');
   const [searchedColumn, setSearchedColumn] = useState('');
   const searchInput = useRef<InputRef>(null);
+
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  
+  const showModal = () => {
+    setIsModalOpen(true);
+  };
+  const handleOk = () => {
+    setIsModalOpen(false);
+    message.success('บันทึกข้อมูลสำเร็จ');
+  };
+  const handleCancel = () => {
+    setIsModalOpen(false);
+    
+  };
+
+
 
   const handleSearch = (
     selectedKeys: string[],
@@ -230,12 +260,12 @@ export default function MyParcelList() {
               นำเข้าพัสดุ
           </Button>
 
-          <Button style={{backgroundColor: '#FF6060',color: '#ffffff'}}>
+          <Button style={{backgroundColor: '#8E7BFF',color: '#ffffff'}}>
               แก้ไข
           </Button>
 
-          <Button >
-            <DeleteOutlined style={{color: 'red'}}/>
+          <Button  style={{backgroundColor: '#FF6060'}}>
+            <DeleteOutlined style={{color: 'white'}}/>
           </Button>
         </Space>
 
@@ -251,15 +281,60 @@ export default function MyParcelList() {
         รายการพัสดุโรงเรียน
       </div>
 
-      <Button
+      <Button onClick={showModal} 
         style={{fontSize:'16px', marginTop:30, textAlign:'center', display: 'flex', 
                 alignItems: 'center', justifyContent: 'center', backgroundColor: '#45a',
                 color: '#ffffff',  border: 'none', borderRadius: '7px', 
                 padding: '20px 20px'}} >
         <PlusOutlined />
+        
         เพิ่มรายการพัสดุ
       </Button>
+        <Modal open={isModalOpen} onOk={handleOk} onCancel={handleCancel}
+               title="กรอกข้อมูลรายการพัสดุ" style={{fontSize:'16px',textAlign:'center', 
+                      minWidth: 800}} 
+               okText="บันทึกข้อมูลรายการพัสดุ" cancelText="ยกเลิก">
+          <Form
+              {...layout}
+              name="nest-messages"
+              onFinish={onFinish}
+              style={{ maxWidth: 1000 , textAlign:'left', marginTop:30 }}
+              validateMessages={{
+                required: '${label} ต้องกรอกข้อมูล',
+                types: {
+                  email: '${label} ไม่ถูกต้อง',
+                  number: '${label} ต้องเป็นตัวเลข',
+                },
+                number: {
+                  range: '${label} ต้องอยู่ระหว่าง ${min} ถึง ${max}',
+                },
+              }} >
 
+            <Form.Item name={['user', 'na']} label="ชื่อรายการพัสดุ" rules={[{ required: true }]}>
+              <Input />
+            </Form.Item>
+            <Form.Item name={['user', 'email']} label="Email" rules={[{ type: 'email' }]}>
+              <Input />
+            </Form.Item>
+            <Form.Item name={['user', 'age']} label="Age" rules={[{ type: 'number', min: 0, max: 99 }]}>
+              <InputNumber />
+            </Form.Item>
+            <Form.Item name={['user', 'website']} label="Website">
+              <Input />
+            </Form.Item>
+            <Form.Item name={['user', 'website']} label="Website">
+              <Input />
+            </Form.Item>
+            <Form.Item name={['user', 'website']} label="Website">
+              <Input />
+            </Form.Item>
+            <Form.Item name={['user', 'introduction']} label="Introduction">
+              <Input.TextArea />
+            </Form.Item>
+            
+        </Form>
+
+        </Modal>
       <Card style={{fontSize:'16px', marginTop:30}}>
         
         <Table 
