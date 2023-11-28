@@ -302,18 +302,19 @@ export default function MyParcelList() {
               name="nest-messages"
               onFinish={onFinish}
               style={{ maxWidth: 1000 , textAlign:'left', marginTop:30 }}
-              validateMessages={{
-                required: '${label} ต้องกรอกข้อมูล',
-                types: {
-                  email: '${label} ไม่ถูกต้อง',
-                  number: '${label} ต้องเป็นตัวเลข',
-                },
-                number: {
-                  range: '${label} ต้องอยู่ระหว่าง ${min} ถึง ${max}',
-                },
-              }} >
+              // validateMessages={{
+              //   required: '${label} ต้องกรอกข้อมูล',
+              //   types: {
+              //     email: '${label} ไม่ถูกต้อง',
+              //     number: '${label} ต้องเป็นตัวเลข',
+              //   },
+              //   number: {
+              //     range: '${label} ต้องอยู่ระหว่าง ${min} ถึง ${max}',
+              //   },
+              // }} 
+              >
 
-            <Form.Item name={['user', 'na']} label="ชื่อรายการพัสดุ" rules={[{ required: true }]}>
+            <Form.Item name={['user', 'na']} label="ชื่อรายการพัสดุ" rules={[{ required: true, message : "กรุณากรอกข้อมูล"}]}>
               <Input />
             </Form.Item>
             <Form.Item name={['user', 'email']} label="Email" rules={[{ type: 'email' }]}>
