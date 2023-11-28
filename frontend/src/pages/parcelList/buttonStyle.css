@@ -1,0 +1,84 @@
+
+
+.parcelListStyle {
+    display: flex;
+    align-items: center;
+    font-size: 24px;
+    font-weight: bold;
+  }
+  
+.iconparcelListStyle {
+    font-size: 40px;
+    color: black;
+    margin-right: 5px;
+}
+  
+.customAddButton {
+    background-color: #45a;
+    color: #ffffff;
+    border: none;
+    border-radius: 7px;
+    padding: 20px 20px;
+    font-size: 16px;
+    margin-top: 30px;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.2s, color 0.2s; 
+  }
+  
+.customAddButton:hover {
+    background-color: rgb(17, 2, 115); 
+    color: #ffffff !important; 
+    transform: scale(1.05);
+}
+  
+
+.importButton {
+    background-color: #2dceff;
+    color: #ffffff;
+    border: none;
+    border-radius: 7px;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.2s, color 0.2s; 
+}
+  
+.importButton:hover {
+    background-color: rgb(54, 191, 255); 
+    color: #ffffff !important; 
+    transform: scale(1.01);
+}
+
+.editButton {
+    background-color: #8E7BFF;
+    color: #ffffff;
+    border: none;
+    border-radius: 7px;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.2s, color 0.2s; 
+}
+  
+.editButton:hover {
+    background-color: #775fff; 
+    color: #ffffff !important; 
+    transform: scale(1.01);
+}
+
+.iconDelete {
+    background-color: #FF6060;
+    border: none;
+    border-radius: 7px;
+    transition: background-color 0.2s, color 0.2s; 
+}
+  
+.iconDelete:hover {
+    background-color: #ee3e3e; 
+    transform: scale(1.01);
+}

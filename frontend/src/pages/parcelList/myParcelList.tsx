@@ -15,6 +15,7 @@ import type { InputRef } from 'antd';
 import { Input, Table } from 'antd';
 import type { ColumnType, ColumnsType } from 'antd/es/table';
 import type { FilterConfirmProps } from 'antd/es/table/interface';
+import './buttonStyle.css' ;
 
 const layout = {
   labelCol: { span: 4 },
@@ -255,15 +256,15 @@ export default function MyParcelList() {
       render: (record) => (
 
         <Space >
-          <Button style={{backgroundColor: '#FF9F2D',color: '#ffffff'}}>
+          <Button className='importButton'>
               นำเข้าพัสดุ
           </Button>
 
-          <Button style={{backgroundColor: '#8E7BFF',color: '#ffffff'}}>
+          <Button className='editButton'>
               แก้ไข
           </Button>
 
-          <Button  style={{backgroundColor: '#FF6060'}}>
+          <Button className='iconDelete'>
             <DeleteOutlined style={{color: 'white'}}/>
           </Button>
         </Space>
@@ -275,16 +276,12 @@ export default function MyParcelList() {
   return (
     <> 
     
-      <div style={{display: 'flex', alignItems: 'center',fontSize:'24px', fontWeight: 'bold'}}>
-        <FileDoneOutlined style={{fontSize: '40px', color: 'black', marginRight:5}} />
+      <div className='parcelListStyle'>
+        <FileDoneOutlined className='iconparcelListStyle'/>
         รายการพัสดุโรงเรียน
       </div>
 
-      <Button onClick={showModal} 
-        style={{fontSize:'16px', marginTop:30, textAlign:'center', display: 'flex', 
-                alignItems: 'center', justifyContent: 'center', backgroundColor: '#45a',
-                color: '#ffffff',  border: 'none', borderRadius: '7px', 
-                padding: '20px 20px'}} >
+      <Button onClick={showModal} className="customAddButton">
         <PlusOutlined />
         
         เพิ่มรายการพัสดุ
@@ -301,23 +298,12 @@ export default function MyParcelList() {
               {...layout}
               name="nest-messages"
               onFinish={onFinish}
-              style={{ maxWidth: 1000 , textAlign:'left', marginTop:30 }}
-              // validateMessages={{
-              //   required: '${label} ต้องกรอกข้อมูล',
-              //   types: {
-              //     email: '${label} ไม่ถูกต้อง',
-              //     number: '${label} ต้องเป็นตัวเลข',
-              //   },
-              //   number: {
-              //     range: '${label} ต้องอยู่ระหว่าง ${min} ถึง ${max}',
-              //   },
-              // }} 
-              >
+              style={{ maxWidth: 1000 , textAlign:'left', marginTop:30 }} >
 
             <Form.Item name={['user', 'na']} label="ชื่อรายการพัสดุ" rules={[{ required: true, message : "กรุณากรอกข้อมูล"}]}>
               <Input />
             </Form.Item>
-            <Form.Item name={['user', 'email']} label="Email" rules={[{ type: 'email' }]}>
+            <Form.Item name={['user', 'email']} label="Email" rules={[{ type: 'email', message : "รูปแบบไม่ถูกต้อง"}]}>
               <Input />
             </Form.Item>
             <Form.Item name={['user', 'age']} label="Age" rules={[{ type: 'number', min: 0, max: 99 }]}>
