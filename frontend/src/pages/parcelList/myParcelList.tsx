@@ -5,7 +5,7 @@ import {
   SearchOutlined,
   DeleteOutlined,
 } from '@ant-design/icons';
-import { Avatar, Card, Layout, Menu, Space, Button, Modal, Form, message, InputNumber} from 'antd';
+import { Avatar, Card, Layout, Menu, Space, Button, Modal, Form, message, InputNumber, Breadcrumb} from 'antd';
 import {
   Link,
 } from "react-router-dom";
@@ -16,6 +16,9 @@ import { Input, Table } from 'antd';
 import type { ColumnType, ColumnsType } from 'antd/es/table';
 import type { FilterConfirmProps } from 'antd/es/table/interface';
 import './buttonStyle.css' ;
+import Headers from '../../layout/header';
+import Footers from '../../layout/footer';
+import { Content } from 'antd/es/layout/layout';
 
 const layout = {
   labelCol: { span: 4 },
@@ -275,68 +278,73 @@ export default function MyParcelList() {
 
   return (
     <> 
-    
-      <div className='parcelListStyle'>
-        <FileDoneOutlined className='iconparcelListStyle'/>
-        รายการพัสดุโรงเรียน
-      </div>
+        <Headers/>
 
-      <Button onClick={showModal} className="customAddButton">
-        <PlusOutlined />
-        
-        เพิ่มรายการพัสดุ
-      </Button>
-        <Modal open={isModalOpen} onOk={handleOk} onCancel={handleCancel}
-               title={<span style={{ color: '#FF4B4B', fontSize:20 }}> กรอกข้อมูลรายการพัสดุ </span>}
-               style={{fontSize:'16px',textAlign:'center', minWidth: 800}} 
-               okText= {<span style={{ color: 'white'}}> บันทึกข้อมูล </span>}
-               okButtonProps={{ style: { background: '#0BB6DC', borderColor: '#0BB6DC' } }}
-               cancelText= {<span style={{ color: 'white'}}> ยกเลิก </span>}
-               cancelButtonProps={{ style: { background: '#FF4B4B', borderColor: '#FF4B4B' } }}>
-                
-          <Form
-              {...layout}
-              name="nest-messages"
-              onFinish={onFinish}
-              style={{ maxWidth: 1000 , textAlign:'left', marginTop:30 }} >
+        <Content style={{ margin: "0 16px" }}>
+        <Breadcrumb style={{ margin: "16px 0" }} />
+        <div style={{padding: 30,minHeight: "100%",background: ''}}>
 
-            <Form.Item name={['user', 'na']} label="ชื่อรายการพัสดุ" rules={[{ required: true, message : "กรุณากรอกข้อมูล"}]}>
-              <Input />
-            </Form.Item>
-            <Form.Item name={['user', 'email']} label="Email" rules={[{ type: 'email', message : "รูปแบบไม่ถูกต้อง"}]}>
-              <Input />
-            </Form.Item>
-            <Form.Item name={['user', 'age']} label="Age" rules={[{ type: 'number', min: 0, max: 99 }]}>
-              <InputNumber />
-            </Form.Item>
-            <Form.Item name={['user', 'website']} label="Website">
-              <Input />
-            </Form.Item>
-            <Form.Item name={['user', 'website']} label="Website">
-              <Input />
-            </Form.Item>
-            <Form.Item name={['user', 'website']} label="Website">
-              <Input />
-            </Form.Item>
-            <Form.Item name={['user', 'introduction']} label="Introduction">
-              <Input.TextArea />
-            </Form.Item>
-            
-        </Form>
+        <div className='parcelListStyle'>
+          <FileDoneOutlined className='iconparcelListStyle'/>
+          รายการพัสดุโรงเรียน
+        </div>
 
-        </Modal>
-      <Card style={{fontSize:'16px', marginTop:30}}>
-        
-        <Table 
-                columns={columns} 
-                dataSource={data}
-                pagination={{ pageSize: 4 }}
-                size='small'/>
-        
-      </Card>
+        <Button onClick={showModal} className="customAddButton">
+          <PlusOutlined />
+          
+          เพิ่มรายการพัสดุ
+        </Button>
+          <Modal open={isModalOpen} onOk={handleOk} onCancel={handleCancel}
+                title={<span style={{ color: '#FF4B4B', fontSize:20 }}> กรอกข้อมูลรายการพัสดุ </span>}
+                style={{fontSize:'16px',textAlign:'center', minWidth: 800}} 
+                okText= {<span style={{ color: 'white'}}> บันทึกข้อมูล </span>}
+                okButtonProps={{ style: { background: '#0BB6DC', borderColor: '#0BB6DC' } }}
+                cancelText= {<span style={{ color: 'white'}}> ยกเลิก </span>}
+                cancelButtonProps={{ style: { background: '#FF4B4B', borderColor: '#FF4B4B' } }}>
+                  
+            <Form
+                {...layout}
+                name="nest-messages"
+                onFinish={onFinish}
+                style={{ maxWidth: 1000 , textAlign:'left', marginTop:30 }} >
 
-  
-    
+              <Form.Item name={['user', 'na']} label="ชื่อรายการพัสดุ" rules={[{ required: true, message : "กรุณากรอกข้อมูล"}]}>
+                <Input />
+              </Form.Item>
+              <Form.Item name={['user', 'email']} label="Email" rules={[{ type: 'email', message : "รูปแบบไม่ถูกต้อง"}]}>
+                <Input />
+              </Form.Item>
+              <Form.Item name={['user', 'age']} label="Age" rules={[{ type: 'number', min: 0, max: 99 }]}>
+                <InputNumber />
+              </Form.Item>
+              <Form.Item name={['user', 'website']} label="Website">
+                <Input />
+              </Form.Item>
+              <Form.Item name={['user', 'website']} label="Website">
+                <Input />
+              </Form.Item>
+              <Form.Item name={['user', 'website']} label="Website">
+                <Input />
+              </Form.Item>
+              <Form.Item name={['user', 'introduction']} label="Introduction">
+                <Input.TextArea />
+              </Form.Item>
+              
+          </Form>
+
+          </Modal>
+        <Card style={{fontSize:'16px', marginTop:30}}>
+          
+          <Table 
+                  columns={columns} 
+                  dataSource={data}
+                  pagination={{ pageSize: 4 }}
+                  size='small'/>
+          
+        </Card>
+        </div>
+        </Content>
+      <Footers/>
     </>
   );
 };

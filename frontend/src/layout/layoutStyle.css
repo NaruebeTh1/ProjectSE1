@@ -1,0 +1,67 @@
+.menuItem {
+    font-size: 14px;
+    font-weight: bold;
+    color: #000000;
+}
+.menuItem :hover{
+    color:#ffffff !important;
+    transition: background-color 0.2s, color 0.2s;
+}
+
+.navbar {
+    display: flex;
+    line-height: 3;
+    background-color:#5a5a5a;
+}
+
+.SubmenuItem {
+    font-size: 14px;
+    font-weight: bold;
+    color: #000000;
+}
+.SubmenuItem :hover{
+    color:#000000;
+    transition: background-color 0.2s, color 0.2s;
+}
+
+/* .ant-menu > .ant-menu-item:hover {
+    
+}
+.ant-menu > .ant-menu-submenu:hover {
+
+}
+.ant-menu > .ant-menu-item-active {
+
+}
+.ant-menu> .ant-menu-submenu-active {
+
+}
+.ant-menu > .ant-menu-item-open {
+
+}
+.ant-menu> .ant-menu-submenu-open {
+
+}
+.ant-menu > .ant-menu-item-selected {
+
+} */
+
+
+.ant-menu-item-selected {
+    background-color: rgb(57, 175, 204) !important;
+    color: #ffffff !important;
+    border-bottom: 2px solid rgb(4, 105, 145); 
+}
+
+.menuItem.ant-menu-submenu-title {
+    color: #ffffff !important;
+}
+
+.menuItem.ant-menu-submenu-title:hover {
+    color: #ffffff !important;
+}
+
+
+.menuItem.ant-menu-submenu-title-selected {
+    color: #ffffff !important;
+}
