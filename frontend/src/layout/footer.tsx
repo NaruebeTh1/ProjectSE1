@@ -4,7 +4,7 @@ import { Footer } from "antd/es/layout/layout";
 export default function Footers() {
     return (
 
-            <Footer style={{ textAlign: 'center', bottom: 0, width: '100%'}}>
+            <Footer style={{ textAlign: 'center', bottom: 0, width: '100%', position:'fixed'}}>
                 <Space>
                     <div style={{fontWeight: 'bold'}}> 
                         Project SE ©2023 School Management System 

@@ -282,7 +282,7 @@ export default function MyParcelList() {
         
         <Content style={{ margin: "0 16px" }}>
         <Breadcrumb style={{ margin: "16px 0" }} />
-        <div style={{padding: 30,minHeight: "100%",background: ''}}>
+        <div style={{padding:40,minHeight: "100%",background: ''}}>
 
         <div className='parcelListStyle'>
           <FileDoneOutlined className='iconparcelListStyle'/>

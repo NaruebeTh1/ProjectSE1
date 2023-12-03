@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react';
 import './layoutStyle.css';
-import {Link} from "react-router-dom";
-import {Button, Col, Dropdown ,Menu, Row} from 'antd';
+import { Link } from 'react-router-dom';
+import { Button, Dropdown, Menu, Drawer } from 'antd';
 
 import {
   DeploymentUnitOutlined,
@@ -11,16 +11,20 @@ import {
   SettingOutlined,
   DownOutlined,
   HomeOutlined,
-  } from '@ant-design/icons';   
+  UnorderedListOutlined,
+} from '@ant-design/icons';
 
 import images1 from '../assets/images1.png';
+import images2 from '../assets/images2.png';
 import { Header } from 'antd/es/layout/layout';
-
 
 
 export default function Headers() {
 
-  const Parcelmenu = (
+  const [menuOpen, setMenuOpen] = useState(false);
+
+
+    const Parcelmenu = (
     <Menu className='SubmenuItem'>
       <Menu.Item key="/pages/parcelTypes">
         <Link to="/pages/parcelTypes">
@@ -114,78 +118,74 @@ export default function Headers() {
       </Menu.Item>
     </Menu>
   );
-    
+
+ 
   return (
     <>
-    <Row>
-      <Col xl={24} xs={24} xxl={24} md={24} sm={24} lg={24}>
-
-      <Header style={{ display: 'flex', alignItems: 'center', backgroundColor:'GrayText'}}>
-
+      <nav  className='Headers'>
         <>
-          <img src={images1} alt="Logo"
-            style={{width:'100px', height:'40px', marginRight:'10px'}}/>
-          <div className='TitleWeb'> EM School </div>
+          <img src={images2} alt="Logo" style={{ width: '100px', height: '50px', marginLeft: '20px' }} />
         </>
 
+        <div className="menu" onClick={() => setMenuOpen(!menuOpen)}>
+          <span></span>
+          <span></span>
+          <span></span>
+        </div>
+
+      <ul className={menuOpen ? "open" : ""}>
+        
         <Link to="/">
           <Button type='text' className='menuItem'>
-            <HomeOutlined /> หน้าหลัก
+            หน้าหลัก
           </Button>
         </Link>
 
         <Dropdown overlay={Menu1} placement="bottomRight" arrow>
           <Button type='text' className='menuItem'>
-            <DeploymentUnitOutlined /> เมนู 1 <DownOutlined />
+            เมนู 1 <DownOutlined />
           </Button>
         </Dropdown>
 
         <Dropdown overlay={Menu2} placement="bottomRight" arrow>
           <Button type='text' className='menuItem'>
-            <DeploymentUnitOutlined /> เมนู 2 <DownOutlined />
+            เมนู 2 <DownOutlined />
           </Button>
         </Dropdown>
 
         <Dropdown overlay={Menu3} placement="bottomRight" arrow>
           <Button type='text' className='menuItem'>
-            <DeploymentUnitOutlined /> เมนู 3 <DownOutlined />
+            เมนู 3 <DownOutlined />
           </Button>
         </Dropdown>
 
         <Dropdown overlay={Menu4} placement="bottomRight" arrow>
           <Button type='text' className='menuItem'>
-            <DeploymentUnitOutlined /> เมนู 4 <DownOutlined />
+            เมนู 4 <DownOutlined />
           </Button>
         </Dropdown>
 
         <Dropdown overlay={Parcelmenu} placement="bottomRight" arrow>
           <Button type='text' className='menuItem'>
-            <DeploymentUnitOutlined /> งานพัสดุโรงเรียน <DownOutlined />
+            งานพัสดุโรงเรียน <DownOutlined />
           </Button>
         </Dropdown>
 
         <Dropdown overlay={Setting} placement="bottomRight" arrow>
           <Button type='text' className='menuItem'>
-            <SettingOutlined /> การตั้งค่า <DownOutlined />
+            <SettingOutlined /> การตั้งค่า 
           </Button>
         </Dropdown>
 
-        <Link to="/">
+        <Link to="/" >
           <Button type='text' className='menuItem'>
             <LogoutOutlined /> ออกจากระบบ
           </Button>
         </Link>
 
-      </Header>
+      </ul>        
+    </nav>
 
-      </Col>
-    </Row>
-      
     </>
-  )
+  );
 }
-
-
-
-
-

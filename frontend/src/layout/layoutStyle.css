@@ -14,19 +14,68 @@
     color: #0a0a0a;
 }
 .SubmenuItem :hover{
-    color:#ff2b2b;
+    color:rgb(82, 43, 255);
     transition: background-color 0.2s, color 0.2s;
 }
-.SubmenuItem :after {
-    color: aqua;
-}
 
-.TitleWeb {
-    margin-right: 100px;
-    color: #ffffff;
-    font-size:large;
-    font-weight:bold;
-    cursor:pointer;
+.Headers {
+    display:flex;
+    align-items: center;
+    background-color: darkgrey;
+    box-shadow: 0em 0 0.5em rgb(0, 70, 128);;
 }
 
 
+
+nav .menu {
+    display: none;
+    position: absolute;
+    top: 0.7rem;
+    right: 0.5rem;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 2.5rem;
+    height: 1.4rem;
+}
+
+nav .menu span {
+    height: 0.3rem;
+    width: 80%;
+    background-color: #fff;
+    border-radius: 0.2rem;
+}
+
+
+@media (max-width: 1000px) {
+    nav .menu {
+        display: flex;
+    }
+
+    nav {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    nav ul {
+        display: none;
+        flex-direction: column;
+        width: 100%;
+        margin-bottom: 0.25rem;
+    }
+
+    nav ul.open {
+        display: flex;
+    }
+
+    nav ul li {
+        width: 100%;
+        text-align: center;
+    }
+
+    nav ul li a {
+        margin: 0.2rem 0.5rem;
+    }
+}
+
+
+  
