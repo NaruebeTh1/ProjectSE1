@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import './layoutStyle.css';
 import { Link } from 'react-router-dom';
-import { Button, Dropdown, Menu, Drawer } from 'antd';
+import { Button, Dropdown, Menu } from 'antd';
 
 import {
   DeploymentUnitOutlined,
@@ -14,9 +14,8 @@ import {
   UnorderedListOutlined,
 } from '@ant-design/icons';
 
-import images1 from '../assets/images1.png';
+
 import images2 from '../assets/images2.png';
-import { Header } from 'antd/es/layout/layout';
 
 
 export default function Headers() {
@@ -47,12 +46,12 @@ export default function Headers() {
   const Setting = (
     <Menu className='SubmenuItem'>
       <Menu.Item key="/">
-        <Link to="/pages/myParcelList">
+        <Link to="/">
           <ContainerOutlined /> แก้ไขข้อมูลโปรไฟล์
         </Link>
       </Menu.Item>
       <Menu.Item key="/">
-        <Link to="/pages/pinkUpParcelList">
+        <Link to="/">
           <FileDoneOutlined /> ความปลอดภัยของบัญชี
         </Link>
       </Menu.Item>
