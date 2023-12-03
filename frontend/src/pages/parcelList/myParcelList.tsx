@@ -338,7 +338,7 @@ export default function MyParcelList() {
           <Table 
                   columns={columns} 
                   dataSource={data}
-                  pagination={{ pageSize: 4 }}
+                  pagination={{ pageSize: 5 }}
                   size='small'/>
           
         </Card>

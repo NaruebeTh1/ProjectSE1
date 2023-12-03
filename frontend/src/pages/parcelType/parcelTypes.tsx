@@ -12,7 +12,7 @@ import { Avatar, Card, Layout, Menu, Space} from 'antd';
 import Headers from '../../layout/header';
 import Footers from '../../layout/footer';
 
-export default function PinkUpParcelList() {
+export default function ParcelType() {
   return (
     <> 
     <Headers/>

@@ -3,6 +3,7 @@ package entity
 import (
 
 	"gorm.io/gorm"
+	"time"
 )
 
 type User struct {
@@ -129,7 +130,7 @@ type Activity struct {
 type BehaviorScore struct {
 	gorm.Model
 
-	//Date date
+	BehaviorScoreDate 	time.Time
 	Score 				float32
 	AddScoreDetail		string
 
@@ -148,7 +149,7 @@ type BehaviorScore struct {
 type Attendance struct {
 	gorm.Model
 
-	//Date date
+	AttendanceDate time.Time
 	Status 				string
 
 	//FK go to BehaviorScore
@@ -171,7 +172,7 @@ type Attendance struct {
 type Budget struct {
 	gorm.Model
 
-	//Date date
+	BudgetDate 			time.Time
 	Name 				string
 	Amount 				float32
 
@@ -202,7 +203,7 @@ type BudgetType struct {
 type Finance struct {
 	gorm.Model
 
-	//Date date
+	FinanceDate 		time.Time
 	Name 				string
 	Amount 				float32
 	Picture 			string
@@ -327,7 +328,7 @@ type ParcelList struct {
 	Amount				int
 	ParcelUnit			string
 	ParcelDetail 		string
-	//PLDate			date
+	PLDate				time.Time
 
 	//FK go to ExportParcelList, ImportParcelList
 
@@ -349,7 +350,7 @@ type ImportParcelList struct {
 	ImportValume 		string
 	ImportNumber 		string
 	Seller      		int
-	//ImprotDate		date
+	ImprotDate			time.Time
 
 	//FK ParcelList this here 
 
@@ -386,7 +387,7 @@ type PinkUpParcelList struct {
 	DetailOfRequest 	string
 	ExportValume    	int
 	Budget				int
-	//PUPLDate			date
+	PUPLDate			time.Time
 
 	//FK PersonnelId this here
 

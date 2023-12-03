@@ -148,9 +148,9 @@ import {
 
 
 import LoginUser from "./pages/loginPage/loginPage";
-
 import MyParcelList from './pages/parcelList/myParcelList';
 import PinkUpParcelList from './pages/pinkUpParcel/pinkUpParcelList';
+import ParcelType from "./pages/parcelType/parcelTypes";
 
 
 
@@ -163,6 +163,7 @@ const App: React.FC = () => {
     <Router>
             <Routes>
               <Route path="/" element={<LoginUser/>} />
+              <Route path="/pages/parcelTypes" element={<ParcelType />} />
               <Route path="/pages/myParcelList" element={<MyParcelList />} />
               <Route path="/pages/pinkUpParcelList" element={<PinkUpParcelList />} />
             </Routes>

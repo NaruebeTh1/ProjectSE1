@@ -1,4 +1,4 @@
-/* .menuItem {
+.menuItem {
     font-size: 14px;
     font-weight: bold;
     color: #000000;
@@ -8,32 +8,25 @@
     transition: background-color 0.2s, color 0.2s;
 }
 
-.navbar {
-    display: flex;
-    line-height: 3;
-    background-color:#5a5a5a;
-}
-
 .SubmenuItem {
     font-size: 14px;
     font-weight: bold;
-    color: #000000;
+    color: #0a0a0a;
 }
 .SubmenuItem :hover{
-    color:#000000;
+    color:#ff2b2b;
     transition: background-color 0.2s, color 0.2s;
-} */
-
-
-.ant-menu-item-selected {
-    background-color: rgb(57, 175, 204) !important;
-    color: #ffffff !important;
-    border-bottom: 2px solid rgb(4, 105, 145); 
+}
+.SubmenuItem :after {
+    color: aqua;
 }
 
-.navbar {
-    display: flex;
-    line-height: 3;
-    background-color:#5a5a5a;
+.TitleWeb {
+    margin-right: 100px;
+    color: #ffffff;
+    font-size:large;
+    font-weight:bold;
+    cursor:pointer;
 }
+
 
