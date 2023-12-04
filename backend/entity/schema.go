@@ -138,6 +138,7 @@ type BehaviorScore struct {
 	Date 				time.Time
 	Score 				float32
 	AddScoreDetail		string
+	Scorecriteria       bool
 
 	//FK Activity, Attendance, Student this here
 
@@ -154,14 +155,14 @@ type BehaviorScore struct {
 type Attendance struct {
 	gorm.Model
 
-	Date 			time.Time
-	Status 			string
+	Date 				time.Time
+	AttendanceType      string
 
 	//FK go to BehaviorScore
 
 	BehaviorScores 	[]BehaviorScore 		`gorm:"foreignkey:AttendanceId"`
 
-	//FK Activity, Student, Personnel, ClassRoom this here
+	//FK Activity, Student, Personnel, ClassRoom, AttendanceReport   this here
 
 	StudentId *uint
 	Student   Student 			`gorm:"foreignKey:StudentId"`
@@ -175,6 +176,19 @@ type Attendance struct {
 	ClassRoomId *uint
 	ClassRoom   ClassRoom 		`gorm:"foreignKey:ClassRoomId"`
 
+	AttendanceReportId  *uint
+    AttendanceReport    AttendanceReport `gorm:"foreignKey:AttendanceReportId"`
+
+}
+
+type AttendanceReport struct {
+	gorm.Model
+    TotalDays            	int64
+    AttendancePercentage 	float64
+    ShouldNotify         	bool
+
+	//FK go to  Attendance
+	Attendances 	[]Attendance 		`gorm:"foreignkey:AttendanceReportId"`
 }
 
 type Budget struct {

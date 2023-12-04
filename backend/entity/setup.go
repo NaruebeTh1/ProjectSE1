@@ -38,6 +38,7 @@ func SetupDatabase() {
 		&Equipment{},
 		&ReservePlace{},
 		&Building{},
+		&UseFor{},
 		&Room{},
 		&ParcelList{},
 		&ImportParcelList{},
