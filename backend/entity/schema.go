@@ -80,6 +80,7 @@ type Student struct {
 	Tel 				string
 	GPA 				float32
 	
+	
 	//FK GenderId this here
 
 	GenderId *uint
