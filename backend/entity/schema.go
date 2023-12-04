@@ -55,11 +55,14 @@ type Personnel struct {
 	GenderId *uint
 	Gender   Gender 		`gorm:"foreignKey:GenderId"`
 
-	//FK go to PinkUpParcelList, Course, ReservePlace
+	//FK go to PinkUpParcelList, Course, ReservePlace, Budget, Finance
 
 	PinkUpParcelLists 	[]PinkUpParcelList 		`gorm:"foreignKey:PersonnelId"`
+	ImportParcelListห 	[]ImportParcelList 		`gorm:"foreignKey:PersonnelId"`
 	Courses 			[]Course 				`gorm:"foreignKey:PersonnelId"`
 	ReservePlaces 		[]ReservePlace 			`gorm:"foreignKey:PersonnelId"`
+	Budgets 			[]Budget 				`gorm:"foreignKey:PersonnelId"`
+	Finances 			[]Finance 				`gorm:"foreignKey:PersonnelId"`
 
 }
 
@@ -78,9 +81,9 @@ type Student struct {
 	StudentName 		string
 	StudentPicture 		string
 	Tel 				string
-	GPA 				float32
+	GPAX 				float32
 	
-	
+
 	//FK GenderId this here
 
 	GenderId *uint
@@ -102,6 +105,8 @@ type ClassRoom struct {
 
 	StudentId *uint
 	Student   Student 		`gorm:"foreignKey:StudentId"`
+
+	Attendances 		[]Attendance 		`gorm:"foreignkey:ClassRoomId"`
 
 }
 
@@ -130,7 +135,7 @@ type Activity struct {
 type BehaviorScore struct {
 	gorm.Model
 
-	BehaviorScoreDate 	time.Time
+	Date 				time.Time
 	Score 				float32
 	AddScoreDetail		string
 
@@ -149,14 +154,14 @@ type BehaviorScore struct {
 type Attendance struct {
 	gorm.Model
 
-	AttendanceDate time.Time
-	Status 				string
+	Date 			time.Time
+	Status 			string
 
 	//FK go to BehaviorScore
 
 	BehaviorScores 	[]BehaviorScore 		`gorm:"foreignkey:AttendanceId"`
 
-	//FK Activity, Student, Personnel this here
+	//FK Activity, Student, Personnel, ClassRoom this here
 
 	StudentId *uint
 	Student   Student 			`gorm:"foreignKey:StudentId"`
@@ -167,14 +172,17 @@ type Attendance struct {
 	PersonnelId *uint
 	Personnel   Personnel 		`gorm:"foreignKey:PersonnelId"`
 
+	ClassRoomId *uint
+	ClassRoom   ClassRoom 		`gorm:"foreignKey:ClassRoomId"`
+
 }
 
 type Budget struct {
 	gorm.Model
 
-	BudgetDate 			time.Time
-	Name 				string
-	Amount 				float32
+	Date 			time.Time
+	Name 			string
+	Amount 			float32
 
 	//FK BudgetType, School, Posonnel this here
 
@@ -203,7 +211,7 @@ type BudgetType struct {
 type Finance struct {
 	gorm.Model
 
-	FinanceDate 		time.Time
+	Date 				time.Time
 	Name 				string
 	Amount 				float32
 	Picture 			string
@@ -234,6 +242,10 @@ type Course struct {
 	gorm.Model
 
 	CourseName 			string
+	Hours				float32
+	Credit				int
+	Description			string
+	LearningOutcomes    string
 
 	//FK Posonnel, Education, Department this here 
 
@@ -282,6 +294,10 @@ type Equipment struct {
 type ReservePlace struct {
 	gorm.Model
 
+	Date 					time.Time
+	NumberParticipants		int   
+	Equipment				string   
+
 	//FK Room, Personnel this here 
 
 	PersonnelId *uint
@@ -290,6 +306,17 @@ type ReservePlace struct {
 	RoomId *uint
 	Room   Room 				`gorm:"foreignKey:RoomId"`
 
+	UseForId *uint
+	UseFor   UseFor 			`gorm:"foreignKey:UseForId"`
+
+}
+
+type UseFor struct {
+	gorm.Model
+
+	UsedForName     	string    
+
+	ReservePlaces 	[]ReservePlace 	`gorm:"foreignkey:UseForId"`
 }
 
 type Building struct {
@@ -325,7 +352,7 @@ type ParcelList struct {
 	ParcelNumber 		string
 	ParcelName 			string
 	PricePerPiece		int
-	Amount				int
+	Valume				int
 	ParcelUnit			string
 	ParcelDetail 		string
 	PLDate				time.Time
@@ -356,6 +383,9 @@ type ImportParcelList struct {
 
 	ParcelListId *uint
 	ParcelList   ParcelList 	`gorm:"foreignKey:ParcelListId"`
+
+	PersonnelId *uint
+	Personnel   Personnel 				`gorm:"foreignKey:PersonnelId"`
 }
 
 type ParcelType struct {
