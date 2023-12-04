@@ -1,14 +1,25 @@
-
+.Datablock {
+    border: 1px solid #ffffff;
+    border-radius: 7px;
+    font-size: 16px;
+    padding: 20px 40px;
+    margin-right: 10px;
+    float:inline-end;
+    background-color:rgb(31, 80, 170);
+    color: #ffffff;
+    font-weight: bolder;
+    text-align: center;
+}
 
 .parcelListStyle {
     display: flex;
     align-items: center;
-    font-size: 24px;
+    font-size: 22px;
     font-weight: bold;
   }
   
 .iconparcelListStyle {
-    font-size: 40px;
+    font-size: 35px;
     color: black;
     margin-right: 5px;
 }
@@ -20,7 +31,7 @@
     border-radius: 7px;
     padding: 20px 20px;
     font-size: 16px;
-    margin-top: 30px;
+    margin-top: 20px;
     text-align: center;
     display: flex;
     align-items: center;

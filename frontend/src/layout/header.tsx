@@ -1,21 +1,17 @@
 import React, { useState } from 'react';
-import './layoutStyle.css';
+import './headerStyle.css';
 import { Link } from 'react-router-dom';
 import { Button, Dropdown, Menu } from 'antd';
 
 import {
-  DeploymentUnitOutlined,
-  ContainerOutlined,
-  FileDoneOutlined,
   LogoutOutlined,
   SettingOutlined,
   DownOutlined,
-  HomeOutlined,
-  UnorderedListOutlined,
+  CaretRightOutlined,
 } from '@ant-design/icons';
 
 
-import images2 from '../assets/images2.png';
+import images3 from '../assets/images3.png';
 
 
 export default function Headers() {
@@ -27,17 +23,17 @@ export default function Headers() {
     <Menu className='SubmenuItem'>
       <Menu.Item key="/pages/parcelTypes">
         <Link to="/pages/parcelTypes">
-          <ContainerOutlined /> ประเภทของพัสดุ
+          <CaretRightOutlined /> ประเภทของพัสดุ
         </Link>
       </Menu.Item>
       <Menu.Item key="/pages/myParcelList">
         <Link to="/pages/myParcelList">
-          <ContainerOutlined /> รายการพัสดุ
+          <CaretRightOutlined /> รายการพัสดุ
         </Link>
       </Menu.Item>
       <Menu.Item key="/pages/pinkUpParcelList">
         <Link to="/pages/pinkUpParcelList">
-          <FileDoneOutlined /> รายการเบิกจ่ายพัสดุ
+          <CaretRightOutlined /> รายการเบิกจ่ายพัสดุ
         </Link>
       </Menu.Item>
     </Menu>
@@ -45,44 +41,44 @@ export default function Headers() {
 
   const Setting = (
     <Menu className='SubmenuItem'>
-      <Menu.Item key="/">
-        <Link to="/">
-          <ContainerOutlined /> แก้ไขข้อมูลโปรไฟล์
+      <Menu.Item key="/pages/settingPages/settingAccount">
+        <Link to="/pages/settingPages/settingAccount">
+          <CaretRightOutlined /> การตั้งค่าโปรไฟล์
         </Link>
       </Menu.Item>
-      <Menu.Item key="/">
-        <Link to="/">
-          <FileDoneOutlined /> ความปลอดภัยของบัญชี
-        </Link>
-      </Menu.Item>
-    </Menu>
-  );
-
-  const Menu1 = (
-    <Menu className='SubmenuItem'>
-      <Menu.Item key="/">
-        <Link to="/">
-          <ContainerOutlined /> xxxxxx1
-        </Link>
-      </Menu.Item>
-      <Menu.Item key="/">
-        <Link to="/">
-          <FileDoneOutlined /> xxxxxx2
+      <Menu.Item key="/pages/settingPages/settingProfile">
+        <Link to="/pages/settingPages/settingProfile">
+        <CaretRightOutlined /> ความปลอดภัยของบัญชี
         </Link>
       </Menu.Item>
     </Menu>
   );
 
-  const Menu2 = (
+  const ReservePlace = (
     <Menu className='SubmenuItem'>
       <Menu.Item key="/">
         <Link to="/">
-          <ContainerOutlined /> xxxxxx1
+          <CaretRightOutlined /> ปฐิทินการจอง
         </Link>
       </Menu.Item>
       <Menu.Item key="/">
         <Link to="/">
-          <FileDoneOutlined /> xxxxxx2
+          <CaretRightOutlined /> จองห้องหรือสถานที่
+        </Link>
+      </Menu.Item>
+    </Menu>
+  );
+
+  const Course = (
+    <Menu className='SubmenuItem'>
+      <Menu.Item key="/">
+        <Link to="/">
+          <CaretRightOutlined /> รายละเอียดวิชาที่เปิดสอน
+        </Link>
+      </Menu.Item>
+      <Menu.Item key="/">
+        <Link to="/">
+          <CaretRightOutlined /> เพิ่มรายวิชา
         </Link>
       </Menu.Item>
     </Menu>
@@ -92,12 +88,12 @@ export default function Headers() {
     <Menu className='SubmenuItem'>
       <Menu.Item key="/">
         <Link to="/">
-          <ContainerOutlined /> xxxxxx1
+          <CaretRightOutlined /> xxxxxx1
         </Link>
       </Menu.Item>
       <Menu.Item key="/">
         <Link to="/">
-          <FileDoneOutlined /> xxxxxx2
+          <CaretRightOutlined /> xxxxxx2
         </Link>
       </Menu.Item>
     </Menu>
@@ -107,23 +103,40 @@ export default function Headers() {
     <Menu className='SubmenuItem'>
       <Menu.Item key="/">
         <Link to="/">
-          <ContainerOutlined /> xxxxxx1
+          <CaretRightOutlined /> xxxxxx1
         </Link>
       </Menu.Item>
       <Menu.Item key="/">
         <Link to="/">
-          <FileDoneOutlined /> xxxxxx2
+          <CaretRightOutlined /> xxxxxx2
         </Link>
       </Menu.Item>
     </Menu>
   );
 
+  const Menu5 = (
+    <Menu className='SubmenuItem'>
+      <Menu.Item key="/">
+        <Link to="/">
+          <CaretRightOutlined /> xxxxxx1
+        </Link>
+      </Menu.Item>
+      <Menu.Item key="/">
+        <Link to="/">
+          <CaretRightOutlined /> xxxxxx2
+        </Link>
+      </Menu.Item>
+    </Menu>
+  );
+
+  
+
  
   return (
     <>
-      <nav  className='Headers'>
+      <nav  className='Headers' style={{justifyContent:'space-between'}}>
         <>
-          <img src={images2} alt="Logo" style={{ width: '100px', height: '50px', marginLeft: '20px' }} />
+          <img src={images3} alt="Logo" style={{ height: '80px', marginLeft: '40px' }} />
         </>
 
         <div className="menu" onClick={() => setMenuOpen(!menuOpen)}>
@@ -134,50 +147,56 @@ export default function Headers() {
 
       <ul className={menuOpen ? "open" : ""}>
         
-        <Link to="/">
-          <Button type='text' className='menuItem'>
+        <Link to="/" >
+          <Button type='link' className='menuItem'>
             หน้าหลัก
           </Button>
         </Link>
 
-        <Dropdown overlay={Menu1} placement="bottomRight" arrow>
-          <Button type='text' className='menuItem'>
-            เมนู 1 <DownOutlined />
+        <Dropdown overlay={ReservePlace} placement="bottomRight" arrow>
+          <Button type='link' className='menuItem'>
+            ปฏิทินการจอง <DownOutlined />
           </Button>
         </Dropdown>
 
-        <Dropdown overlay={Menu2} placement="bottomRight" arrow>
-          <Button type='text' className='menuItem'>
-            เมนู 2 <DownOutlined />
+        <Dropdown overlay={Course} placement="bottomRight" arrow>
+          <Button type='link' className='menuItem'>
+            รายวิชาที่เปิดสอน <DownOutlined />
           </Button>
         </Dropdown>
 
         <Dropdown overlay={Menu3} placement="bottomRight" arrow>
-          <Button type='text' className='menuItem'>
-            เมนู 3 <DownOutlined />
+          <Button type='link' className='menuItem'>
+            เมนู 000003 <DownOutlined />
           </Button>
         </Dropdown>
 
         <Dropdown overlay={Menu4} placement="bottomRight" arrow>
-          <Button type='text' className='menuItem'>
-            เมนู 4 <DownOutlined />
+          <Button type='link' className='menuItem'>
+            เมนู 000004 <DownOutlined />
+          </Button>
+        </Dropdown>
+
+        <Dropdown overlay={Menu5} placement="bottomRight" arrow>
+          <Button type='link' className='menuItem'>
+            เมนู 000005 <DownOutlined />
           </Button>
         </Dropdown>
 
         <Dropdown overlay={Parcelmenu} placement="bottomRight" arrow>
-          <Button type='text' className='menuItem'>
+          <Button type='link' className='menuItem'>
             งานพัสดุโรงเรียน <DownOutlined />
           </Button>
         </Dropdown>
 
         <Dropdown overlay={Setting} placement="bottomRight" arrow>
-          <Button type='text' className='menuItem'>
+          <Button type='link' className='menuItem'>
             <SettingOutlined /> การตั้งค่า 
           </Button>
         </Dropdown>
 
         <Link to="/" >
-          <Button type='text' className='menuItem'>
+          <Button type='link' className='menuItem'>
             <LogoutOutlined /> ออกจากระบบ
           </Button>
         </Link>

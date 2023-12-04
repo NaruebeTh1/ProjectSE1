@@ -148,6 +148,8 @@ import {
 
 
 import LoginUser from "./pages/loginPage/loginPage";
+import SettingAccount from "./pages/settingPages/settingAccount";
+import SettingProfile from "./pages/settingPages/settingProfile";
 import MyParcelList from './pages/parcelList/myParcelList';
 import PinkUpParcelList from './pages/pinkUpParcel/pinkUpParcelList';
 import ParcelType from "./pages/parcelType/parcelTypes";
@@ -162,10 +164,15 @@ const App: React.FC = () => {
   return (
     <Router>
             <Routes>
+
               <Route path="/" element={<LoginUser/>} />
               <Route path="/pages/parcelTypes" element={<ParcelType />} />
               <Route path="/pages/myParcelList" element={<MyParcelList />} />
               <Route path="/pages/pinkUpParcelList" element={<PinkUpParcelList />} />
+
+              <Route path="/pages/settingPages/settingAccount" element={<SettingAccount />} />
+              <Route path="/pages/settingPages/settingProfile" element={<SettingProfile />} />
+
             </Routes>
     </Router>
   );

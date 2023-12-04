@@ -5,7 +5,7 @@ import {
   SearchOutlined,
   DeleteOutlined,
 } from '@ant-design/icons';
-import { Avatar, Card, Layout, Menu, Space, Button, Modal, Form, message, InputNumber, Breadcrumb} from 'antd';
+import { Avatar, Card, Layout, Menu, Space, Button, Modal, Form, message, InputNumber, Breadcrumb, Col, Row, Divider} from 'antd';
 import {
   Link,
 } from "react-router-dom";
@@ -19,6 +19,7 @@ import './buttonStyle.css' ;
 import Headers from '../../layout/header';
 import Footers from '../../layout/footer';
 import { Content } from 'antd/es/layout/layout';
+import Column from 'antd/es/table/Column';
 
 const layout = {
   labelCol: { span: 4 },
@@ -282,18 +283,35 @@ export default function MyParcelList() {
         
         <Content style={{ margin: "0 16px" }}>
         <Breadcrumb style={{ margin: "16px 0" }} />
-        <div style={{padding:40,minHeight: "100%",background: ''}}>
+        <div style={{padding:30,minHeight: "100%",background: ''}}>
 
-        <div className='parcelListStyle'>
+        {/* <div className='parcelListStyle'>
           <FileDoneOutlined className='iconparcelListStyle'/>
           รายการพัสดุโรงเรียน
+        </div> */}
+
+        <div className='parcelListStyle'>
+            <FileDoneOutlined className='iconparcelListStyle'/>
+            รายการพัสดุโรงเรียน
         </div>
 
         <Button onClick={showModal} className="customAddButton">
+              <PlusOutlined /> เพิ่มรายการพัสดุ
+        </Button>
+
+        <span className="Datablock" style={{ marginTop: '-63px', marginRight:'10px'}}> 
+              จำนวนรายการพัสดุ <></>
+              <div style={{display:'inline-block'}}> 100 </div> <></>
+              <div style={{ display: 'inline-block' }}> รายการ </div>
+        </span>
+
+
+        {/* <Button onClick={showModal} className="customAddButton">
           <PlusOutlined />
           
           เพิ่มรายการพัสดุ
-        </Button>
+        </Button> */}
+
           <Modal open={isModalOpen} onOk={handleOk} onCancel={handleCancel}
                 title={<span style={{ color: '#FF4B4B', fontSize:20 }}> กรอกข้อมูลรายการพัสดุ </span>}
                 style={{fontSize:'16px',textAlign:'center', minWidth: 800}} 
@@ -333,12 +351,12 @@ export default function MyParcelList() {
           </Form>
 
           </Modal>
-        <Card style={{fontSize:'16px', marginTop:30}}>
+        <Card style={{fontSize:'16px', marginTop:20}}>
           
           <Table 
                   columns={columns} 
                   dataSource={data}
-                  pagination={{ pageSize: 5 }}
+                  pagination={{ pageSize: 4 }}
                   size='small'/>
           
         </Card>

@@ -1,3 +1,5 @@
+
+
 import React, { useState } from 'react';
 import {
   DesktopOutlined,
@@ -13,7 +15,8 @@ import Headers from '../../layout/header';
 import Footers from '../../layout/footer';
 import { Content } from 'antd/es/layout/layout';
 
-export default function ParcelType() {
+
+export default function SettingProfile() {
   return (
     <> 
     <Headers />

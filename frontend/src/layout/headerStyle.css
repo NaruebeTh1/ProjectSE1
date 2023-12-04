@@ -1,28 +1,30 @@
 .menuItem {
-    font-size: 14px;
+    font-size: 15px;
     font-weight: bold;
-    color: #000000;
+    color: #ffffff; 
 }
+
 .menuItem :hover{
-    color:#ffffff !important;
+    color:#c5c5c5 ;
     transition: background-color 0.2s, color 0.2s;
+    
 }
 
 .SubmenuItem {
     font-size: 14px;
     font-weight: bold;
-    color: #0a0a0a;
+    color: #ffffff;
 }
 .SubmenuItem :hover{
-    color:rgb(82, 43, 255);
+    color:rgb(47, 0, 255);
     transition: background-color 0.2s, color 0.2s;
 }
 
 .Headers {
     display:flex;
     align-items: center;
-    background-color: darkgrey;
-    box-shadow: 0em 0 0.5em rgb(0, 70, 128);;
+    background-color: #202023;
+    box-shadow: 0em 0 0.5em rgb(0, 38, 70);
 }
 
 
@@ -30,7 +32,7 @@
 nav .menu {
     display: none;
     position: absolute;
-    top: 0.7rem;
+    margin-top: 30px;
     right: 0.5rem;
     flex-direction: column;
     justify-content: space-between;
@@ -46,7 +48,7 @@ nav .menu span {
 }
 
 
-@media (max-width: 1000px) {
+@media (max-width: 1350px) {
     nav .menu {
         display: flex;
     }
@@ -76,6 +78,3 @@ nav .menu span {
         margin: 0.2rem 0.5rem;
     }
 }
-
-
-  
