@@ -367,7 +367,6 @@ type ParcelList struct {
 	ParcelName 			string
 	PricePerPiece		int
 	Valume				int
-	ParcelUnit			string
 	ParcelDetail 		string
 	PLDate				time.Time
 
@@ -380,6 +379,9 @@ type ParcelList struct {
 	
 	ParcelTypeId *uint
 	ParcelType   ParcelType 	`gorm:"foreignKey:ParcelTypeId"`
+
+	ParcelUnitId *uint
+	ParcelUnit   ParcelUnit 	`gorm:"foreignKey:ParcelUnitId"`
 
 	RoomId *uint
 	Room   Room 				`gorm:"foreignKey:RoomId"`
@@ -400,6 +402,16 @@ type ImportParcelList struct {
 
 	PersonnelId *uint
 	Personnel   Personnel 				`gorm:"foreignKey:PersonnelId"`
+}
+
+type ParcelUnit struct {
+	gorm.Model
+
+	ParcelUnit 			string
+
+	//FK go to ParcelList
+
+	ParcelLists 	[]ParcelList 	`gorm:"foreignkey:ParcelUnitId"`
 }
 
 type ParcelType struct {

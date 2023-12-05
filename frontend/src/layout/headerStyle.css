@@ -3,12 +3,16 @@
     font-weight: bold;
     color: #ffffff; 
 }
-
-.menuItem :hover{
-    color:#c5c5c5 ;
-    transition: background-color 0.2s, color 0.2s;
-    
+.menuItem.active {
+    color: red;
 }
+
+.menuItem :hover {
+    color:#c5c5c5 ;
+    transition: background-color 0.2s, color 0.2s;    
+}
+
+
 
 .SubmenuItem {
     font-size: 14px;
@@ -48,7 +52,7 @@ nav .menu span {
 }
 
 
-@media (max-width: 1350px) {
+@media (max-width: 1550px) {
     nav .menu {
         display: flex;
     }

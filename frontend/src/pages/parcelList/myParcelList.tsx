@@ -5,10 +5,8 @@ import {
   SearchOutlined,
   DeleteOutlined,
 } from '@ant-design/icons';
-import { Avatar, Card, Layout, Menu, Space, Button, Modal, Form, message, InputNumber, Breadcrumb, Col, Row, Divider} from 'antd';
-import {
-  Link,
-} from "react-router-dom";
+import { Card, Space, Button, Modal, Form, message, InputNumber, Breadcrumb, DatePicker, Select} from 'antd';
+
 
 import Highlighter from "react-highlight-words";
 import type { InputRef } from 'antd';
@@ -19,7 +17,6 @@ import './buttonStyle.css' ;
 import Headers from '../../layout/header';
 import Footers from '../../layout/footer';
 import { Content } from 'antd/es/layout/layout';
-import Column from 'antd/es/table/Column';
 
 const layout = {
   labelCol: { span: 4 },
@@ -100,21 +97,28 @@ export default function MyParcelList() {
   const searchInput = useRef<InputRef>(null);
 
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [form] = Form.useForm();
 
-  
   const showModal = () => {
     setIsModalOpen(true);
   };
   const handleOk = () => {
-    setIsModalOpen(false);
-    message.success('บันทึกข้อมูลสำเร็จ');
+    form
+      .validateFields()
+      .then((values) => {
+        form.resetFields();
+        message.success('บันทึกข้อมูลสำเร็จ');
+        setIsModalOpen(false);
+      })
+      .catch((errorInfo) => {
+        console.log('Validation failed:', errorInfo);
+      });
   };
+
   const handleCancel = () => {
+    form.resetFields();
     setIsModalOpen(false);
-    
   };
-
-
 
   const handleSearch = (
     selectedKeys: string[],
@@ -277,6 +281,8 @@ export default function MyParcelList() {
     },
   ];
 
+  const { Option } = Select;
+
   return (
     <> 
         <Headers/>
@@ -312,7 +318,7 @@ export default function MyParcelList() {
           เพิ่มรายการพัสดุ
         </Button> */}
 
-          <Modal open={isModalOpen} onOk={handleOk} onCancel={handleCancel}
+          <Modal open={isModalOpen} onOk={handleOk} onCancel={handleCancel} 
                 title={<span style={{ color: '#FF4B4B', fontSize:20 }}> กรอกข้อมูลรายการพัสดุ </span>}
                 style={{fontSize:'16px',textAlign:'center', minWidth: 800}} 
                 okText= {<span style={{ color: 'white'}}> บันทึกข้อมูล </span>}
@@ -320,35 +326,80 @@ export default function MyParcelList() {
                 cancelText= {<span style={{ color: 'white'}}> ยกเลิก </span>}
                 cancelButtonProps={{ style: { background: '#FF4B4B', borderColor: '#FF4B4B' } }}>
                   
-            <Form
-                {...layout}
-                name="nest-messages"
-                onFinish={onFinish}
-                style={{ maxWidth: 1000 , textAlign:'left', marginTop:30 }} >
+                  <Form
+                      {...layout}
+                      name="parcel-form"
+                      form={form}
+                      style={{ maxWidth: 1000, textAlign: 'left', marginTop: 30 }}
+                    >
+                      
+                      <Form.Item name={['parcel', 'ParcelNumber']} label="รหัสพัสดุ (PID)" rules={[{ required: true, message: "กรุณากรอกข้อมูล" }]}>
+                        <Input placeholder="เช่น P10001"/>
+                      </Form.Item>
+                      <Form.Item name={['parcel', 'ParcelName']} label="ชื่อรายการพัสดุ" rules={[{ required: true, message: "กรุณากรอกข้อมูล" }]}>
+                        <Input placeholder="เช่น กระดาษถ่ายเอกสาร ชนิด 70 แกรม ขนาด A4"/>
+                      </Form.Item>
+                      <Form.Item name={['parcel', 'ParcelTypeId']} label="ประเภทพัสดุ" rules={[{ required: true, message: "กรุณาเลือกประเภท" }]}>
+                        <Select placeholder="เลือกประเภทพัสดุ">
+                          <Option value={1}>Type 1</Option>
+                          <Option value={2}>Type 2</Option>
+                        </Select>
+                      </Form.Item>
+                      <Form.Item name={['parcel', 'ParcelUnit']} label="หน่วยนับพัสดุ" rules={[{ required: true, message: "กรุณาเลือกหน่วยนับ" }]}>
+                        <Select placeholder="เลือกหน่วยนับพัสดุ">
+                          <Option value={1}>ชิ้น</Option>
+                          <Option value={2}>อัน</Option>
+                          <Option value={3}>รีม</Option>
+                          <Option value={4}>กล่อง</Option>
+                          <Option value={5}>แผ่น</Option>
+                          <Option value={6}>ตลับ</Option>
+                          <Option value={7}>ม้วน</Option>
+                        </Select>
+                      </Form.Item>
+                      <Form.Item name={['parcel', 'PricePerPiece']} label="ราคาต่อชิ้น" 
+                                  rules={[{
+                                    required: true,
+                                    validator: (_, value) => {
+                                      if (value === undefined || value === null || value === '') {
+                                        return Promise.reject('กรุณากรอกข้อมูล');
+                                      }
+                                      if (value < 0) {
+                                        return Promise.reject('มากกว่าหรือเท่ากับ 0 เท่านั้น');
+                                      }
+                                      return Promise.resolve();
+                                    },
+                                  }]}>
+                        <InputNumber />
+                      </Form.Item>
+                      <Form.Item name={['parcel', 'Valume']} label="จำนวนทั้งหมด" 
+                                  rules={[{
+                                    required: true,
+                                    validator: (_, value) => {
+                                      if (value === undefined || value === null || value === '') {
+                                        return Promise.reject('กรุณากรอกข้อมูล');
+                                      }
+                                      if (value < 0) {
+                                        return Promise.reject('มากกว่าหรือเท่ากับ 0 เท่านั้น');
+                                      }
+                                      return Promise.resolve();
+                                    },
+                                  }]}>
+                        <InputNumber />
+                      </Form.Item>
+                      <Form.Item name={['parcel', 'RoomId']} label="ห้องเก็บพัสดุ" rules={[{ required: true, message: "กรุณาเลือกสถานที่เก็บพัสดุ" }]}>
+                        <Select placeholder="เลือกสถานที่จัดเก็บพัสดุ">
+                          <Option value={1}>Room 1</Option>
+                          <Option value={2}>Room 2</Option>
+                        </Select>
+                      </Form.Item>
+                      <Form.Item name={['parcel', 'ParcelDetail']} label="รายละเอียดพัสดุ" rules={[{ required: true, message: "กรุณากรอกข้อมูลเพิ่มเติม" }]}>
+                        <Input.TextArea placeholder="รายละเอียดเพิ่มเติม เช่น สี (ถ้ามี) หรือการนำไปใช้งาน"/>
+                      </Form.Item>
+                      <Form.Item name={['parcel', 'PLDate']} label="วันที่" rules={[{ required: true, message: "กรุณาเลือกวันที่" }]}>
+                        <DatePicker />
+                      </Form.Item>
+                    </Form>
 
-              <Form.Item name={['user', 'na']} label="ชื่อรายการพัสดุ" rules={[{ required: true, message : "กรุณากรอกข้อมูล"}]}>
-                <Input />
-              </Form.Item>
-              <Form.Item name={['user', 'email']} label="Email" rules={[{ type: 'email', message : "รูปแบบไม่ถูกต้อง"}]}>
-                <Input />
-              </Form.Item>
-              <Form.Item name={['user', 'age']} label="Age" rules={[{ type: 'number', min: 0, max: 99 }]}>
-                <InputNumber />
-              </Form.Item>
-              <Form.Item name={['user', 'website']} label="Website">
-                <Input />
-              </Form.Item>
-              <Form.Item name={['user', 'website']} label="Website">
-                <Input />
-              </Form.Item>
-              <Form.Item name={['user', 'website']} label="Website">
-                <Input />
-              </Form.Item>
-              <Form.Item name={['user', 'introduction']} label="Introduction">
-                <Input.TextArea />
-              </Form.Item>
-              
-          </Form>
 
           </Modal>
         <Card style={{fontSize:'16px', marginTop:20}}>

@@ -1,135 +1,191 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import './headerStyle.css';
 import { Link } from 'react-router-dom';
 import { Button, Dropdown, Menu } from 'antd';
-
 import {
   LogoutOutlined,
   SettingOutlined,
   DownOutlined,
   CaretRightOutlined,
 } from '@ant-design/icons';
-
-
 import images3 from '../assets/images3.png';
-
 
 export default function Headers() {
 
   const [menuOpen, setMenuOpen] = useState(false);
 
+  const createMenuItem = (key:any, label:any) => (
+    <Menu.Item key={key}>
+      <Link to={key}>
+        <CaretRightOutlined /> {label}
+      </Link>
+    </Menu.Item>
+  );
 
-    const Parcelmenu = (
+  const Parcelmenu = (
     <Menu className='SubmenuItem'>
-      <Menu.Item key="/pages/parcelTypes">
-        <Link to="/pages/parcelTypes">
-          <CaretRightOutlined /> ประเภทของพัสดุ
-        </Link>
-      </Menu.Item>
-      <Menu.Item key="/pages/myParcelList">
-        <Link to="/pages/myParcelList">
-          <CaretRightOutlined /> รายการพัสดุ
-        </Link>
-      </Menu.Item>
-      <Menu.Item key="/pages/pinkUpParcelList">
-        <Link to="/pages/pinkUpParcelList">
-          <CaretRightOutlined /> รายการเบิกจ่ายพัสดุ
-        </Link>
-      </Menu.Item>
+      {createMenuItem('/pages/parcelTypes', 'ประเภทของพัสดุ')}
+      {createMenuItem('/pages/myParcelList', 'รายการพัสดุ')}
+      {createMenuItem('/pages/pinkUpParcelList', 'รายการเบิกจ่ายพัสดุ')}
     </Menu>
   );
 
   const Setting = (
     <Menu className='SubmenuItem'>
-      <Menu.Item key="/pages/settingPages/settingAccount">
-        <Link to="/pages/settingPages/settingAccount">
-          <CaretRightOutlined /> การตั้งค่าโปรไฟล์
-        </Link>
-      </Menu.Item>
-      <Menu.Item key="/pages/settingPages/settingProfile">
-        <Link to="/pages/settingPages/settingProfile">
-        <CaretRightOutlined /> ความปลอดภัยของบัญชี
-        </Link>
-      </Menu.Item>
+      {createMenuItem('/pages/settingProfile', 'การตั้งค่าโปรไฟล์')}
+      {createMenuItem('/pages/settingAccount', 'การตั้งค่าบัญชี')}
     </Menu>
   );
 
   const ReservePlace = (
     <Menu className='SubmenuItem'>
-      <Menu.Item key="/">
-        <Link to="/">
-          <CaretRightOutlined /> ปฐิทินการจอง
-        </Link>
-      </Menu.Item>
-      <Menu.Item key="/">
-        <Link to="/">
-          <CaretRightOutlined /> จองห้องหรือสถานที่
-        </Link>
-      </Menu.Item>
+      {createMenuItem('/pages/1', 'ปฐิทินการจอง')}
+      {createMenuItem('/pages/2', 'จองห้องหรือสถานที่')}
     </Menu>
   );
 
   const Course = (
     <Menu className='SubmenuItem'>
-      <Menu.Item key="/">
-        <Link to="/">
-          <CaretRightOutlined /> รายละเอียดวิชาที่เปิดสอน
-        </Link>
-      </Menu.Item>
-      <Menu.Item key="/">
-        <Link to="/">
-          <CaretRightOutlined /> เพิ่มรายวิชา
-        </Link>
-      </Menu.Item>
+      {createMenuItem('/pages/3', 'รายละเอียดวิชาที่เปิดสอน')}
+      {createMenuItem('/pages/4', 'เพิ่มรายวิชา')}
     </Menu>
   );
 
   const Menu3 = (
     <Menu className='SubmenuItem'>
-      <Menu.Item key="/">
-        <Link to="/">
-          <CaretRightOutlined /> xxxxxx1
-        </Link>
-      </Menu.Item>
-      <Menu.Item key="/">
-        <Link to="/">
-          <CaretRightOutlined /> xxxxxx2
-        </Link>
-      </Menu.Item>
+      {createMenuItem('/pages/5', '01')}
+      {createMenuItem('/pages/6', '02')}
+      {createMenuItem('/pages/7', '03')}
     </Menu>
   );
 
   const Menu4 = (
     <Menu className='SubmenuItem'>
-      <Menu.Item key="/">
-        <Link to="/">
-          <CaretRightOutlined /> xxxxxx1
-        </Link>
-      </Menu.Item>
-      <Menu.Item key="/">
-        <Link to="/">
-          <CaretRightOutlined /> xxxxxx2
-        </Link>
-      </Menu.Item>
+      {createMenuItem('/pages/8', '01')}
+      {createMenuItem('/pages/9', '02')}
+      {createMenuItem('/pages/10', '03')}
     </Menu>
   );
 
   const Menu5 = (
     <Menu className='SubmenuItem'>
-      <Menu.Item key="/">
-        <Link to="/">
-          <CaretRightOutlined /> xxxxxx1
-        </Link>
-      </Menu.Item>
-      <Menu.Item key="/">
-        <Link to="/">
-          <CaretRightOutlined /> xxxxxx2
-        </Link>
-      </Menu.Item>
+      {createMenuItem('/pages/11', '01')}
+      {createMenuItem('/pages/12', '02')}
+      {createMenuItem('/pages/13', '03')}
     </Menu>
   );
 
+  //   const Parcelmenu = (
+  //   <Menu className='SubmenuItem'>
+  //     <Menu.Item key="/pages/parcelTypes">
+  //       <Link to="/pages/parcelTypes">
+  //         <CaretRightOutlined /> ประเภทของพัสดุ
+  //       </Link>
+  //     </Menu.Item>
+  //     <Menu.Item key="/pages/myParcelList">
+  //       <Link to="/pages/myParcelList">
+  //         <CaretRightOutlined /> รายการพัสดุ
+  //       </Link>
+  //     </Menu.Item>
+  //     <Menu.Item key="/pages/pinkUpParcelList">
+  //       <Link to="/pages/pinkUpParcelList">
+  //         <CaretRightOutlined /> รายการเบิกจ่ายพัสดุ
+  //       </Link>
+  //     </Menu.Item>
+  //   </Menu>
+  // );
+
   
+
+  // const Setting = (
+  //   <Menu className='SubmenuItem'>
+  //     <Menu.Item key="/pages/settingPages/settingProfile">
+  //       <Link to="/pages/settingPages/settingProfile">
+  //         <CaretRightOutlined /> การตั้งค่าโปรไฟล์
+  //       </Link>
+  //     </Menu.Item>
+  //     <Menu.Item key="/pages/settingPages/settingAccount">
+  //       <Link to="/pages/settingPages/settingAccount">
+  //       <CaretRightOutlined /> การตั้งค่าบัญชี
+  //       </Link>
+  //     </Menu.Item>
+  //   </Menu>
+  // );
+
+  // const ReservePlace = (
+  //   <Menu className='SubmenuItem'>
+  //     <Menu.Item key="/">
+  //       <Link to="/">
+  //         <CaretRightOutlined /> ปฐิทินการจอง
+  //       </Link>
+  //     </Menu.Item>
+  //     <Menu.Item key="/">
+  //       <Link to="/">
+  //         <CaretRightOutlined /> จองห้องหรือสถานที่
+  //       </Link>
+  //     </Menu.Item>
+  //   </Menu>
+  // );
+
+  // const Course = (
+  //   <Menu className='SubmenuItem'>
+  //     <Menu.Item key="/">
+  //       <Link to="/">
+  //         <CaretRightOutlined /> รายละเอียดวิชาที่เปิดสอน
+  //       </Link>
+  //     </Menu.Item>
+  //     <Menu.Item key="/">
+  //       <Link to="/">
+  //         <CaretRightOutlined /> เพิ่มรายวิชา
+  //       </Link>
+  //     </Menu.Item>
+  //   </Menu>
+  // );
+
+  // const Menu3 = (
+  //   <Menu className='SubmenuItem'>
+  //     <Menu.Item key="/">
+  //       <Link to="/">
+  //         <CaretRightOutlined /> xxxxxx1
+  //       </Link>
+  //     </Menu.Item>
+  //     <Menu.Item key="/">
+  //       <Link to="/">
+  //         <CaretRightOutlined /> xxxxxx2
+  //       </Link>
+  //     </Menu.Item>
+  //   </Menu>
+  // );
+
+  // const Menu4 = (
+  //   <Menu className='SubmenuItem'>
+  //     <Menu.Item key="/">
+  //       <Link to="/">
+  //         <CaretRightOutlined /> xxxxxx1
+  //       </Link>
+  //     </Menu.Item>
+  //     <Menu.Item key="/">
+  //       <Link to="/">
+  //         <CaretRightOutlined /> xxxxxx2
+  //       </Link>
+  //     </Menu.Item>
+  //   </Menu>
+  // );
+
+  // const Menu5 = (
+  //   <Menu className='SubmenuItem'>
+  //     <Menu.Item key="/">
+  //       <Link to="/">
+  //         <CaretRightOutlined /> xxxxxx1
+  //       </Link>
+  //     </Menu.Item>
+  //     <Menu.Item key="/">
+  //       <Link to="/">
+  //         <CaretRightOutlined /> xxxxxx2
+  //       </Link>
+  //     </Menu.Item>
+  //   </Menu>
+  // );
 
  
   return (
@@ -147,8 +203,8 @@ export default function Headers() {
 
       <ul className={menuOpen ? "open" : ""}>
         
-        <Link to="/" >
-          <Button type='link' className='menuItem'>
+        <Link to="/pages/homePage" >
+          <Button type='link' className='menuItem' >
             หน้าหลัก
           </Button>
         </Link>
