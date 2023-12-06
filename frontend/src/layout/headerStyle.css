@@ -55,18 +55,20 @@ nav .menu span {
 @media (max-width: 1550px) {
     nav .menu {
         display: flex;
+        
     }
 
     nav {
         flex-direction: column;
-        align-items: flex-start;
+        align-items: center;
     }
 
     nav ul {
         display: none;
-        flex-direction: column;
+        flex-direction:column;
         width: 100%;
         margin-bottom: 0.25rem;
+        text-align: center;
     }
 
     nav ul.open {

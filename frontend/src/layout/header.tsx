@@ -24,7 +24,7 @@ export default function Headers() {
 
   const Parcelmenu = (
     <Menu className='SubmenuItem'>
-      {createMenuItem('/pages/parcelTypes', 'ประเภทของพัสดุ')}
+      {createMenuItem('/pages/parcelTypes', 'ประเภทและหน่วยนับพัสดุ')}
       {createMenuItem('/pages/myParcelList', 'รายการพัสดุ')}
       {createMenuItem('/pages/pinkUpParcelList', 'รายการเบิกจ่ายพัสดุ')}
     </Menu>
@@ -51,29 +51,20 @@ export default function Headers() {
     </Menu>
   );
 
-  const Menu3 = (
+  const PersonnelAndStudent = (
     <Menu className='SubmenuItem'>
-      {createMenuItem('/pages/5', '01')}
-      {createMenuItem('/pages/6', '02')}
-      {createMenuItem('/pages/7', '03')}
+      {createMenuItem('/pages/5', 'ข้อมูลบุคลากร')}
+      {createMenuItem('/pages/6', 'ข้อมูลนักเรียน')}
     </Menu>
   );
 
-  const Menu4 = (
+  const Attendance = (
     <Menu className='SubmenuItem'>
-      {createMenuItem('/pages/8', '01')}
-      {createMenuItem('/pages/9', '02')}
-      {createMenuItem('/pages/10', '03')}
+      {createMenuItem('/pages/7', 'บันทึกการเข้าห้องเรียนและกิจกรรม')}
+      {createMenuItem('/pages/8', 'ข้อมูลการเช็คชื่อ')}
     </Menu>
   );
 
-  const Menu5 = (
-    <Menu className='SubmenuItem'>
-      {createMenuItem('/pages/11', '01')}
-      {createMenuItem('/pages/12', '02')}
-      {createMenuItem('/pages/13', '03')}
-    </Menu>
-  );
 
   //   const Parcelmenu = (
   //   <Menu className='SubmenuItem'>
@@ -221,21 +212,9 @@ export default function Headers() {
           </Button>
         </Dropdown>
 
-        <Dropdown overlay={Menu3} placement="bottomRight" arrow>
+        <Dropdown overlay={PersonnelAndStudent} placement="bottomRight" arrow>
           <Button type='link' className='menuItem'>
-            เมนู 000003 <DownOutlined />
-          </Button>
-        </Dropdown>
-
-        <Dropdown overlay={Menu4} placement="bottomRight" arrow>
-          <Button type='link' className='menuItem'>
-            เมนู 000004 <DownOutlined />
-          </Button>
-        </Dropdown>
-
-        <Dropdown overlay={Menu5} placement="bottomRight" arrow>
-          <Button type='link' className='menuItem'>
-            เมนู 000005 <DownOutlined />
+            ข้อมูลบุคคล <DownOutlined />
           </Button>
         </Dropdown>
 
@@ -244,6 +223,24 @@ export default function Headers() {
             งานพัสดุโรงเรียน <DownOutlined />
           </Button>
         </Dropdown>
+
+        <Dropdown overlay={Attendance} placement="bottomRight" arrow>
+          <Button type='link' className='menuItem'>
+            การเช็คชื่อนักเรียน <DownOutlined />
+          </Button>
+        </Dropdown>
+
+        <Link to="/" >
+          <Button type='link' className='menuItem'>
+            บันทึกพฤติกรรมนักเรียน
+          </Button>
+        </Link>
+
+        <Link to="/" >
+          <Button type='link' className='menuItem'>
+            งานงบประมาณและการบัญชึ
+          </Button>
+        </Link>
 
         <Dropdown overlay={Setting} placement="bottomRight" arrow>
           <Button type='link' className='menuItem'>
