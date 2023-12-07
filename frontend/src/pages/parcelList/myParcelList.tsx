@@ -93,16 +93,18 @@ export default function MyParcelList() {
   const [isModalImportPLOpen, setIsModalImportPLOpen] = useState(false);
   const [isModalEditPLOpen, setIsModalEditPLOpen] = useState(false);
 
-  const [form] = Form.useForm();
+  const [Addform] = Form.useForm();
+  const [Importform] = Form.useForm();
+  const [Editform] = Form.useForm();
 
   const showModalAddPL = () => {
     setIsModalAddPLOpen(true);
   };
   const handleOkAddPL = () => {
-    form
+    Addform
       .validateFields()
       .then((values) => {
-        form.resetFields();
+        Addform.resetFields();
         message.success('บันทึกข้อมูลสำเร็จ');
         setIsModalAddPLOpen(false);
       })
@@ -111,7 +113,7 @@ export default function MyParcelList() {
       });
   };
   const handleCancelAddPL = () => {
-    form.resetFields();
+    Addform.resetFields();
     setIsModalAddPLOpen(false);
   };
 
@@ -120,10 +122,10 @@ export default function MyParcelList() {
     setIsModalImportPLOpen(true);
   };
   const handleOkImportPL = () => {
-    form
+    Importform
       .validateFields()
       .then((values) => {
-        form.resetFields();
+        Importform.resetFields();
         message.success('นำเข้าพัสดุสำเร็จ');
         setIsModalImportPLOpen(false);
       })
@@ -132,7 +134,7 @@ export default function MyParcelList() {
       });
   };
   const handleCancelImportPL = () => {
-    form.resetFields();
+    Importform.resetFields();
     setIsModalImportPLOpen(false);
   };
 
@@ -141,10 +143,10 @@ export default function MyParcelList() {
     setIsModalEditPLOpen(true);
   };
   const handleOkEditPL = () => {
-    form
+    Editform
       .validateFields()
       .then((values) => {
-        form.resetFields();
+        Editform.resetFields();
         message.success('แก้ไขข้อมูลสำเร็จ');
         setIsModalEditPLOpen(false);
       })
@@ -153,7 +155,7 @@ export default function MyParcelList() {
       });
   };
   const handleCancelEditPL = () => {
-    form.resetFields();
+    Editform.resetFields();
     setIsModalEditPLOpen(false);
   };
 
@@ -385,9 +387,9 @@ export default function MyParcelList() {
     <> 
         <Headers/>
         
-        <Content style={{ margin: "0 16px" }}>
-        <Breadcrumb style={{ margin: "16px 0" }} />
-        <div style={{padding:30,minHeight: "100%",background: ''}}>
+        <Content style={{ margin: "0 16px", backgroundColor:'darkslategrey'}}>
+        <Breadcrumb style={{ margin: "10px 0" }} />
+        <div style={{padding:30,minHeight: "100%"}}>
 
         <div className='parcelListStyle'>
             <FileDoneOutlined className='iconparcelListStyle'/>
@@ -416,7 +418,7 @@ export default function MyParcelList() {
                   <Form
                       {...layout}
                       name="parcel-form"
-                      form={form}
+                      form={Addform}
                       style={{ maxWidth: 1000, textAlign: 'left', marginTop: 30 }}
                     >
                       
@@ -499,8 +501,8 @@ export default function MyParcelList() {
                   
                   <Form
                       {...layout}
-                      name="parcel-form"
-                      form={form}
+                      name="Importparcel-form"
+                      form={Importform}
                       style={{ maxWidth: 1000, textAlign: 'left', marginTop: 30 }}
                     >
                       
@@ -555,24 +557,24 @@ export default function MyParcelList() {
                   
                   <Form
                       {...layout}
-                      name="parcel-form"
-                      form={form}
+                      name="EditParcel-form"
+                      form={Editform}
                       style={{ maxWidth: 1000, textAlign: 'left', marginTop: 30 }}
                     >
                       
-                      <Form.Item name={['parcel', 'ParcelNumber']} label="รหัสพัสดุ (PID)" rules={[{ required: true, message: "กรุณากรอกข้อมูล" }]}>
+                      <Form.Item name={['EditParcel', 'ParcelNumber']} label="รหัสพัสดุ (PID)" rules={[{ required: true, message: "กรุณากรอกข้อมูล" }]}>
                         <Input placeholder="เช่น P10001"/>
                       </Form.Item>
-                      <Form.Item name={['parcel', 'ParcelName']} label="ชื่อรายการพัสดุ" rules={[{ required: true, message: "กรุณากรอกข้อมูล" }]}>
+                      <Form.Item name={['EditParcel', 'ParcelName']} label="ชื่อรายการพัสดุ" rules={[{ required: true, message: "กรุณากรอกข้อมูล" }]}>
                         <Input placeholder="เช่น กระดาษถ่ายเอกสาร ชนิด 70 แกรม ขนาด A4"/>
                       </Form.Item>
-                      <Form.Item name={['parcel', 'ParcelTypeId']} label="ประเภทพัสดุ" rules={[{ required: true, message: "กรุณาเลือกประเภท" }]}>
+                      <Form.Item name={['EditParcel', 'ParcelTypeId']} label="ประเภทพัสดุ" rules={[{ required: true, message: "กรุณาเลือกประเภท" }]}>
                         <Select placeholder="เลือกประเภทพัสดุ">
                           <Option value={1}>Type 1</Option>
                           <Option value={2}>Type 2</Option>
                         </Select>
                       </Form.Item>
-                      <Form.Item name={['parcel', 'ParcelUnit']} label="หน่วยนับพัสดุ" rules={[{ required: true, message: "กรุณาเลือกหน่วยนับ" }]}>
+                      <Form.Item name={['EditParcel', 'ParcelUnit']} label="หน่วยนับพัสดุ" rules={[{ required: true, message: "กรุณาเลือกหน่วยนับ" }]}>
                         <Select placeholder="เลือกหน่วยนับพัสดุ">
                           <Option value={1}>ชิ้น</Option>
                           <Option value={2}>อัน</Option>
@@ -583,7 +585,7 @@ export default function MyParcelList() {
                           <Option value={7}>ม้วน</Option>
                         </Select>
                       </Form.Item>
-                      <Form.Item name={['parcel', 'PricePerPiece']} label="ราคาต่อชิ้น" 
+                      <Form.Item name={['EditParcel', 'PricePerPiece']} label="ราคาต่อชิ้น" 
                                   rules={[{
                                     required: true,
                                     validator: (_, value) => {
@@ -598,7 +600,7 @@ export default function MyParcelList() {
                                   }]}>
                         <InputNumber />
                       </Form.Item>
-                      <Form.Item name={['parcel', 'Valume']} label="จำนวนทั้งหมด" 
+                      <Form.Item name={['EditParcel', 'Valume']} label="จำนวนทั้งหมด" 
                                   rules={[{
                                     required: true,
                                     validator: (_, value) => {
@@ -613,16 +615,16 @@ export default function MyParcelList() {
                                   }]}>
                         <InputNumber />
                       </Form.Item>
-                      <Form.Item name={['parcel', 'RoomId']} label="ห้องเก็บพัสดุ" rules={[{ required: true, message: "กรุณาเลือกสถานที่เก็บพัสดุ" }]}>
+                      <Form.Item name={['EditParcel', 'RoomId']} label="ห้องเก็บพัสดุ" rules={[{ required: true, message: "กรุณาเลือกสถานที่เก็บพัสดุ" }]}>
                         <Select placeholder="เลือกสถานที่จัดเก็บพัสดุ">
                           <Option value={1}>Room 1</Option>
                           <Option value={2}>Room 2</Option>
                         </Select>
                       </Form.Item>
-                      <Form.Item name={['parcel', 'ParcelDetail']} label="รายละเอียดพัสดุ" rules={[{ required: true, message: "กรุณากรอกข้อมูลเพิ่มเติม" }]}>
+                      <Form.Item name={['EditParcel', 'ParcelDetail']} label="รายละเอียดพัสดุ" rules={[{ required: true, message: "กรุณากรอกข้อมูลเพิ่มเติม" }]}>
                         <Input.TextArea placeholder="รายละเอียดเพิ่มเติม เช่น สี (ถ้ามี) หรือการนำไปใช้งาน"/>
                       </Form.Item>
-                      <Form.Item name={['parcel', 'PLDate']} label="วันที่" rules={[{ required: true, message: "กรุณาเลือกวันที่" }]}>
+                      <Form.Item name={['EditParcel', 'PLDate']} label="วันที่" rules={[{ required: true, message: "กรุณาเลือกวันที่" }]}>
                         <DatePicker />
                       </Form.Item>
                     </Form>

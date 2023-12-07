@@ -1,11 +1,11 @@
 .Datablock {
-    border: 1px solid #ffffff;
+    border: none;
     border-radius: 3px;
     font-size: 16px;
     padding: 20px 40px;
     margin-right: 10px;
     float:inline-end;
-    background-color:rgb(31, 80, 170);
+    background-color:rgb(0, 144, 163);
     color: #ffffff;
     font-weight: bolder;
     text-align: center;
@@ -16,12 +16,14 @@
     align-items: center;
     font-size: 22px;
     font-weight: bold;
+    color: #ffffff;
   }
   
 .iconparcelListStyle {
     font-size: 35px;
     color: black;
     margin-right: 5px;
+    color: #ffffff;
 }
   
 .customAddButton {

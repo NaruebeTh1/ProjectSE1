@@ -13,7 +13,7 @@ import SettingProfile from "./pages/settingPages/settingProfile";
 import MyParcelList from './pages/parcelList/myParcelList';
 import PinkUpParcelList from './pages/pinkUpParcel/pinkUpParcelList';
 import CreatePinkUpParcelList from "./pages/pinkUpParcel/createPUPL/createPinkUpParcelList";
-import ParcelType from "./pages/parcelType/parcelTypes";
+import ParcelTypeAndUnti from "./pages/parcelTypeAndUnti/parcelTypesAndUnit";
 
 
 
@@ -25,7 +25,7 @@ const App: React.FC = () => {
             <Routes>
 
               <Route path="/" element={<LoginUser/>} />
-              <Route path="/pages/parcelTypes" element={<ParcelType />} />
+              <Route path="/pages/parcelTypesAndUnit" element={<ParcelTypeAndUnti />} />
               <Route path="/pages/myParcelList" element={<MyParcelList />} />
               <Route path="/pages/pinkUpParcelList" element={<PinkUpParcelList />} />
               <Route path="/pages//createPUPL/createPinkUpParcelList" element={<CreatePinkUpParcelList />} />

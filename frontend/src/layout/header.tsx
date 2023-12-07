@@ -1,10 +1,8 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import "./headerStyle.css";
 import { Link } from "react-router-dom";
 import { Avatar, Button, Dropdown , Menu } from "antd";
 import {
-  LogoutOutlined,
-  SettingOutlined,
   DownOutlined,
   CaretRightOutlined,
 } from "@ant-design/icons";
@@ -23,7 +21,7 @@ export default function Headers() {
 
   const Parcelmenu = (
     <Menu className="SubmenuItem">
-      {createMenuItem("/pages/parcelTypes", "ประเภทและหน่วยนับพัสดุ")}
+      {createMenuItem("/pages/parcelTypesAndUnit", "ประเภทและหน่วยนับพัสดุ")}
       {createMenuItem("/pages/myParcelList", "รายการพัสดุ")}
       {createMenuItem("/pages/pinkUpParcelList", "รายการเบิกจ่ายพัสดุ")}
     </Menu>
