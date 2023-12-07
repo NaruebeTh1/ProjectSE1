@@ -504,69 +504,40 @@ export default function MyParcelList() {
                       style={{ maxWidth: 1000, textAlign: 'left', marginTop: 30 }}
                     >
                       
-                      <Form.Item name={['parcel', 'ParcelNumber']} label="รหัสพัสดุ (PID)" rules={[{ required: true, message: "กรุณากรอกข้อมูล" }]}>
-                        <Input placeholder="เช่น P10001"/>
+                      <Form.Item name={['ImportParcelList', 'ImportNumber']} label="รหัสการนำเข้า" rules={[{ required: true, message: "กรุณากรอกข้อมูล" }]}>
+                        <Input placeholder="เช่น IMP0001"/>
                       </Form.Item>
-                      <Form.Item name={['parcel', 'ParcelName']} label="ชื่อรายการพัสดุ" rules={[{ required: true, message: "กรุณากรอกข้อมูล" }]}>
-                        <Input placeholder="เช่น กระดาษถ่ายเอกสาร ชนิด 70 แกรม ขนาด A4"/>
-                      </Form.Item>
-                      <Form.Item name={['parcel', 'ParcelTypeId']} label="ประเภทพัสดุ" rules={[{ required: true, message: "กรุณาเลือกประเภท" }]}>
-                        <Select placeholder="เลือกประเภทพัสดุ">
-                          <Option value={1}>Type 1</Option>
-                          <Option value={2}>Type 2</Option>
-                        </Select>
-                      </Form.Item>
-                      <Form.Item name={['parcel', 'ParcelUnit']} label="หน่วยนับพัสดุ" rules={[{ required: true, message: "กรุณาเลือกหน่วยนับ" }]}>
-                        <Select placeholder="เลือกหน่วยนับพัสดุ">
-                          <Option value={1}>ชิ้น</Option>
-                          <Option value={2}>อัน</Option>
-                          <Option value={3}>รีม</Option>
-                          <Option value={4}>กล่อง</Option>
-                          <Option value={5}>แผ่น</Option>
-                          <Option value={6}>ตลับ</Option>
-                          <Option value={7}>ม้วน</Option>
-                        </Select>
-                      </Form.Item>
-                      <Form.Item name={['parcel', 'PricePerPiece']} label="ราคาต่อชิ้น" 
+
+                      <Form.Item name={['ImportParcelList', 'ImportValume']} label="จำนวนการนำเข้า" 
                                   rules={[{
                                     required: true,
                                     validator: (_, value) => {
                                       if (value === undefined || value === null || value === '') {
                                         return Promise.reject('กรุณากรอกข้อมูล');
                                       }
-                                      if (value < 0) {
-                                        return Promise.reject('มากกว่าหรือเท่ากับ 0 เท่านั้น');
+                                      if (value < 1) {
+                                        return Promise.reject('มากกว่าหรือเท่ากับ 1 เท่านั้น');
                                       }
                                       return Promise.resolve();
                                     },
                                   }]}>
                         <InputNumber />
                       </Form.Item>
-                      <Form.Item name={['parcel', 'Valume']} label="จำนวนทั้งหมด" 
-                                  rules={[{
-                                    required: true,
-                                    validator: (_, value) => {
-                                      if (value === undefined || value === null || value === '') {
-                                        return Promise.reject('กรุณากรอกข้อมูล');
-                                      }
-                                      if (value < 0) {
-                                        return Promise.reject('มากกว่าหรือเท่ากับ 0 เท่านั้น');
-                                      }
-                                      return Promise.resolve();
-                                    },
-                                  }]}>
-                        <InputNumber />
+
+                      <Form.Item name={['ImportParcelList', 'Seller']} label="ผู้ขายพัสดุ" rules={[{ required: true, message: "กรุณากรอกข้อมูล" }]}>
+                          <Input placeholder="เช่น ร้านเจริญพัสดุ"/>
                       </Form.Item>
-                      <Form.Item name={['parcel', 'RoomId']} label="ห้องเก็บพัสดุ" rules={[{ required: true, message: "กรุณาเลือกสถานที่เก็บพัสดุ" }]}>
-                        <Select placeholder="เลือกสถานที่จัดเก็บพัสดุ">
-                          <Option value={1}>Room 1</Option>
-                          <Option value={2}>Room 2</Option>
+
+                      <Form.Item name={['ImportParcelList', 'Personnel']} label="ผู้ตรวจรับพัสดุ" rules={[{ required: true, message: "กรุณาเลือกผู้ตรวจรับพัสดุ" }]}>
+                        <Select placeholder="เลือกผู้ตรวจรับพัสดุ">
+                          <Option value={1}>คนที่ 1</Option>
+                          <Option value={2}>คนที่ 2</Option>
+                          <Option value={3}>คนที่ 3</Option>
+                          <Option value={4}>คนที่ 4</Option>
                         </Select>
                       </Form.Item>
-                      <Form.Item name={['parcel', 'ParcelDetail']} label="รายละเอียดพัสดุ" rules={[{ required: true, message: "กรุณากรอกข้อมูลเพิ่มเติม" }]}>
-                        <Input.TextArea placeholder="รายละเอียดเพิ่มเติม เช่น สี (ถ้ามี) หรือการนำไปใช้งาน"/>
-                      </Form.Item>
-                      <Form.Item name={['parcel', 'PLDate']} label="วันที่" rules={[{ required: true, message: "กรุณาเลือกวันที่" }]}>
+
+                      <Form.Item name={['ImportParcelList', 'ImportDate']} label="วันที่นำเข้าพัสดุ" rules={[{ required: true, message: "กรุณาเลือกวันที่" }]}>
                         <DatePicker />
                       </Form.Item>
                     </Form>
