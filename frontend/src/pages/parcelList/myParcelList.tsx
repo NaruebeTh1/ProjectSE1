@@ -1,12 +1,11 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import {
   PlusOutlined,
   FileDoneOutlined,
   SearchOutlined,
   DeleteOutlined,
 } from '@ant-design/icons';
-import { Card, Space, Button, Modal, Form, message, InputNumber, Breadcrumb, DatePicker, Select} from 'antd';
-
+import { Card, Space, Button, Modal, message, Breadcrumb} from 'antd';
 
 import Highlighter from "react-highlight-words";
 import type { InputRef } from 'antd';
@@ -17,204 +16,72 @@ import './buttonStyle.css' ;
 import Headers from '../../layout/header';
 import Footers from '../../layout/footer';
 import { Content } from 'antd/es/layout/layout';
+import { Link, useNavigate } from 'react-router-dom';
+import { GetParcelList, DeleteParcelListByID} from '../../services/https';
+import { ParcelList } from '../../interfaces';
 
-const layout = {
-  labelCol: { span: 4 },
-  wrapperCol: { span: 16 },
-};
 
-interface DataType {
-  key: string;
-  name: string;
-  age: number;
-  address: string;
-}
-
-type DataIndex = keyof DataType;
-
-const data: DataType[] = [
-  {
-    key: '1',
-    name: 'John Brown',
-    age: 10,
-    address: 'New',
-  },
-  {
-    key: '2',
-    name: 'Joe Black',
-    age: 20,
-    address: 'London',
-  },
-  {
-    key: '3',
-    name: 'Jim Green',
-    age: 30,
-    address: 'Sydney',
-  },
-  {
-    key: '4',
-    name: 'Jim Red',
-    age: 40,
-    address: 'London',
-  },
-
-  {
-    key: '5',
-    name: 'Jim Red',
-    age: 40,
-    address: 'London',
-  },
-
-  {
-    key: '6',
-    name: 'Jim Red',
-    age: 40,
-    address: 'London',
-  },
-
-  {
-    key: '7',
-    name: 'Jim Red',
-    age: 40,
-    address: 'London',
-  },
-
-];
+type DataIndex = keyof ParcelList;
 
 
 export default function MyParcelList() {
 
-
+  const [dataParcelList, setDataParcelList] = useState<ParcelList[]>([]);
+  const navigate = useNavigate();
   const [searchText, setSearchText] = useState('');
   const [searchedColumn, setSearchedColumn] = useState('');
   const searchInput = useRef<InputRef>(null);
 
-  const [isModalAddPLOpen, setIsModalAddPLOpen] = useState(false);
-  const [isModalImportPLOpen, setIsModalImportPLOpen] = useState(false);
-  const [isModalEditPLOpen, setIsModalEditPLOpen] = useState(false);
-
-  const [Addform] = Form.useForm();
-  const [Importform] = Form.useForm();
-  const [Editform] = Form.useForm();
-
-  const showModalAddPL = () => {
-    setIsModalAddPLOpen(true);
+  const getParcelList = async () => {
+    let res = await GetParcelList();
+    if (res) {
+      setDataParcelList(res);
+    }
   };
-  const handleOkAddPL = () => {
-    Addform
-      .validateFields()
-      .then((values) => {
-        Addform.resetFields();
-        message.success('บันทึกข้อมูลสำเร็จ');
-        setIsModalAddPLOpen(false);
-      })
-      .catch((errorInfo) => {
-        console.log('Validation failed:', errorInfo);
+
+  useEffect(() => {
+    getParcelList();
+  }, []);
+
+  const [messageApi] = message.useMessage();
+  const [open, setOpen] = useState(false);
+  const [confirmLoading, setConfirmLoading] = useState(false);
+  const [modalText, setModalText] = useState<String>();
+  const [deleteId, setDeleteId] = useState<Number>();
+
+  const showModal = (val: ParcelList) => {
+    setModalText(
+      `คุณแน่ใจหรือไม่ว่าต้องการลบรายการพัสดุ "${val.ParcelNumber} ${val.ParcelName}"
+        ข้อมูลของรายการพัสดุและข้อมูลการนำเข้าจะถูกลบออกทั้งหมด`
+    );
+    setDeleteId(val.ID);
+    setOpen(true);
+  };
+
+  const handleOk = async () => {
+    setConfirmLoading(true);
+    let res = await DeleteParcelListByID(deleteId);
+    if (res) {
+      setOpen(false);
+      messageApi.open({
+        type: "success",
+        content: "ลบข้อมูลสำเร็จ",
       });
-  };
-  const handleCancelAddPL = () => {
-    Addform.resetFields();
-    setIsModalAddPLOpen(false);
-  };
-
-
-  const showModalImportPL = () => {
-    setIsModalImportPLOpen(true);
-  };
-  const handleOkImportPL = () => {
-    Importform
-      .validateFields()
-      .then((values) => {
-        Importform.resetFields();
-        message.success('นำเข้าพัสดุสำเร็จ');
-        setIsModalImportPLOpen(false);
-      })
-      .catch((errorInfo) => {
-        console.log('Validation failed:', errorInfo);
+      getParcelList();
+    } else {
+      setOpen(false);
+      messageApi.open({
+        type: "error",
+        content: "เกิดข้อผิดพลาด !",
       });
-  };
-  const handleCancelImportPL = () => {
-    Importform.resetFields();
-    setIsModalImportPLOpen(false);
+    }
+    setConfirmLoading(false);
   };
 
-
-  const showModalEditPL = () => {
-    setIsModalEditPLOpen(true);
+  const handleCancel = () => {
+    setOpen(false);
   };
-  const handleOkEditPL = () => {
-    Editform
-      .validateFields()
-      .then((values) => {
-        Editform.resetFields();
-        message.success('แก้ไขข้อมูลสำเร็จ');
-        setIsModalEditPLOpen(false);
-      })
-      .catch((errorInfo) => {
-        console.log('Validation failed:', errorInfo);
-      });
-  };
-  const handleCancelEditPL = () => {
-    Editform.resetFields();
-    setIsModalEditPLOpen(false);
-  };
-
-
   
-  const showModalDetailPL = () => {
-    Modal.info({
-      title: (
-        <div style={{ color: 'blue', fontSize: '18px' }}>
-          รายละเอียดของรายการพัสดุและการนำเข้าพัสดุ
-        </div>
-      ),
-      content: (
-        <div>
-          <p>some messages...some messages...</p>
-          <p>some messages...some messages...</p>
-          <p>some messages...some messages...</p>
-          <p>some messages...some messages...</p>
-          <p>some messages...some messages...</p>
-          <p>some messages...some messages...</p>
-          <p>some messages...some messages...</p>
-          <p>some messages...some messages...</p>    
-        </div>
-      ),
-      onOk() {},
-      okText: 'ปิดหน้าต่าง',
-      okButtonProps: { style: { background: '#ee3e3e'} },
-      style:{fontSize:'16px', minWidth: 500},
-    });
-  };
-
-  const { confirm } = Modal;
-  const showDeleteConfirm = () => {
-    confirm({
-      title: (
-        <div style={{ color: 'red', fontSize: '18px' }}>
-          คำเตือน!! คุณแน่ใจหรือไม่ว่าต้องการลบข้อมูล
-        </div>
-      ),
-      content: (
-        <div>
-          <p> ข้อมูลของรายการพัสดุและข้อมูลการนำเข้าจะถูกลบออกทั้งหมด</p>
-          <p></p>
-  
-        </div>
-      ),
-      okText: 'ยืนยันการลบ',
-      okType: 'danger',
-      cancelText: 'ยกเลิก',
-      style:{fontSize:'16px', minWidth: 500},
-      onOk() {
-        console.log('ยืนยันการลบ');
-        message.success('ลบข้อมูลสำเร็จ');
-      },
-      onCancel() {
-        console.log('ยกเลิก');
-      },
-    });
-  };
 
   const handleSearch = (
     selectedKeys: string[],
@@ -231,7 +98,7 @@ export default function MyParcelList() {
     setSearchText('');
   };
 
-  const getColumnSearchProps = (dataIndex: DataIndex): ColumnType<DataType> => ({
+  const getColumnSearchProps = (dataIndex: DataIndex): ColumnType<ParcelList> => ({
     filterDropdown: ({ setSelectedKeys, selectedKeys, confirm, clearFilters, close }) => (
       <div style={{ padding: 8 }} onKeyDown={(e) => e.stopPropagation()}>
         <Input
@@ -298,81 +165,83 @@ export default function MyParcelList() {
       ),
   });
 
-  const columns: ColumnsType<DataType> = [
+  const columns: ColumnsType<ParcelList> = [
     {
-      title: 'ลำดับ',
-      dataIndex: 'name',
-      key: 'name',
+      title: 'ID',
+      dataIndex: 'ID',
+      key: 'ID',
       width: '10%',
       align: 'center',
-      sorter: (a, b) => a.address.length - b.address.length,
-      sortDirections: ['descend', 'ascend'],
-      
     },
     {
       title: 'รหัสพัสดุ',
-      dataIndex: 'name',
-      key: 'name',
+      dataIndex: 'ParcelNumber',
+      key: 'ParcelNumber',
       width: '10%',
       align: 'center',
-      sorter: (a, b) => a.address.length - b.address.length,
+      sorter: (a, b) => a.ParcelNumber.localeCompare(b.ParcelNumber),
       sortDirections: ['descend', 'ascend'],
     },
     {
       title: 'ชื่อรายการพัสดุ',
-      dataIndex: 'name',
-      key: 'name',
+      dataIndex: 'ParcelName',
+      key: 'ParcelName',
       width: '30%',
       align: 'center',
-      ...getColumnSearchProps('name'),
+      ...getColumnSearchProps('ParcelName'),
     },
     {
       title: 'หน่วยนับ',
-      dataIndex: 'name',
-      key: 'name',
+      dataIndex: 'ParcelUnit',
+      key: 'ParcelUnit',
       width: '10%',
       align: 'center',
+      render: (item) => Object.values(item.ParcelUnit),
     },
+      
     {
       title: 'ราคา',
-      dataIndex: 'age',
-      key: 'age',
+      dataIndex: 'PricePerPiece',
+      key: 'PricePerPiece',
       width: '10%',
       align: 'center',
-      sorter: (a, b) => a.address.length - b.address.length,
+      sorter: (a, b) => a.PricePerPiece - b.PricePerPiece,
       sortDirections: ['descend', 'ascend'],
     },
     {
       title: 'จำนวน',
-      dataIndex: 'address',
-      key: 'address',
+      dataIndex: 'Valume',
+      key: 'Valume',
       width: '10%',
       align: 'center',
-      sorter: (a, b) => a.address.length - b.address.length,
+      sorter: (a, b) => a.Valume - b.Valume,
       sortDirections: ['descend', 'ascend'],
     },
     {
       title: 'จัดการข้อมูลพัสดุ',
-      dataIndex: 'address',
-      key: 'address',
       align: 'center',
       
       render: (record) => (
 
         <Space >
-          <Button onClick={showModalImportPL} className='importButton'>
-              นำเข้าพัสดุ
-          </Button>
+          
+          <Link to={'/pages/myParcelList/importParcelList'}>
+            <Button className='importButton'>
+                นำเข้าพัสดุ
+            </Button>
+          </Link>
 
-          <Button onClick={showModalDetailPL} className='detailButton'>
-              รายละเอียด
-          </Button>
+          <Link to={'/pages/myParcelList/detailParcelList'}>
+            <Button className='detailButton'>
+                รายละเอียด
+            </Button>
+          </Link>
 
-          <Button onClick={showModalEditPL} className='editButton'>
+          <Button className='editButton' onClick={() =>  navigate(`/pages/myParcelList/editParcelList/${record.ID}`)} >
               แก้ไข
           </Button>
 
-          <Button onClick={showDeleteConfirm} className='iconDelete'>
+          <Button onClick={() => showModal(record)} className='iconDelete'>
             <DeleteOutlined style={{color: 'white'}}/>
           </Button>
         </Space>
@@ -381,7 +250,7 @@ export default function MyParcelList() {
     },
   ];
 
-  const { Option } = Select;
+
 
   return (
     <> 
@@ -389,255 +258,56 @@ export default function MyParcelList() {
         
         <Content style={{ margin: "0 16px", backgroundColor:'darkslategrey'}}>
         <Breadcrumb style={{ margin: "10px 0" }} />
-        <div style={{padding:30,minHeight: "100%"}}>
+        <div style={{padding:15,minHeight: "100%"}}>
 
         <div className='parcelListStyle'>
             <FileDoneOutlined className='iconparcelListStyle'/>
             รายการพัสดุโรงเรียน
         </div>
 
-        <Button onClick={showModalAddPL} className="customAddButton">
-              <PlusOutlined /> เพิ่มรายการพัสดุ
-        </Button>
+          <div>
+              <Link to={'/pages/myParcelList/createParcelList'}>
+                <Button className="customAddButton">
+                  <PlusOutlined /> เพิ่มรายการพัสดุ
+                </Button>
+              </Link>
+          </div>
 
-        <span className="Datablock" style={{ marginTop: '-63px', marginRight:'10px'}}> 
-              จำนวนรายการพัสดุ <></>
-              <div style={{display:'inline-block'}}> 100 </div> <></>
-              <div style={{ display: 'inline-block' }}> รายการ </div>
-        </span>
+          <div>
+              <span className="DatablockPL" style={{ marginTop: '-63px', marginLeft:'auto'}}> 
+                    จำนวนรายการพัสดุ <></>
+                    <div style={{display:'inline-block'}}> {dataParcelList.length} </div> <></>
+                    <div style={{ display: 'inline-block' }}> รายการ </div>
+              </span>
+          </div>
 
-
-          <Modal open={isModalAddPLOpen} onOk={handleOkAddPL} onCancel={handleCancelAddPL} 
-                title={<span style={{ color: '#FF4B4B', fontSize:20 }}> กรอกข้อมูลรายการพัสดุ </span>}
-                style={{fontSize:'16px',textAlign:'center', minWidth: 800}} 
-                okText= {<span style={{ color: 'white'}}> บันทึกข้อมูล </span>}
-                okButtonProps={{ style: { background: '#0BB6DC', borderColor: '#0BB6DC' } }}
-                cancelText= {<span style={{ color: 'white'}}> ยกเลิก </span>}
-                cancelButtonProps={{ style: { background: '#FF4B4B', borderColor: '#FF4B4B' } }}>
-                  
-                  <Form
-                      {...layout}
-                      name="parcel-form"
-                      form={Addform}
-                      style={{ maxWidth: 1000, textAlign: 'left', marginTop: 30 }}
-                    >
-                      
-                      <Form.Item name={['parcel', 'ParcelNumber']} label="รหัสพัสดุ (PID)" rules={[{ required: true, message: "กรุณากรอกข้อมูล" }]}>
-                        <Input placeholder="เช่น P10001"/>
-                      </Form.Item>
-                      <Form.Item name={['parcel', 'ParcelName']} label="ชื่อรายการพัสดุ" rules={[{ required: true, message: "กรุณากรอกข้อมูล" }]}>
-                        <Input placeholder="เช่น กระดาษถ่ายเอกสาร ชนิด 70 แกรม ขนาด A4"/>
-                      </Form.Item>
-                      <Form.Item name={['parcel', 'ParcelTypeId']} label="ประเภทพัสดุ" rules={[{ required: true, message: "กรุณาเลือกประเภท" }]}>
-                        <Select placeholder="เลือกประเภทพัสดุ">
-                          <Option value={1}>Type 1</Option>
-                          <Option value={2}>Type 2</Option>
-                        </Select>
-                      </Form.Item>
-                      <Form.Item name={['parcel', 'ParcelUnit']} label="หน่วยนับพัสดุ" rules={[{ required: true, message: "กรุณาเลือกหน่วยนับ" }]}>
-                        <Select placeholder="เลือกหน่วยนับพัสดุ">
-                          <Option value={1}>ชิ้น</Option>
-                          <Option value={2}>อัน</Option>
-                          <Option value={3}>รีม</Option>
-                          <Option value={4}>กล่อง</Option>
-                          <Option value={5}>แผ่น</Option>
-                          <Option value={6}>ตลับ</Option>
-                          <Option value={7}>ม้วน</Option>
-                        </Select>
-                      </Form.Item>
-                      <Form.Item name={['parcel', 'PricePerPiece']} label="ราคาต่อชิ้น" 
-                                  rules={[{
-                                    required: true,
-                                    validator: (_, value) => {
-                                      if (value === undefined || value === null || value === '') {
-                                        return Promise.reject('กรุณากรอกข้อมูล');
-                                      }
-                                      if (value < 0) {
-                                        return Promise.reject('มากกว่าหรือเท่ากับ 0 เท่านั้น');
-                                      }
-                                      return Promise.resolve();
-                                    },
-                                  }]}>
-                        <InputNumber />
-                      </Form.Item>
-                      <Form.Item name={['parcel', 'Valume']} label="จำนวนทั้งหมด" 
-                                  rules={[{
-                                    required: true,
-                                    validator: (_, value) => {
-                                      if (value === undefined || value === null || value === '') {
-                                        return Promise.reject('กรุณากรอกข้อมูล');
-                                      }
-                                      if (value < 0) {
-                                        return Promise.reject('มากกว่าหรือเท่ากับ 0 เท่านั้น');
-                                      }
-                                      return Promise.resolve();
-                                    },
-                                  }]}>
-                        <InputNumber />
-                      </Form.Item>
-                      <Form.Item name={['parcel', 'RoomId']} label="ห้องเก็บพัสดุ" rules={[{ required: true, message: "กรุณาเลือกสถานที่เก็บพัสดุ" }]}>
-                        <Select placeholder="เลือกสถานที่จัดเก็บพัสดุ">
-                          <Option value={1}>Room 1</Option>
-                          <Option value={2}>Room 2</Option>
-                        </Select>
-                      </Form.Item>
-                      <Form.Item name={['parcel', 'ParcelDetail']} label="รายละเอียดพัสดุ" rules={[{ required: true, message: "กรุณากรอกข้อมูลเพิ่มเติม" }]}>
-                        <Input.TextArea placeholder="รายละเอียดเพิ่มเติม เช่น สี (ถ้ามี) หรือการนำไปใช้งาน"/>
-                      </Form.Item>
-                      <Form.Item name={['parcel', 'PLDate']} label="วันที่" rules={[{ required: true, message: "กรุณาเลือกวันที่" }]}>
-                        <DatePicker />
-                      </Form.Item>
-                    </Form>
-          </Modal>
-
-
-          <Modal open={isModalImportPLOpen} onOk={handleOkImportPL} onCancel={handleCancelImportPL} 
-                title={<span style={{ color: '#FF4B4B', fontSize:20 }}> กรอกข้อมูลการนำเข้าพัสดุ </span>}
-                style={{fontSize:'16px',textAlign:'center', minWidth: 800}} 
-                okText= {<span style={{ color: 'white'}}> บันทึกข้อมูล </span>}
-                okButtonProps={{ style: { background: '#0BB6DC', borderColor: '#0BB6DC' } }}
-                cancelText= {<span style={{ color: 'white'}}> ยกเลิก </span>}
-                cancelButtonProps={{ style: { background: '#FF4B4B', borderColor: '#FF4B4B' } }}>
-                  
-                  <Form
-                      {...layout}
-                      name="Importparcel-form"
-                      form={Importform}
-                      style={{ maxWidth: 1000, textAlign: 'left', marginTop: 30 }}
-                    >
-                      
-                      <Form.Item name={['ImportParcelList', 'ImportNumber']} label="รหัสการนำเข้า" rules={[{ required: true, message: "กรุณากรอกข้อมูล" }]}>
-                        <Input placeholder="เช่น IMP0001"/>
-                      </Form.Item>
-
-                      <Form.Item name={['ImportParcelList', 'ImportValume']} label="จำนวนการนำเข้า" 
-                                  rules={[{
-                                    required: true,
-                                    validator: (_, value) => {
-                                      if (value === undefined || value === null || value === '') {
-                                        return Promise.reject('กรุณากรอกข้อมูล');
-                                      }
-                                      if (value < 1) {
-                                        return Promise.reject('มากกว่าหรือเท่ากับ 1 เท่านั้น');
-                                      }
-                                      return Promise.resolve();
-                                    },
-                                  }]}>
-                        <InputNumber />
-                      </Form.Item>
-
-                      <Form.Item name={['ImportParcelList', 'Seller']} label="ผู้ขายพัสดุ" rules={[{ required: true, message: "กรุณากรอกข้อมูล" }]}>
-                          <Input placeholder="เช่น ร้านเจริญพัสดุ"/>
-                      </Form.Item>
-
-                      <Form.Item name={['ImportParcelList', 'Personnel']} label="ผู้ตรวจรับพัสดุ" rules={[{ required: true, message: "กรุณาเลือกผู้ตรวจรับพัสดุ" }]}>
-                        <Select placeholder="เลือกผู้ตรวจรับพัสดุ">
-                          <Option value={1}>คนที่ 1</Option>
-                          <Option value={2}>คนที่ 2</Option>
-                          <Option value={3}>คนที่ 3</Option>
-                          <Option value={4}>คนที่ 4</Option>
-                        </Select>
-                      </Form.Item>
-
-                      <Form.Item name={['ImportParcelList', 'ImportDate']} label="วันที่นำเข้าพัสดุ" rules={[{ required: true, message: "กรุณาเลือกวันที่" }]}>
-                        <DatePicker />
-                      </Form.Item>
-                    </Form>
-          </Modal>
-
-
-
-          <Modal open={isModalEditPLOpen} onOk={handleOkEditPL} onCancel={handleCancelEditPL} 
-                title={<span style={{ color: '#FF4B4B', fontSize:20 }}> แก้ไขข้อมูลรายการพัสดุ </span>}
-                style={{fontSize:'16px',textAlign:'center', minWidth: 800}} 
-                okText= {<span style={{ color: 'white'}}> บันทึกข้อมูล </span>}
-                okButtonProps={{ style: { background: '#0BB6DC', borderColor: '#0BB6DC' } }}
-                cancelText= {<span style={{ color: 'white'}}> ยกเลิก </span>}
-                cancelButtonProps={{ style: { background: '#FF4B4B', borderColor: '#FF4B4B' } }}>
-                  
-                  <Form
-                      {...layout}
-                      name="EditParcel-form"
-                      form={Editform}
-                      style={{ maxWidth: 1000, textAlign: 'left', marginTop: 30 }}
-                    >
-                      
-                      <Form.Item name={['EditParcel', 'ParcelNumber']} label="รหัสพัสดุ (PID)" rules={[{ required: true, message: "กรุณากรอกข้อมูล" }]}>
-                        <Input placeholder="เช่น P10001"/>
-                      </Form.Item>
-                      <Form.Item name={['EditParcel', 'ParcelName']} label="ชื่อรายการพัสดุ" rules={[{ required: true, message: "กรุณากรอกข้อมูล" }]}>
-                        <Input placeholder="เช่น กระดาษถ่ายเอกสาร ชนิด 70 แกรม ขนาด A4"/>
-                      </Form.Item>
-                      <Form.Item name={['EditParcel', 'ParcelTypeId']} label="ประเภทพัสดุ" rules={[{ required: true, message: "กรุณาเลือกประเภท" }]}>
-                        <Select placeholder="เลือกประเภทพัสดุ">
-                          <Option value={1}>Type 1</Option>
-                          <Option value={2}>Type 2</Option>
-                        </Select>
-                      </Form.Item>
-                      <Form.Item name={['EditParcel', 'ParcelUnit']} label="หน่วยนับพัสดุ" rules={[{ required: true, message: "กรุณาเลือกหน่วยนับ" }]}>
-                        <Select placeholder="เลือกหน่วยนับพัสดุ">
-                          <Option value={1}>ชิ้น</Option>
-                          <Option value={2}>อัน</Option>
-                          <Option value={3}>รีม</Option>
-                          <Option value={4}>กล่อง</Option>
-                          <Option value={5}>แผ่น</Option>
-                          <Option value={6}>ตลับ</Option>
-                          <Option value={7}>ม้วน</Option>
-                        </Select>
-                      </Form.Item>
-                      <Form.Item name={['EditParcel', 'PricePerPiece']} label="ราคาต่อชิ้น" 
-                                  rules={[{
-                                    required: true,
-                                    validator: (_, value) => {
-                                      if (value === undefined || value === null || value === '') {
-                                        return Promise.reject('กรุณากรอกข้อมูล');
-                                      }
-                                      if (value < 0) {
-                                        return Promise.reject('มากกว่าหรือเท่ากับ 0 เท่านั้น');
-                                      }
-                                      return Promise.resolve();
-                                    },
-                                  }]}>
-                        <InputNumber />
-                      </Form.Item>
-                      <Form.Item name={['EditParcel', 'Valume']} label="จำนวนทั้งหมด" 
-                                  rules={[{
-                                    required: true,
-                                    validator: (_, value) => {
-                                      if (value === undefined || value === null || value === '') {
-                                        return Promise.reject('กรุณากรอกข้อมูล');
-                                      }
-                                      if (value < 0) {
-                                        return Promise.reject('มากกว่าหรือเท่ากับ 0 เท่านั้น');
-                                      }
-                                      return Promise.resolve();
-                                    },
-                                  }]}>
-                        <InputNumber />
-                      </Form.Item>
-                      <Form.Item name={['EditParcel', 'RoomId']} label="ห้องเก็บพัสดุ" rules={[{ required: true, message: "กรุณาเลือกสถานที่เก็บพัสดุ" }]}>
-                        <Select placeholder="เลือกสถานที่จัดเก็บพัสดุ">
-                          <Option value={1}>Room 1</Option>
-                          <Option value={2}>Room 2</Option>
-                        </Select>
-                      </Form.Item>
-                      <Form.Item name={['EditParcel', 'ParcelDetail']} label="รายละเอียดพัสดุ" rules={[{ required: true, message: "กรุณากรอกข้อมูลเพิ่มเติม" }]}>
-                        <Input.TextArea placeholder="รายละเอียดเพิ่มเติม เช่น สี (ถ้ามี) หรือการนำไปใช้งาน"/>
-                      </Form.Item>
-                      <Form.Item name={['EditParcel', 'PLDate']} label="วันที่" rules={[{ required: true, message: "กรุณาเลือกวันที่" }]}>
-                        <DatePicker />
-                      </Form.Item>
-                    </Form>
-          </Modal>
-      
 
         <Card style={{fontSize:'16px', marginTop:20}}>
           <Table 
                   columns={columns} 
-                  dataSource={data}
+                  dataSource={dataParcelList}
                   pagination={{ pageSize: 4 }}
                   size='small'/>
         </Card>
+
+            <Modal
+
+            open={open}
+            onOk={handleOk}
+            confirmLoading={confirmLoading}
+            onCancel={handleCancel}
+
+            title={<span style={{ color: '#FF4B4B', fontSize:20 }}> คำเตือน !! </span>}
+            style={{fontSize:'16px', minWidth: 400}} 
+            okText= {<span style={{ color: 'white'}}> ลบข้อมูล </span>}
+            okButtonProps={{ style: { background: '#0BB6DC', borderColor: '#0BB6DC' } }}
+            cancelText= {<span style={{ color: 'white'}}> ยกเลิก </span>}
+            cancelButtonProps={{ style: { background: '#FF4B4B', borderColor: '#FF4B4B' } }}>
+
+              <p>{modalText}</p>
+
+          </Modal>
+          
         </div>
         </Content>
       <Footers/>

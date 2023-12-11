@@ -5,6 +5,7 @@ import { Avatar, Button, Dropdown , Menu } from "antd";
 import {
   DownOutlined,
   CaretRightOutlined,
+  MenuOutlined,
 } from "@ant-design/icons";
 import images3 from "../assets/images3.png";
 
@@ -21,7 +22,7 @@ export default function Headers() {
 
   const Parcelmenu = (
     <Menu className="SubmenuItem">
-      {createMenuItem("/pages/parcelTypesAndUnit", "ประเภทและหน่วยนับพัสดุ")}
+      {createMenuItem("/pages/parcelOverview", "ภาพรวมงานพัสดุ")}
       {createMenuItem("/pages/myParcelList", "รายการพัสดุ")}
       {createMenuItem("/pages/pinkUpParcelList", "รายการเบิกจ่ายพัสดุ")}
     </Menu>
@@ -71,11 +72,13 @@ export default function Headers() {
         <img src={images3} alt="Logo" style={{height: "80px",marginLeft: "20px"}}/>
       </div>
       
-      <div className="menu" onClick={() => setMenuOpen(!menuOpen)}>
-        <span></span>
-        <span></span>
-        <span></span>
-      </div>
+      <Button
+        className="iconMenu"
+        type="link"
+        size="large"
+        icon={<MenuOutlined style={{ color: "#ffffff", fontSize: "25px" }} />}
+        onClick={() => setMenuOpen(!menuOpen)}
+      />
 
         <ul className={menuOpen ? "open" : ""}>
           <Link to="/pages/homePage">
@@ -120,7 +123,7 @@ export default function Headers() {
             </Button>
           </Link>
 
-          <Dropdown overlay={SettingAndLogout} placement="bottomRight" arrow>
+          <Dropdown overlay={SettingAndLogout} placement="bottomRight" arrow className="avatar">
             <div style={{float:'right', marginRight:'20px', marginLeft:'20px'}}>
               <Avatar
                 src="https://static.vecteezy.com/system/resources/previews/020/389/525/original/hand-drawing-cartoon-girl-cute-girl-drawing-for-profile-picture-vector.jpg"

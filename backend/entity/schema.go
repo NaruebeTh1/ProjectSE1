@@ -365,10 +365,9 @@ type ParcelList struct {
 
 	ParcelNumber 		string
 	ParcelName 			string
-	PricePerPiece		int
+	PricePerPiece		float32
 	Valume				int
 	ParcelDetail 		string
-	PLDate				time.Time
 
 	//FK go to ExportParcelList, ImportParcelList
 
@@ -407,7 +406,7 @@ type ImportParcelList struct {
 type ParcelUnit struct {
 	gorm.Model
 
-	ParcelUnit 			string
+	ParcelUnit 			string `gorm:"unique"`
 
 	//FK go to ParcelList
 
@@ -417,7 +416,7 @@ type ParcelUnit struct {
 type ParcelType struct {
 	gorm.Model
 
-	ParcelType 			string
+	ParcelType 			string `gorm:"unique"`
 
 	//FK go to ParcelList
 
@@ -426,6 +425,9 @@ type ParcelType struct {
 
 type ExportParcelList struct {
 	gorm.Model
+	
+	ExportValume    	int
+	Budget				int
 
 	//FK ParcelList, PinkUpParcelList this here
 	
@@ -441,8 +443,6 @@ type PinkUpParcelList struct {
 
 	BillNumber			int
 	DetailOfRequest 	string
-	ExportValume    	int
-	Budget				int
 	PUPLDate			time.Time
 
 	//FK PersonnelId this here

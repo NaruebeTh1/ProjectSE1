@@ -1,18 +1,31 @@
 package main
 
 import (
+	"github.com/NaruebeTh1/ProjectSE1/controller"
 	"github.com/NaruebeTh1/ProjectSE1/entity"
 	"github.com/gin-gonic/gin"
-	
-	// "github.com/NaruebeTh1/ProjecSE1/controller"
 )
+
 
 func main() {
 	entity.SetupDatabase()
-	r := gin.Default()
-	r.Use(CORSMiddleware())
-	
-	r.Run()
+	router := gin.Default()
+	router.Use(CORSMiddleware())
+
+	router.GET("/parcelTypes", controller.ListParcelType)
+	router.GET("/parcelUnits", controller.ListParcelUnit)
+
+	router.GET("/parcelLists", controller.ListParcelList)
+	router.GET("/pinkUpParcelLists", controller.ListPinkUpParcelList)
+
+	router.POST("/parcelLists", controller.CreateParcelList)
+	router.GET("/parcelList/:id", controller.GetParcelList)
+	router.DELETE("/parcelList/:id", controller.DeleteParcelList)
+	router.PATCH("/parcelLists", controller.UpdateParcelList)
+
+	router.GET("/rooms", controller.ListRoom)
+
+	router.Run(":8080")
 }
 
 func CORSMiddleware() gin.HandlerFunc {

@@ -47,4 +47,41 @@ func SetupDatabase() {
 		&PinkUpParcelList{},
 	)
 	db = database
+
+
+	ParcelType := []ParcelType{
+		{ParcelType: "วัสดุสํานักงาน"},
+		{ParcelType: "วัสดุไฟฟ้าและวิทยุ"},
+		{ParcelType: "วัสดุงานบ้านงานครัว"},
+		{ParcelType: "วัสดุก่อสร้าง"},
+		{ParcelType: "วัสดุยานพาหนะและขนส่ง"},
+		{ParcelType: "วัสดุเชื้อเพลิงและหล่อลื่น"},
+		{ParcelType: "วัสดุวิทยาศาสตร์หรือการแพทย์"},
+		{ParcelType: "วัสดุการเกษตร"},
+		{ParcelType: "วัสดุโฆษณาและเผยแพร่"},
+		{ParcelType: "วัสดุเครื่องแต่งกาย"},
+		{ParcelType: "วัสดุกีฬา"},
+		{ParcelType: "วัสดุคอมพิวเตอร์"},
+	}
+	for _, ParcelType := range ParcelType {
+		db.Create(&ParcelType) 
+	}
+
+	ParcelUnit := []ParcelUnit{
+		{ParcelUnit: "ม้วน"},
+		{ParcelUnit: "กล่อง"},
+		{ParcelUnit: "ชิ้น"},
+		{ParcelUnit: "แพ็ค"},
+		{ParcelUnit: "รีม"},
+		{ParcelUnit: "ด้าม"},
+		{ParcelUnit: "อัน"},
+		{ParcelUnit: "ขวด"},
+		{ParcelUnit: "ตลับ"},
+		{ParcelUnit: "ผืน"},
+		{ParcelUnit: "กระป๋อง"},
+		{ParcelUnit: "แผ่น"},
+	}
+	for _, ParcelUnit := range ParcelUnit {
+		db.Create(&ParcelUnit) 
+	}
 }

@@ -1,0 +1,55 @@
+.titleOfPUPL {
+    color: aliceblue;
+    align-items: center;
+    margin-top: -5px;
+    font-size: 22px;
+    font-weight: bold;
+    text-shadow: 0em 0 0.1em rgb(255, 255, 255);
+}
+
+.titleofParcellist {
+    margin-top: 5px;
+    font-size: 18px;
+    text-align: left;
+    padding: 5px;
+    padding-left: 20px !important;
+    color: aliceblue;
+    background-color: rgb(69, 122, 122);
+    border-radius: 5px;
+}
+
+
+.PUPLCard {
+    margin-top: 20px;
+    box-shadow: 0em 0 0.5em rgb(0, 208, 255);
+}
+
+.PUPLfrom {
+    justify-content: center;
+}
+
+.parcelListTalble {
+    margin-top: 5px;
+}
+
+
+.customAddPUPListButton {
+    background-color: rgb(184, 50, 105);
+    color: #ffffff;
+    border: none;
+    border-radius: 7px;
+    padding: 20px 20px;
+    font-size: 16px;
+    margin-top: 36px;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.2s, color 0.2s; 
+  }
+  
+.customAddPUPListButton:hover {
+    background-color: rgb(155, 1, 65); 
+    color: #ffffff !important; 
+    transform: scale(1.05);
+}

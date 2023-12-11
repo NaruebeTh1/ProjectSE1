@@ -1,37 +1,46 @@
 export interface ParcelList {
+    ID: number;
     ParcelNumber: string;
     ParcelName: string;
     PricePerPiece: number;
     Valume: number;
     ParcelDetail: string;
-    PLDate: string;
+
     ParcelTypeId: number;
     ParcelUnitId: number;
     RoomId: number;
-    ParcelType: ParcelType;
-    ParcelUnit: ParcelUnit;
-    Room: Room;
+    
+    ParcelType: InterfaceParcelType;
+    ParcelUnit: InterfaceParcelUnit;
+    Room: InterfaceRoom;
 }
   
 export interface ImportParcelList  {
-    ImportValume: string;
+    ID: number;
+    ImportValume: number;
     ImportNumber: string;
-    Seller: number;
+    Seller: string;
     ImportDate: string;
-    ParcelList: ParcelList;
-    PersonnelId: number;
-    Personnel: Personnel;
+    ParcelList: string;
+    PersonnelId?: number;
+    PersonnelName?: Personnel;
 }
   
-export interface ParcelUnit {
-    ParcelUnit: string;
+export interface InterfaceParcelUnit {
+    ID?: number;
+    ParcelUnit?: string;
 }
   
-export interface ParcelType {
-    ParcelType: string;
+export interface InterfaceParcelType {
+    ID?: number;
+    ParcelType?: string;
 }
   
 export interface ExportParcelList {
+    ID: number;
+    ExportVolume: number;
+    Budget: number;
+    
     ParcelListId: number;
     PickUpParcelListId: number;
     ParcelList: ParcelList;
@@ -39,20 +48,34 @@ export interface ExportParcelList {
 }
   
 export interface PickUpParcelList {
+    ID: number;
     BillNumber: number;
     DetailOfRequest: string;
-    ExportVolume: number;
-    Budget: number;
     PUPLDate: string;
     PersonnelId: number;
     Personnel: Personnel;
 }
 
-
 export interface Personnel {
+    ID: number;
+    TitleName: 	        string;
+	FirstName: 	        string;	
+	LastName:	        string;	
+	PersonnelTel: 	    string;
+	PersonnelPicture:   string;
+
+// PositionId: number;
+// Position: Position;
+
+// DepartmentId: number;
+// Department: Department;
+
+//  GenderId: number;
+//  Gender: Gender;
 
 }
 
-export interface Room {
-
+export interface InterfaceRoom {
+    ID?: number;
+    RoomName: string
 }

@@ -1,4 +1,4 @@
-.menuItem {
+/* .menuItem {
     font-size: 15px;
     font-weight: bold;
     color: #ffffff; 
@@ -84,3 +84,103 @@ nav .menu span {
         margin: 0.2rem 0.5rem;
     }
 }
+
+ */
+
+
+ .menuItem {
+    font-size: 15px;
+    font-weight: bold;
+    color: #ffffff;
+  }
+  .menuItem.active {
+    color: red;
+  }
+  
+  .menuItem :hover {
+    color: #c5c5c5;
+    transition: background-color 0.2s, color 0.2s;
+  }
+  
+  .SubmenuItem {
+    font-size: 14px;
+    font-weight: bold;
+    color: #ffffff;
+  }
+  .SubmenuItem :hover {
+    color: rgb(47, 0, 255);
+    transition: background-color 0.2s, color 0.2s;
+  }
+  
+  .Headers {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    background-color: #202023;
+    box-shadow: 0em 0 0.5em rgb(0, 38, 70);
+    padding: 0px 20px;
+  }
+  
+  nav .menu {
+    display: none;
+    position: absolute;
+    margin-top: 30px;
+    right: 0.5rem;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 2.5rem;
+    height: 1.4rem;
+  }
+  
+  .iconMenu {
+    display: none;
+  }
+  .openn {
+    display: flex;
+    justify-content: space-between;
+    padding: 0;
+    width: 1290px;
+  }
+  
+  @media (max-width: 1527px) {
+
+    .Headers {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: space-between;
+      position: relative;
+  
+      & .menu {
+        display: flex;
+      }
+      & ul {
+        display: none;
+      }
+      & .avatar {
+        display: block;
+        margin: 8px 0px;
+        display: flex;
+        justify-content: center;
+      }
+      & .open {
+        display: flex;
+        justify-content: center;
+        align-content: center;
+        flex-direction: column;
+        margin: 0;
+        padding-bottom: 10px;
+      }
+      & a {
+        display: flex;
+        justify-content: center;
+      }
+      & .iconMenu {
+        display: block;
+        position: absolute;
+        right: 2%;
+        top: 22.5px;
+      }
+    }
+  }
+  

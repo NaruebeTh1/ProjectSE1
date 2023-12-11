@@ -1,4 +1,4 @@
-.Datablock {
+.DatablockPL {
     border: none;
     border-radius: 3px;
     font-size: 16px;
@@ -17,6 +17,7 @@
     font-size: 22px;
     font-weight: bold;
     color: #ffffff;
+    text-shadow: 0em 0 0.1em rgb(255, 255, 255);
   }
   
 .iconparcelListStyle {
@@ -31,14 +32,11 @@
     color: #ffffff;
     border: none;
     border-radius: 7px;
-    padding: 20px 20px;
     font-size: 16px;
     margin-top: 20px;
-    text-align: center;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: background-color 0.2s, color 0.2s; 
+    padding: 10px 20px;
+    transition: background-color 0.2s, color 0.2s;  
+    height: auto;   
   }
   
 .customAddButton:hover {
@@ -113,3 +111,66 @@
     background-color: #ee3e3e; 
     transform: scale(1.01);
 }
+
+
+
+
+
+.titleOfCreateParcel {
+    color: aliceblue;
+    align-items: center;
+    margin-top: -5px;
+    font-size: 22px;
+    font-weight: bold;
+    text-shadow: 0em 0 0.1em rgb(255, 255, 255);
+}
+
+
+.CreatePLCard {
+    margin-top: 20px;
+    box-shadow: 0em 0 0.5em rgb(255, 94, 0);
+    height: 400px;
+}
+
+.CreatePLfrom {
+    justify-content: center;
+}
+
+
+.AddParcelListButton {
+    background-color: rgb(184, 50, 105);
+    color: #ffffff;
+    border: none;
+    border-radius: 7px;
+    padding: 20px 20px;
+    font-size: 16px;
+    margin-top: 36px;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.2s, color 0.2s; 
+  }
+  
+.AddParcelListButton:hover {
+    background-color: rgb(155, 1, 65); 
+    color: #ffffff !important; 
+    transform: scale(1.05);
+}
+
+
+.titleOfImportParcelList {
+    font-size: 18px;
+    font-weight: bold;
+    display: flex;
+    padding: 20px;
+    background-color: rgb(169, 241, 217);
+    border-radius: 10px;
+    margin-right: 250px;
+    margin-left: 250px;
+  }
+
+  .titleOfImportParcelList div {
+    display: flex;
+    justify-content:center;
+  }
