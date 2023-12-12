@@ -72,6 +72,16 @@ export default function CreateParcelListPage() {
         getRoom();
       }, []);
     
+      //ไม่ใช้
+    //   const validateParcelNumber = (rule:any, value: string, callback:any) => {
+    //     const regex = /^P\d{5}$/;
+    //     if (!regex.test(value)) {
+    //       callback('รหัสพัสดุต้องขึ้นต้นด้วย "P" ตามด้วยเลข 5 หลัก');
+    //     } else {
+    //       callback(); 
+    //     }
+    //   };
+      
 
     return (
         <> 

@@ -143,7 +143,7 @@ export default function MyParcelList() {
       <SearchOutlined style={{ color: filtered ? '#1677ff' : undefined }} />
     ),
     onFilter: (value, record) =>
-      record[dataIndex]
+    (record[dataIndex]?.toString() ?? '')
         .toString()
         .toLowerCase()
         .includes((value as string).toLowerCase()),
@@ -166,13 +166,6 @@ export default function MyParcelList() {
   });
 
   const columns: ColumnsType<ParcelList> = [
-    {
-      title: 'ID',
-      dataIndex: 'ID',
-      key: 'ID',
-      width: '10%',
-      align: 'center',
-    },
     {
       title: 'รหัสพัสดุ',
       dataIndex: 'ParcelNumber',
@@ -225,17 +218,13 @@ export default function MyParcelList() {
 
         <Space >
           
-          <Link to={'/pages/myParcelList/importParcelList'}>
-            <Button className='importButton'>
+          <Button className='importButton' onClick={() =>  navigate(`/pages/myParcelList/importParcelList/${record.ID}`)}>
                 นำเข้าพัสดุ
-            </Button>
-          </Link>
+          </Button>
 
-          <Link to={'/pages/myParcelList/detailParcelList'}>
-            <Button className='detailButton'>
-                รายละเอียด
-            </Button>
-          </Link>
+          <Button className='detailButton' onClick={() =>  navigate(`/pages/myParcelList/detailParcelList/${record.ID}`)}>
+              รายละเอียด
+          </Button>
 
           <Button className='editButton' onClick={() =>  navigate(`/pages/myParcelList/editParcelList/${record.ID}`)} >
               แก้ไข

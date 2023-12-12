@@ -185,7 +185,7 @@ export default function EditPinkUpParcelList() {
     <Headers />
       <Content style={{ margin: "0 16px", backgroundColor:'darkslategrey' }}>
         <Breadcrumb style={{ margin: "10px 0" }} />
-          <div style={{padding:10,minHeight: "100%", textAlign:'center'}}>
+          <div style={{padding:15,minHeight: "100%", textAlign:'center'}}>
 
           <Layout style={{ backgroundColor: 'darkslategrey'}}>
             <div className='titleOfPUPL'>
@@ -249,7 +249,7 @@ export default function EditPinkUpParcelList() {
             <Table 
                   columns={columns} 
                   dataSource={data}
-                  pagination={{ pageSize: 3 }}
+                  pagination={{ pageSize: 2 }}
                   size='small'/>
             </Card> 
 

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   ArrowLeftOutlined,
   PieChartOutlined,
@@ -9,59 +9,46 @@ import {Breadcrumb, Card, Layout} from 'antd';
 import Headers from '../../../layout/header';
 import Footers from '../../../layout/footer';
 import { Content } from 'antd/es/layout/layout';
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import Table, { ColumnsType } from 'antd/es/table';
-import { ImportParcelList } from '../../../interfaces';
+import { ImportParcelList, ParcelList } from '../../../interfaces';
+import { GetImportParcelList, GetImportParcelListById, GetParcelListById } from '../../../services/https';
 
-
-interface ParcelList {
-  ID:number;
-  ParcelNumber: string;
-  ParcelName: string;
-  ParcelUnit: string;
-  PricePerPiece: number;
-  Valume: number;
-  Room: number;
-  ParcelType: String;
-  
-}
-
-
-
-const dataParcel: ParcelList[] = [
-  {
-    ID: 1,
-    ParcelNumber: 'PN001',
-    ParcelName: 'Parcel 1',
-    ParcelUnit: 'อัน',
-    ParcelType: 'วัสดุสำนักงาน',
-    PricePerPiece: 10,
-    Valume: 20,
-    Room: 1012
-  },
-  
-];
-
-const dataImport: ImportParcelList[] = [
-  // {
-  //   ID: 1,
-  //   ImportValume: 20,
-  //   ImportNumber: '10255',
-  //   Seller: 'ร้านพัสดุการช่าง',
-  //   ImportDate: '12/12/2566',
-  //   PersonnelName: 'PersonnelName',
-  // },
-  // {
-  //   ID: 2,
-  //   ImportValume: 20,
-  //   ImportNumber: '10255',
-  //   Seller: 'ร้านพัสดุการช่าง',
-  //   ImportDate: '12/12/2566',
-  //   PersonnelName: 'Personnel',
-  // },
-];
 
 export default function DetailParcelList() {
+
+
+  const [dataParcelList, setDataParcelList] = useState<ParcelList>();
+  const [dataImportParcelList, setDataImportParcelList] = useState<ImportParcelList>();
+
+  let { id } = useParams();
+
+
+
+  const getParcelListById = async () => {
+    let res = await GetParcelListById(Number(id));
+    if (res) {
+      setDataParcelList(res);
+    }
+  };
+
+
+  const getImportParcelListById = async () => {
+    let res = await GetImportParcelListById(Number(id));
+    console.log('Import Parcel List:', res);
+    if (res) {
+      setDataImportParcelList(res);
+    }
+  };
+
+
+  useEffect(() => {
+    getParcelListById();
+    getImportParcelListById();
+  
+  }, []);
+  
+  
 
   const columnsParcel: ColumnsType<ParcelList> = [
     {
@@ -80,17 +67,19 @@ export default function DetailParcelList() {
     },
     {
       title: 'หน่วยนับ',
-      dataIndex: 'ParcelType',
-      key: 'ParcelType',
-      width: '10%',
-      align: 'center',
-    },
-    {
-      title: 'ประเภท',
       dataIndex: 'ParcelUnit',
       key: 'ParcelUnit',
       width: '10%',
       align: 'center',
+      render: (item) => Object.values(item.ParcelUnit),
+    },
+    {
+      title: 'ประเภท',
+      dataIndex: 'ParcelType',
+      key: 'ParcelType',
+      width: '10%',
+      align: 'center',
+      render: (item) => Object.values(item.ParcelType),
     },
     {
       title: 'ราคา',
@@ -112,10 +101,11 @@ export default function DetailParcelList() {
       key: 'Room',
       width: '10%',
       align: 'center',
+      render: (item) => Object.values(item.RoomName),
     },
   ];
 
-  const columnsImprot: ColumnsType<ImportParcelList> = [
+  const columnsImport: ColumnsType<ImportParcelList> = [
     {
       title: 'รหัสการนำเข้า',
       dataIndex: 'ImportNumber',
@@ -134,16 +124,23 @@ export default function DetailParcelList() {
       title: 'ผู้ขายพัสดุ',
       dataIndex: 'Seller',
       key: 'Seller',
-      width: '10%',
+      width: '20%',
       align: 'center',
     },
     {
       title: 'ผู้ตรวจรับพัสดุ',
       dataIndex: 'Personnel',
       key: 'Personnel',
-      width: '10%',
+      width: '20%',
       align: 'center',
-    },
+      render: (personnel) => {
+        if (personnel) {
+          return `${personnel.TitleName}${personnel.FirstName}  ${personnel.LastName}`;
+        } else {
+          return 'N/A'; 
+        }
+      }
+    }, 
     {
       title: 'จำนวนการนำเข้า',
       dataIndex: 'ImportValume',
@@ -174,17 +171,18 @@ export default function DetailParcelList() {
             <Card style={{fontSize:'16px', marginTop:20}}>
               <Table 
                       columns={columnsParcel} 
-                      dataSource={dataParcel}
+                      dataSource={dataParcelList ? [dataParcelList] : []}
                       pagination={{ pageSize: 1 }}
                       size='small'/>
            </Card>
 
            <Card style={{fontSize:'16px', marginTop:10}}>
               <Table 
-                      columns={columnsImprot} 
-                      dataSource={dataImport}
+                      columns={columnsImport} 
+                      dataSource={dataImportParcelList ? [dataImportParcelList] : []}
                       pagination={{ pageSize: 2 }}
                       size='small'/>
+                      
            </Card>
 
           </div>

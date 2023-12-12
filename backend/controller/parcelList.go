@@ -10,18 +10,6 @@ import (
 // GET /ParcelList
 
 
-// func ListParcelList(c *gin.Context) {
-// 	var parcelList []entity.ParcelList
-
-// 	if err := entity.DB().Preload("ParcelUnit").Preload("ParcelType").Preload("Room").Raw("SELECT * FROM parcel_lists").Scan(&parcelList).Error; err != nil {
-// 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
-// 		return
-// 	}
-
-// 	c.JSON(http.StatusOK, gin.H{"data": parcelList})
-// }
-
-
 func ListParcelList(c *gin.Context) {
 	var parcelList []entity.ParcelList
 
@@ -111,23 +99,23 @@ func DeleteParcelList(c *gin.Context) {
 // PATCH /ParcelList
 
 func UpdateParcelList(c *gin.Context) {
-	var ParcelList entity.ParcelList
+	var parcelList entity.ParcelList
 	var result entity.ParcelList
 
-	if err := c.ShouldBindJSON(&ParcelList); err != nil {
+	if err := c.ShouldBindJSON(&parcelList); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
 
 	// ค้นหา ParcelList ด้วย id
-	if tx := entity.DB().Where("id = ?", ParcelList.ID).First(&result); tx.RowsAffected == 0 {
+	if tx := entity.DB().Where("id = ?", parcelList.ID).First(&result); tx.RowsAffected == 0 {
 		c.JSON(http.StatusBadRequest, gin.H{"error": "ParcelList not found"})
 		return
 	}
 
-	if err := entity.DB().Save(&ParcelList).Error; err != nil {
+	if err := entity.DB().Save(&parcelList).Error; err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
-	c.JSON(http.StatusOK, gin.H{"data": ParcelList})
+	c.JSON(http.StatusOK, gin.H{"data": parcelList})
 }

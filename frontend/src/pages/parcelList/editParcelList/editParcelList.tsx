@@ -24,13 +24,13 @@ export default function EditParcelList() {
     const [messageApi, contextHolder] = message.useMessage();
     const [dataParcelType, setDataParcelType] = useState<InterfaceParcelType[]>([]);
     const [dataParcelUnit, setDataParcelUnit] = useState<InterfaceParcelUnit[]>([]);
-    const [dataParcelList, setDataParcelList] = useState<ParcelList[]>([]);
+    const [dataParcelList, setDataParcelList] = useState<ParcelList>();
     const [dataRoom, setDataRoom] = useState<InterfaceRoom[]>([]);
 
     let { id } = useParams();
 
     const onFinish = async (values: ParcelList) => {
-        values.ID = dataParcelList[1].ID;
+        values.ID = dataParcelList?.ID;
         let res = await UpdateParcelList(values);
         if (res.status) {
           messageApi.open({
@@ -47,6 +47,8 @@ export default function EditParcelList() {
           });
         }
       };
+
+      
     
     const getParcelUnit = async () => {
         let res = await GetParcelUnit();
@@ -113,8 +115,7 @@ export default function EditParcelList() {
                         <span > Back </span>
                     </Link>
 
-                    <FileSearchOutlined style={{ fontSize: '30px', marginRight: '10px' }}/> แก้ไขรายการพัสดุ :
-                    รหัสพัสดุ ...(ดึงข้อมูลรหัสพัสดุ)...      
+                    <FileSearchOutlined style={{ fontSize: '30px', marginRight: '10px' }}/> แก้ไขรายการพัสดุ     
                     </div>
 
                 </Layout>

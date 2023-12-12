@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   FileSearchOutlined,
   ArrowLeftOutlined,
@@ -14,6 +14,8 @@ import { Content } from 'antd/es/layout/layout';
 import './PUPLStyle.css' ;
 import Table, { ColumnsType } from 'antd/es/table';
 import { Link } from 'react-router-dom';
+import { GetPersonnel } from '../../../services/https';
+import { InterfacePersonnel } from '../../../interfaces';
 
 
 interface DataPickUpParcelList {
@@ -106,6 +108,19 @@ export default function CreatePinkUpParcelList() {
 
   const [form] = Form.useForm();
   const { Option } = Select;
+  const [dataPersonnels, setDataPersonnel] = useState<InterfacePersonnel[]>([]);
+
+  const getPersonnel = async () => {
+    let res = await GetPersonnel();
+    if (res) {
+      setDataPersonnel(res);
+    }
+  };
+
+  useEffect(() => {
+    getPersonnel();
+
+  }, []);
 
   const columns: ColumnsType<DataPickUpParcelList> = [
     {
@@ -185,7 +200,7 @@ export default function CreatePinkUpParcelList() {
     <Headers />
       <Content style={{ margin: "0 16px", backgroundColor:'darkslategrey' }}>
         <Breadcrumb style={{ margin: "10px 0" }} />
-          <div style={{padding:10,minHeight: "100%", textAlign:'center'}}>
+          <div style={{padding:15,minHeight: "100%", textAlign:'center'}}>
 
           <Layout style={{ backgroundColor: 'darkslategrey'}}>
             <div className='titleOfPUPL'>
@@ -220,8 +235,11 @@ export default function CreatePinkUpParcelList() {
                   <div style={{width:'400px', marginLeft:'18px'}}>
                     <Form.Item style={{justifyContent:'left', textAlign: 'left'}} name={['Personnel']} label="ผู้ขอเบิก"  rules={[{ required: true, message: 'กรุณากรอกข้อมูล'}]}>
                     <Select placeholder="เลือกชื่อผู้ขอเบิก" style={{textAlign:'left'}}>
-                        <Option value={1}>คนที่ 1</Option>
-                        <Option value={2}>คนที่ 2</Option>
+                      {dataPersonnels.map((item) => (
+                              <Option value={item.ID} key={item.ID}>
+                                {`${item.TitleName} ${item.FirstName} ${item.LastName}`}
+                              </Option>
+                              ))}
                     </Select>
                     </Form.Item>
                   </div>
@@ -249,7 +267,7 @@ export default function CreatePinkUpParcelList() {
             <Table 
                   columns={columns} 
                   dataSource={data}
-                  pagination={{ pageSize: 3 }}
+                  pagination={{ pageSize: 2 }}
                   size='small'/>
             </Card> 
 

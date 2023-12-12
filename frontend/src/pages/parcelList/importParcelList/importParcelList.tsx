@@ -1,22 +1,114 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   ImportOutlined,
   ArrowLeftOutlined,
   FileSearchOutlined,
 } from '@ant-design/icons';
 
-import { Breadcrumb, Card, DatePicker, Form, Input, InputNumber, Layout, Select} from 'antd';
+import { Breadcrumb, Card, DatePicker, Form, Input, InputNumber, Layout, Select, message, Button} from 'antd';
 
 import Headers from '../../../layout/header';
 import Footers from '../../../layout/footer';
 import { Content } from 'antd/es/layout/layout';
-import { Button } from 'antd/es/radio';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
+import { CreateImportParcelList, GetParcelListById, GetParcelUnit, GetPersonnel } from '../../../services/https';
+import { ImportParcelList, InterfaceParcelUnit, InterfacePersonnel, ParcelList } from '../../../interfaces';
 
+const { Option } = Select;
 
-export default function ImprotParcelList() {
-
+export default function ImportParcelLists() {
+  
+  const navigate = useNavigate();
+  const [messageApi, contextHolder] = message.useMessage();
+  
   const [Importform] = Form.useForm();
+  const [dataPersonnels, setDataPersonnel] = useState<InterfacePersonnel[]>([]);
+  const [dataParcelList, setDataParcelList] = useState<ParcelList[]>([]);
+  const [dataParcelUnit, setDataParcelUnit] = useState<InterfaceParcelUnit[]>([]);
+
+
+  let { id } = useParams();
+
+  
+  const onFinish = async (valueImport: ImportParcelList) => {
+    try {
+      const parcelListId = Importform.getFieldValue('ID');
+      valueImport.ParcelListId = parcelListId;
+      
+      let res = await CreateImportParcelList(valueImport);
+      console.log('API Response:', res); 
+  
+      if (res.status) {
+        messageApi.open({
+          type: "success",
+          content: "บันทึกข้อมูลสำเร็จ",
+        });
+        setTimeout(function () {
+          navigate("/pages/myParcelList");
+        }, 1000);
+      } else {
+        messageApi.open({
+          type: "error",
+          content: "บันทึกข้อมูลไม่สำเร็จ",
+        });
+      }
+    } catch (error) {
+      console.error('Error during API request:', error);
+    }
+  };
+
+  
+  const getPersonnel = async () => {
+    let res = await GetPersonnel();
+    if (res) {
+      setDataPersonnel(res);
+    }
+  };
+
+  const getParcelUnit = async () => {
+    let res = await GetParcelUnit();
+    if (res) {
+      setDataParcelUnit(res);
+    }
+  };
+  const getParcelUnitName = (id: number) => {
+    const parcel_units: InterfaceParcelUnit | undefined = dataParcelUnit.find((unit: InterfaceParcelUnit) => unit.ID === id);
+    return parcel_units ? parcel_units.ParcelUnit : 'Unknown Unit';
+  };
+  
+
+  const getParcelListById = async () => {
+    try {
+      let res = await GetParcelListById(Number(id));
+      if (res && res.ParcelNumber) {
+        setDataParcelList([res]);
+        
+        Importform.setFieldsValue({
+          ID: res.ID,
+          ParcelNumber: res.ParcelNumber,
+          ParcelName: res.ParcelName,
+          PricePerPiece: res.PricePerPiece,
+          Valume: res.Valume,
+          ParcelDetail: res.ParcelDetail,
+          ParcelTypeId: res.ParcelTypeId,
+          ParcelUnitId: res.ParcelUnitId,
+          RoomId: res.RoomId,
+        });
+      }
+    } catch (error) {
+      console.error('Error fetching parcel list:', error);
+    }
+  };
+  
+
+
+  useEffect(() => {
+    getPersonnel();
+    getParcelListById();
+    getParcelUnit();
+  }, []);
+
+
 
   return (
     <> 
@@ -40,34 +132,38 @@ export default function ImprotParcelList() {
 
             <Card className='CreatePLCard'>
 
-              <Layout className='titleOfImportParcelList'>
-                <div>
-                  <div> รหัสพัสดุ : </div>
-                  <div style={{marginLeft:'10px', color:'red'}}> 
-                    P1001 
-                  </div>
-
-                  <div style={{marginLeft:'10px'}}> จำนวนปัจจุบัน : </div>
-                  <div style={{marginLeft:'10px', color:'red'}}> 
-                    100 
-                  </div>
-                  <div style={{marginLeft:'10px'}}> 
-                    รีม 
-                  </div>
-
-                </div>
-                
+            <Layout className='titleOfImportParcelList' >
+              <div>
                 <div>
                   <div> รายการพัสดุ : </div>
-                  <div style={{marginLeft:'10px', color:'red'}}> 
-                    กระดาษรายงาน A4 70 แกรม 
+                  <div style={{ marginLeft: '10px', color: 'red' }}>
+                    {dataParcelList.length > 0 && dataParcelList[0].ParcelName}
                   </div>
                 </div>
-                
-              </Layout>
+              </div>
 
+              <div style={{ marginTop: '10px'}}>
+                <div>
+                  <div> รหัสพัสดุ : </div>
+                  <div style={{ marginLeft: '10px', color: 'red' }}>
+                    {dataParcelList.length > 0 && dataParcelList[0].ParcelNumber}
+                  </div>
+                </div>
+                <div>
+                  <div style={{ marginLeft: '10px' }}> จำนวนปัจจุบัน : </div>
+                  <div style={{ marginLeft: '10px', color: 'red' }}>
+                    {dataParcelList.length > 0 && dataParcelList[0].Valume}
+                  </div>
+                  <div style={{ marginLeft: '10px' }}>
+                    {dataParcelList.length > 0 && (
+                      <span>{getParcelUnitName(dataParcelList[0].ParcelUnitId)}</span>)}
+                  </div>
+                </div>
+              </div>
+            </Layout>
 
-                <Form layout="inline" name="parcel-form" form={Importform} className='CreatePLfrom'>
+            {contextHolder}
+                <Form layout="inline" name="parcel-form" form={Importform} className='CreatePLfrom' onFinish={onFinish} autoComplete="off">
                     <div style={{marginRight:'30px', width:'400px'}}>
                     
                         <div style={{marginTop:'30px'}}>  
@@ -83,9 +179,13 @@ export default function ImprotParcelList() {
                         </div>
 
                         <div style={{marginTop:'30px'}}>  
-                          <Form.Item style={{ textAlign: 'left'}} name='Personnel' label="ผู้ตรวจรับพัสดุ" rules={[{ required: true, message: "กรุณาเลือกผู้ตรวจรับพัสดุ" }]}>
+                          <Form.Item style={{ textAlign: 'left'}} name='PersonnelId' label="ผู้ตรวจรับพัสดุ" rules={[{ required: true, message: "กรุณาเลือกผู้ตรวจรับพัสดุ" }]}>
                             <Select placeholder="เลือกผู้ตรวจรับพัสดุ">
-                              
+                            {dataPersonnels.map((item) => (
+                              <Option value={item.ID} key={item.ID}>
+                                {`${item.TitleName} ${item.FirstName} ${item.LastName}`}
+                              </Option>
+                              ))}
                             </Select>
                           </Form.Item>
                         </div>
@@ -93,6 +193,12 @@ export default function ImprotParcelList() {
                     </div>
 
                     <div style={{marginRight:'30px'}}>
+
+                      <div style={{marginTop:'30px',marginLeft:'11px'}}>
+                      <Form.Item style={{ textAlign: 'left'}} name='ID' label="ID รายการพัสดุ" >
+                        <Input  disabled />
+                      </Form.Item>
+                      </div>
 
                         <div style={{marginTop:'30px', marginLeft:'-8px'}}>  
                           <Form.Item style={{ textAlign: 'left'}} name='ImportValume' label="จำนวนการนำเข้า" 
@@ -117,14 +223,15 @@ export default function ImprotParcelList() {
                             <DatePicker />
                           </Form.Item>
                         </div>
-
-                        <div style={{float:'right'}}>
-                            <Button className='AddParcelListButton'>
-                                <ImportOutlined /> บันทึกรายการพัสดุ
-                            </Button>
-                        </div>
-
                     </div>
+                    <div style={{ display: 'grid', alignItems:'center',marginTop:'110px'}}>
+                      <div>
+                        <Button className='AddParcelListButton' htmlType="submit">
+                          <ImportOutlined /> บันทึกการนำเข้าพัสดุ
+                        </Button>
+                      </div>
+                    </div>
+
                     
                 </Form>
             </Card>

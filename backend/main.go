@@ -14,16 +14,18 @@ func main() {
 
 	router.GET("/parcelTypes", controller.ListParcelType)
 	router.GET("/parcelUnits", controller.ListParcelUnit)
-
 	router.GET("/parcelLists", controller.ListParcelList)
 	router.GET("/pinkUpParcelLists", controller.ListPinkUpParcelList)
+	router.GET("/parcelList/:id", controller.GetParcelList)
+	router.GET("/importparcelLists/:id", controller.GetImportParcel)
+	router.GET("/importparcelLists", controller.ListImportParcel)
+	router.GET("/rooms", controller.ListRoom)
+	router.GET("/personnelsP", controller.ListPersonnel)
 
 	router.POST("/parcelLists", controller.CreateParcelList)
-	router.GET("/parcelList/:id", controller.GetParcelList)
+	router.POST("/importparcelLists", controller.CreateImportParcel)
 	router.DELETE("/parcelList/:id", controller.DeleteParcelList)
 	router.PATCH("/parcelLists", controller.UpdateParcelList)
-
-	router.GET("/rooms", controller.ListRoom)
 
 	router.Run(":8080")
 }

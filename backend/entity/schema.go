@@ -363,7 +363,7 @@ type Room struct {
 type ParcelList struct {
 	gorm.Model
 
-	ParcelNumber 		string
+	ParcelNumber 		string `gorm:"unique"`
 	ParcelName 			string
 	PricePerPiece		float32
 	Valume				int
@@ -389,10 +389,10 @@ type ParcelList struct {
 type ImportParcelList struct {
 	gorm.Model
 
-	ImportValume 		string
+	ImportValume 		int
 	ImportNumber 		string
-	Seller      		int
-	ImprotDate			time.Time
+	Seller      		string
+	ImportDate			time.Time
 
 	//FK ParcelList this here 
 
@@ -441,7 +441,7 @@ type ExportParcelList struct {
 type PinkUpParcelList struct {
 	gorm.Model
 
-	BillNumber			int
+	BillNumber			int   `gorm:"unique"`
 	DetailOfRequest 	string
 	PUPLDate			time.Time
 

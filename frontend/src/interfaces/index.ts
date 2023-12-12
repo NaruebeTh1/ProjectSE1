@@ -1,5 +1,5 @@
 export interface ParcelList {
-    ID: number;
+    ID?: number;
     ParcelNumber: string;
     ParcelName: string;
     PricePerPiece: number;
@@ -16,14 +16,15 @@ export interface ParcelList {
 }
   
 export interface ImportParcelList  {
-    ID: number;
+    ID?: number;
     ImportValume: number;
     ImportNumber: string;
     Seller: string;
     ImportDate: string;
-    ParcelList: string;
+    ParcelList: ParcelList;
+    ParcelListId:number;
     PersonnelId?: number;
-    PersonnelName?: Personnel;
+    PersonnelName?: InterfacePersonnel;
 }
   
 export interface InterfaceParcelUnit {
@@ -53,11 +54,11 @@ export interface PickUpParcelList {
     DetailOfRequest: string;
     PUPLDate: string;
     PersonnelId: number;
-    Personnel: Personnel;
+    Personnel: InterfacePersonnel;
 }
 
-export interface Personnel {
-    ID: number;
+export interface InterfacePersonnel {
+    ID?: number;
     TitleName: 	        string;
 	FirstName: 	        string;	
 	LastName:	        string;	
