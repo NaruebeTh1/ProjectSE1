@@ -27,6 +27,10 @@ func main() {
 	router.DELETE("/parcelList/:id", controller.DeleteParcelList)
 	router.PATCH("/parcelLists", controller.UpdateParcelList)
 
+
+	router.GET("/getListImportParcel/:id", controller.GetImportParcelListByParcelListId)
+
+
 	router.Run(":8080")
 }
 

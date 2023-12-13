@@ -1,4 +1,5 @@
 export interface ParcelList {
+    ImportParcelLists: never[];
     ID?: number;
     ParcelNumber: string;
     ParcelName: string;

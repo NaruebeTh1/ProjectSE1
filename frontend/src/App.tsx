@@ -20,7 +20,7 @@ import CreateParcelListPage from "./pages/parcelList/createParcelList/createParc
 import DetailParcelList from "./pages/parcelList/detailParcelList/detailParcelList";
 import EditParcelList from "./pages/parcelList/editParcelList/editParcelList";
 import ImportParcelLists from "./pages/parcelList/importParcelList/importParcelList";
-
+import ImportHistory from "./pages/parcelList/detailParcelList/importHistory/importHistorys";
 
 
 
@@ -37,6 +37,7 @@ const App: React.FC = () => {
               <Route path="/pages/myParcelList/createParcelList" element={<CreateParcelListPage />} />
 
               <Route path="/pages/myParcelList/detailParcelList/:id" element={<DetailParcelList />} />
+              <Route path="/pages/myParcelList/detailParcelList/importHistorys/:id" element={<ImportHistory />} />
               <Route path="/pages/myParcelList/editParcelList/:id" element={<EditParcelList />} />
               <Route path="/pages/myParcelList/importParcelList/:id" element={<ImportParcelLists />} />
 

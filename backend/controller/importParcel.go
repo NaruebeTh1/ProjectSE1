@@ -25,6 +25,19 @@ func ListImportParcel(c *gin.Context) {
 	c.JSON(http.StatusOK, gin.H{"data": importparcel})
 }
 
+func GetImportParcelListByParcelListId(c *gin.Context) {
+    var importParcels []entity.ImportParcelList
+    parcelListId := c.Param("id")
+
+    if err := entity.DB().Preload("Personnel").Preload("ParcelList").Where("parcel_list_id = ?", parcelListId).Find(&importParcels).Error; err != nil {
+        c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+        return
+    }
+
+    c.JSON(http.StatusOK, gin.H{"data": importParcels})
+}
+
+
 
 // POST /ImportParcel
 
@@ -89,3 +102,4 @@ func GetImportParcel(c *gin.Context) {
 	}
 	c.JSON(http.StatusOK, gin.H{"data": importparcel})
 }
+

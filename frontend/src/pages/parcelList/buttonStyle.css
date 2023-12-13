@@ -174,3 +174,35 @@
     display: flex;
     justify-content:center;
   }
+
+
+
+.ButtonImportHistory {
+    background-color: rgb(50, 153, 184);
+    color: #ffffff;
+    border: none;
+    border-radius: 3px;
+    padding: 30px 30px;
+    font-size: 20px;
+    display: flex;
+    align-items: center;
+    transition: background-color 0.2s, color 0.2s; 
+  }
+  
+.ButtonImportHistory:hover {
+    background-color: rgb(1, 93, 155); 
+    color: #ffffff !important; 
+    transform: scale(1.05);
+}
+
+
+.titleofImportHistory {
+    margin-top: 10px;
+    font-size: 20px;
+    text-align: left;
+    padding: 20px;
+    padding-left: 20px !important;
+    color: aliceblue;
+    background-color: rgb(29, 165, 165);
+    border-radius: 5px;
+}

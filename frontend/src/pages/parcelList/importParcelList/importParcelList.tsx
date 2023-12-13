@@ -6,7 +6,7 @@ import {
 } from '@ant-design/icons';
 
 import { Breadcrumb, Card, DatePicker, Form, Input, InputNumber, Layout, Select, message, Button} from 'antd';
-
+import locale from 'antd/es/date-picker/locale/th_TH';
 import Headers from '../../../layout/header';
 import Footers from '../../../layout/footer';
 import { Content } from 'antd/es/layout/layout';
@@ -26,8 +26,8 @@ export default function ImportParcelLists() {
   const [dataParcelList, setDataParcelList] = useState<ParcelList[]>([]);
   const [dataParcelUnit, setDataParcelUnit] = useState<InterfaceParcelUnit[]>([]);
 
-
   let { id } = useParams();
+  
 
   
   const onFinish = async (valueImport: ImportParcelList) => {
@@ -220,7 +220,12 @@ export default function ImportParcelLists() {
 
                         <div style={{marginTop:'30px'}}>
                           <Form.Item style={{ textAlign: 'left'}} name='ImportDate' label="วันที่นำเข้าพัสดุ" rules={[{ required: true, message: "กรุณาเลือกวันที่" }]}>
-                            <DatePicker />
+                          <DatePicker
+                            showTime={{ format: 'HH:mm:ss'}}
+                            format="DD-MM-YYYY HH:mm:ss"
+                            locale={locale}  
+                            style={{color:'red'}}                          
+                          />
                           </Form.Item>
                         </div>
                     </div>

@@ -146,6 +146,25 @@ async function GetParcelListById(id: Number | undefined) {
   return res;
 }
 
+/*000000000000000000000000000000000000*/
+async function GetImportParcelListByParcelListId(id: Number | undefined) {
+  const requestOptions = {
+    method: "GET"
+  };
+
+  let res = await fetch(`${apiUrl}/getListImportParcel/${id}`, requestOptions)
+    .then((response) => response.json())
+    .then((res) => {
+      if (res.data) {
+        return res.data;
+      } else {
+        return false;
+      }
+    });
+
+  return res;
+} 
+/*000000000000000000000000000000000000*/
 
 async function CreateParcelList(data: ParcelList) {
   const requestOptions = {
@@ -240,7 +259,7 @@ export {
     CreateImportParcelList,
     GetImportParcelListById,
     GetImportParcelList,
-    
+    GetImportParcelListByParcelListId,
     GetPersonnel,
     GetRoom,
 };
