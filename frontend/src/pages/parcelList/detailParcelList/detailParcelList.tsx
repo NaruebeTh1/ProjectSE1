@@ -99,9 +99,8 @@ export default function DetailParcelList() {
   return (
     <> 
     <Headers />
-      <Content style={{ margin: "0 16px", backgroundColor:'darkslategrey' }}>
-        <Breadcrumb style={{ margin: "10px 0" }} />
-          <div style={{padding:15,minHeight: "100%", textAlign:'center'}}>
+      <Content style={{backgroundColor:'darkslategrey' , minHeight:'100vh'}}>
+          <div style={{padding:30,textAlign:'center' }}>
             <Layout style={{ backgroundColor: 'darkslategrey'}}>
                 <div className='titleOfCreateParcel'>
 

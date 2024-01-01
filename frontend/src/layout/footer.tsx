@@ -8,7 +8,7 @@ import {
   } from '@ant-design/icons';
 const Footers: React.FC = () => {
   return (
-    <div className="footer-basic" style={{ textAlign: 'center', bottom: 0, width: '100%'}}>
+    <div className="footer-basic" style={{ textAlign: 'center', bottom: 0, width: '100%', boxShadow: '0 1px 8px rgba(255, 255, 255, 20)'}}>
       <footer>
         <div className="social" style={{marginTop:'10px'}}>
           <a href="https://github.com/dashboard"> <GithubOutlined /> </a>

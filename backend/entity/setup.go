@@ -11,6 +11,7 @@ func DB() *gorm.DB {
 	return db
 }
 
+
 func SetupDatabase() {
 	database, err := gorm.Open(sqlite.Open("school_management.db"), &gorm.Config{})
 	if err != nil {
@@ -44,7 +45,8 @@ func SetupDatabase() {
 		&ImportParcelList{},
 		&ParcelType{},
 		&ExportParcelList{},
-		&PinkUpParcelList{},
+		&PickUpParcelList{},
+		&PickUpStatus{},
 	)
 	db = database
 
@@ -83,5 +85,14 @@ func SetupDatabase() {
 	}
 	for _, ParcelUnit := range ParcelUnit {
 		db.Create(&ParcelUnit) 
+	}
+
+	PUPLStatus := []PickUpStatus{
+		{PUPLStatus: "รออนุมัติ"},
+		{PUPLStatus: "อนุมัติแล้ว"},
+
+	}
+	for _, PUPLStatus := range PUPLStatus {
+		db.Create(&PUPLStatus) 
 	}
 }

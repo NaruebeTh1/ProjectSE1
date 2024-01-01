@@ -43,7 +43,7 @@ export default function EditParcelList() {
         } else {
           messageApi.open({
             type: "error",
-            content: "แก้ไขข้อมูลไม่สำเร็จ",
+            content: res.message,
           });
         }
       };
@@ -103,9 +103,8 @@ export default function EditParcelList() {
     return (
         <> 
         <Headers />
-            <Content style={{ margin: "0 16px", backgroundColor:'darkslategrey' }}>
-            <Breadcrumb style={{ margin: "10px 0" }} />
-            <div style={{padding:15,minHeight: "100%", textAlign:'center'}}>
+            <Content style={{backgroundColor:'darkslategrey', minHeight:'100vh' }}>
+            <div style={{padding:30, textAlign:'center'}}>
 
                 <Layout style={{ backgroundColor: 'darkslategrey'}}>
                     <div className='titleOfCreateParcel'>
@@ -165,8 +164,8 @@ export default function EditParcelList() {
                                                 if (value === undefined || value === null || value === '') {
                                                     return Promise.reject('กรุณากรอกข้อมูล');
                                                 }
-                                                if (value < 0) {
-                                                    return Promise.reject('มากกว่าหรือเท่ากับ 0 เท่านั้น');
+                                                if (value <= 0) {
+                                                    return Promise.reject('มากกว่า 0 เท่านั้น');
                                                 }
                                                 return Promise.resolve();
                                                 },

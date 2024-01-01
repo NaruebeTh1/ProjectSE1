@@ -1,4 +1,4 @@
-import { ImportParcelList, ParcelList } from "../../interfaces";
+import { ExportParcelList, ImportParcelList, ParcelList, PickUpParcelList } from "../../interfaces";
 
 const apiUrl = "http://localhost:8080";
 
@@ -95,21 +95,6 @@ async function GetImportParcelList() {
 }
 
 
-async function GetPinkUpParcelList() {
-  const requestOptions = {
-    method: "GET",
-    headers: {
-      "Content-Type": "application/json",
-    },
-  };
-
-  let res = await fetch(`${apiUrl}/pinkUpParcelLists`, requestOptions)
-    .then((response) => response.json())
-    .then(({ data }) => (data ? data : false));
-
-  return res;
-}
-
 async function DeleteParcelListByID(id: Number | undefined) {
   const requestOptions = {
     method: "DELETE"
@@ -146,7 +131,6 @@ async function GetParcelListById(id: Number | undefined) {
   return res;
 }
 
-/*000000000000000000000000000000000000*/
 async function GetImportParcelListByParcelListId(id: Number | undefined) {
   const requestOptions = {
     method: "GET"
@@ -164,7 +148,6 @@ async function GetImportParcelListByParcelListId(id: Number | undefined) {
 
   return res;
 } 
-/*000000000000000000000000000000000000*/
 
 async function CreateParcelList(data: ParcelList) {
   const requestOptions = {
@@ -246,12 +229,189 @@ async function UpdateParcelList(data: ParcelList) {
 }
 
 
+/*ระบบเบิกจ่ายพัสดุ*/ 
+
+async function GetPickUpParcelList() {
+  const requestOptions = {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+    },
+  };
+
+  let res = await fetch(`${apiUrl}/pickUpParcelLists`, requestOptions)
+    .then((response) => response.json())
+    .then(({ data }) => (data ? data : false));
+
+  return res;
+}
+
+async function GetPickUpParcelListByPickUpStatusId1() {
+  const requestOptions = {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+    },
+  };
+
+  let res = await fetch(`${apiUrl}/pickUpParcelListsByStatusId1`, requestOptions)
+    .then((response) => response.json())
+    .then(({ data }) => (data ? data : false));
+
+  return res;
+}
+
+async function GetPickUpParcelListByPickUpStatusId2() {
+  const requestOptions = {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+    },
+  };
+
+  let res = await fetch(`${apiUrl}/pickUpParcelListsByStatusId2`, requestOptions)
+    .then((response) => response.json())
+    .then(({ data }) => (data ? data : false));
+
+  return res;
+}
+
+async function GetPickUpParcelListById(id: Number | undefined) {
+  const requestOptions = {
+    method: "GET"
+  };
+
+  let res = await fetch(`${apiUrl}/pickUpParcelLists/${id}`, requestOptions)
+    .then((response) => response.json())
+    .then((res) => {
+      if (res.data) {
+        return res.data;
+      } else {
+        return false;
+      }
+    });
+
+  return res;
+}
+
+async function GetPickUpStatus() {
+  const requestOptions = {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+    },
+  };
+
+  let res = await fetch(`${apiUrl}/pickUpstatuses`, requestOptions)
+    .then((response) => response.json())
+    .then(({ data }) => (data ? data : false));
+
+  return res;
+}
+
+async function GetExportParcelList() {
+  const requestOptions = {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+    },
+  };
+
+  let res = await fetch(`${apiUrl}/exportparcelLists`, requestOptions)
+    .then((response) => response.json())
+    .then(({ data }) => (data ? data : false));
+
+  return res;
+}
+
+async function CreateExportParcelList(data: ExportParcelList) {
+  const requestOptions = {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(data),
+  };
+
+  let res = await fetch(`${apiUrl}/exportparcelLists`, requestOptions)
+    .then((response) => response.json())
+    .then((res) => {
+      if (res.data) {
+        return { status: true, message: res.data };
+      } else {
+        return { status: false, message: res.error };
+      }
+    });
+
+  return res;
+}
+
+
+async function CreatePickUpParcelListPUP(data: PickUpParcelList) {
+  const requestOptions = {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(data),
+  };
+
+  let res = await fetch(`${apiUrl}/pickUpParcelLists`, requestOptions)
+    .then((response) => response.json())
+    .then((res) => {
+      if (res.data) {
+        return { status: true, message: res.data };
+      } else {
+        return { status: false, message: res.error };
+      }
+    });
+
+  return res;
+}
+
+
+async function UpdatePickUpParcelList(data: PickUpParcelList) {
+  const requestOptions = {
+    method: "PATCH",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(data),
+  };
+
+  let res = await fetch(`${apiUrl}/pickUpParcelLists`, requestOptions)
+    .then((response) => response.json())
+    .then((res) => {
+      if (res.data) {
+        return { status: true, message: res.data };
+      } else {
+        return { status: false, message: res.error };
+      }
+    });
+
+  return res;
+}
+
+
+async function DeletePickUpParcelListByID(id: Number | undefined) {
+  const requestOptions = {
+    method: "DELETE"
+  };
+
+  let res = await fetch(`${apiUrl}/pickUpParcelLists/${id}`, requestOptions)
+    .then((response) => response.json())
+    .then((res) => {
+      if (res.data) {
+        return res.data;
+      } else {
+        return false;
+      }
+    });
+
+  return res;
+}
+
+
 
 export {
+  //ระบบจัดการข้อมูลพัสดุ
     GetParcelType,
     GetParcelUnit,
     GetParcelList,
-    GetPinkUpParcelList,
     DeleteParcelListByID,
     GetParcelListById,
     CreateParcelList,
@@ -260,6 +420,19 @@ export {
     GetImportParcelListById,
     GetImportParcelList,
     GetImportParcelListByParcelListId,
+    
+  //ระบบเบิกจ่ายพัสดุ
+    GetPickUpParcelListByPickUpStatusId1,
+    GetPickUpParcelListByPickUpStatusId2,
+    GetPickUpParcelList,
+    GetPickUpParcelListById,
+    GetPickUpStatus,
+    CreatePickUpParcelListPUP,
+    UpdatePickUpParcelList,
+    DeletePickUpParcelListByID,
+    GetExportParcelList,
+    CreateExportParcelList,
+    
     GetPersonnel,
     GetRoom,
 };

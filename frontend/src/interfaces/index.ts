@@ -1,5 +1,4 @@
 export interface ParcelList {
-    ImportParcelLists: never[];
     ID?: number;
     ParcelNumber: string;
     ParcelName: string;
@@ -17,7 +16,7 @@ export interface ParcelList {
 }
   
 export interface ImportParcelList  {
-    ID?: number;
+    ID: number;
     ImportValume: number;
     ImportNumber: string;
     Seller: string;
@@ -41,21 +40,29 @@ export interface InterfaceParcelType {
 export interface ExportParcelList {
     ID: number;
     ExportVolume: number;
-    Budget: number;
-    
+
     ParcelListId: number;
     PickUpParcelListId: number;
     ParcelList: ParcelList;
-    PickUpParcelList: PickUpParcelList;
+
 }
   
 export interface PickUpParcelList {
-    ID: number;
-    BillNumber: number;
+    ID?: number;
+    BillNumber: string;
     DetailOfRequest: string;
     PUPLDate: string;
+
     PersonnelId: number;
-    Personnel: InterfacePersonnel;
+    PersonnelName?: InterfacePersonnel;
+
+    PickUpStatusId: number;
+    PickUpStatusName?: InterfacePickUpStatus;
+}
+
+export interface InterfacePickUpStatus {
+    ID?: number;
+    PUPLStatus?: string;
 }
 
 export interface InterfacePersonnel {
@@ -63,18 +70,6 @@ export interface InterfacePersonnel {
     TitleName: 	        string;
 	FirstName: 	        string;	
 	LastName:	        string;	
-	PersonnelTel: 	    string;
-	PersonnelPicture:   string;
-
-// PositionId: number;
-// Position: Position;
-
-// DepartmentId: number;
-// Department: Department;
-
-//  GenderId: number;
-//  Gender: Gender;
-
 }
 
 export interface InterfaceRoom {

@@ -4,7 +4,7 @@ import {
   PieChartOutlined,
 } from '@ant-design/icons';
 
-import {Breadcrumb, Card, Layout} from 'antd';
+import {Card, Layout} from 'antd';
 
 import Headers from '../../../../layout/header';
 import Footers from '../../../../layout/footer';
@@ -89,9 +89,8 @@ export default function ImportHistory() {
   return (
     <> 
     <Headers />
-      <Content style={{ margin: "0 16px", backgroundColor:'darkslategrey' }}>
-        <Breadcrumb style={{ margin: "10px 0" }} />
-          <div style={{padding:15,minHeight: "100%", textAlign:'center'}}>
+      <Content style={{ backgroundColor:'darkslategrey', minHeight:'100vh' }}>
+          <div style={{padding:30, textAlign:'center'}}>
             <Layout style={{ backgroundColor: 'darkslategrey'}}>
                 <div className='titleOfCreateParcel'>
 
@@ -104,7 +103,7 @@ export default function ImportHistory() {
                 </div>
             </Layout>
 
-            <Layout className='titleofImportHistory' style={{ display: 'flex', flexDirection: 'row'}}>
+            <Layout className='titleofImportHistory' style={{ display: 'flex', flexDirection: 'row', marginTop:'20px'}}>
                 <div style={{ marginRight: '10px', color:'white',textShadow: '2px 2px 4px rgba(0, 0, 0, 0.5)' }}>
                     ประวัติการนำเข้าพัสดุ
                 </div>

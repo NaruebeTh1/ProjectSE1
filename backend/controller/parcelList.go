@@ -4,6 +4,7 @@ import (
 	"net/http"
 
 	"github.com/NaruebeTh1/ProjectSE1/entity"
+	"github.com/asaskevich/govalidator"
 	"github.com/gin-gonic/gin"
 )
 
@@ -31,6 +32,11 @@ func CreateParcelList(c *gin.Context) {
 
 	// bind เข้าตัวแปร ParcelList
 	if err := c.ShouldBindJSON(&parcellists); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+
+	if _, err := govalidator.ValidateStruct(parcellists); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}

@@ -15,6 +15,9 @@ import PinkUpParcelList from './pages/pinkUpParcel/pinkUpParcelList';
 import CreatePinkUpParcelList from "./pages/pinkUpParcel/createPUPL/createPinkUpParcelList";
 import ParcelOverview from "./pages/parcelOverview/parcelOverview";
 import EditPinkUpParcelList from "./pages/pinkUpParcel/editPUPL/editPUPL";
+import ApprovedList from "./pages/pinkUpParcel/puplApproved/approvedList";
+import ApprovalPinkUpParcelList from "./pages/pinkUpParcel/forApproval/forApproval";
+import CreateExportParcel from "./pages/pinkUpParcel/createExportParcel/createExportParcel";
 
 import CreateParcelListPage from "./pages/parcelList/createParcelList/createParcelList";
 import DetailParcelList from "./pages/parcelList/detailParcelList/detailParcelList";
@@ -44,8 +47,11 @@ const App: React.FC = () => {
 
               <Route path="/pages/pinkUpParcelList" element={<PinkUpParcelList />} />
               <Route path="/pages/pinkUpParcelList/createPinkUpParcelList" element={<CreatePinkUpParcelList />} />
-              <Route path="/pages/pinkUpParcel/editPUPL" element={<EditPinkUpParcelList />} />
-
+              <Route path="/pages/pinkUpParcel/editPUPL/:id" element={<EditPinkUpParcelList />} />
+              <Route path="/pages/pinkUpParcel/approvedList" element={<ApprovedList />} />
+              <Route path="/pages/pinkUpParcel/forApproval/:id" element={<ApprovalPinkUpParcelList />} />
+              <Route path="/pages/pinkUpParcel/createExportParcel/:id" element={<CreateExportParcel />} /> 
+              
               <Route path="/pages/homePage" element={<HomePage />} />
 
               <Route path="/pages/settingAccount" element={<SettingAccount />} />

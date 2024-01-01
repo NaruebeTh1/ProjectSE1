@@ -57,7 +57,7 @@ type Personnel struct {
 
 	//FK go to PinkUpParcelList, Course, ReservePlace, Budget, Finance
 
-	PinkUpParcelLists 	[]PinkUpParcelList 		`gorm:"foreignKey:PersonnelId"`
+	PickUpParcelLists 	[]PickUpParcelList 		`gorm:"foreignKey:PersonnelId"`
 	ImportParcelListห 	[]ImportParcelList 		`gorm:"foreignKey:PersonnelId"`
 	Courses 			[]Course 				`gorm:"foreignKey:PersonnelId"`
 	ReservePlaces 		[]ReservePlace 			`gorm:"foreignKey:PersonnelId"`
@@ -362,12 +362,12 @@ type Room struct {
 
 type ParcelList struct {
 	gorm.Model
-
-	ParcelNumber 		string `gorm:"unique"`
-	ParcelName 			string
-	PricePerPiece		float32
-	Valume				int
-	ParcelDetail 		string
+ 
+	ParcelNumber 		string 		`gorm:"unique" valid:"required~ParcelNumber is required"`
+	ParcelName 			string		`valid:"required~ParcelName is required"`
+	PricePerPiece		float32		
+	Valume				int			`valid:"required~Valume is required"`
+	ParcelDetail 		string		`valid:"required~ParcelDetail is required"`
 
 	//FK go to ExportParcelList, ImportParcelList
 
@@ -376,37 +376,37 @@ type ParcelList struct {
 
 	//FK ParcelType, Room this here
 	
-	ParcelTypeId *uint
+	ParcelTypeId uint			
 	ParcelType   ParcelType 	`gorm:"foreignKey:ParcelTypeId"`
 
-	ParcelUnitId *uint
+	ParcelUnitId uint
 	ParcelUnit   ParcelUnit 	`gorm:"foreignKey:ParcelUnitId"`
 
-	RoomId *uint
+	RoomId uint				
 	Room   Room 				`gorm:"foreignKey:RoomId"`
 }
 
 type ImportParcelList struct {
 	gorm.Model
 
-	ImportValume 		int
-	ImportNumber 		string
-	Seller      		string
-	ImportDate			time.Time
+	ImportValume 		int 		
+	ImportNumber 		string 		`gorm:"unique"`
+	Seller      		string		
+	ImportDate			time.Time	
 
 	//FK ParcelList this here 
 
-	ParcelListId *uint
+	ParcelListId *uint		
 	ParcelList   ParcelList 	`gorm:"foreignKey:ParcelListId"`
 
-	PersonnelId *uint
-	Personnel   Personnel 				`gorm:"foreignKey:PersonnelId"`
+	PersonnelId *uint			
+	Personnel   Personnel 		`gorm:"foreignKey:PersonnelId"`
 }
 
 type ParcelUnit struct {
 	gorm.Model
 
-	ParcelUnit 			string `gorm:"unique"`
+	ParcelUnit 			string `gorm:"unique" `
 
 	//FK go to ParcelList
 
@@ -426,27 +426,38 @@ type ParcelType struct {
 type ExportParcelList struct {
 	gorm.Model
 	
-	ExportValume    	int
-	Budget				int
+	ExportVolume    	int 		
 
 	//FK ParcelList, PinkUpParcelList this here
 	
-	ParcelListId *uint
+	ParcelListId *uint						
 	ParcelList   ParcelList 				`gorm:"foreignKey:ParcelListId"`
 
-	PinkUpParcelListId *uint
-	PinkUpParcelList   PinkUpParcelList 	`gorm:"foreignKey:PinkUpParcelListId"`
+	PickUpParcelListId *uint				
+	PickUpParcelList   PickUpParcelList 	`gorm:"foreignKey:PickUpParcelListId"`
 }
 
-type PinkUpParcelList struct {
+type PickUpParcelList struct {
 	gorm.Model
 
-	BillNumber			int   `gorm:"unique"`
-	DetailOfRequest 	string
+	BillNumber			string   	`gorm:"unique"`
+	DetailOfRequest 	string	
+
 	PUPLDate			time.Time
 
 	//FK PersonnelId this here
 
-	PersonnelId *uint
+	PersonnelId *uint				
 	Personnel   Personnel 				`gorm:"foreignKey:PersonnelId"`
+
+	PickUpStatusId *uint				
+	PickUpStatus   PickUpStatus 		`gorm:"foreignKey:PickUpStatusId"`
+}
+
+type PickUpStatus struct {
+	gorm.Model
+
+	PUPLStatus 	string `gorm:"unique"`
+
+	PickUpParcelLists 	[]PickUpParcelList 	`gorm:"foreignkey:PickUpStatusId"`
 }

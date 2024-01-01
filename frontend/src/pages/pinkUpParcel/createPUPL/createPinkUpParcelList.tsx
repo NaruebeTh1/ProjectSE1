@@ -3,112 +3,48 @@ import {
   FileSearchOutlined,
   ArrowLeftOutlined,
   PlusOutlined,
-  DeleteOutlined,
 } from '@ant-design/icons';
 
-import {Breadcrumb, Card, Layout, Form, Input, DatePicker, Select, Button, Space} from 'antd';
+import {Card, Layout, Form, Input, DatePicker, Select, Button, message} from 'antd';
 
 import Headers from '../../../layout/header';
 import Footers from '../../../layout/footer';
 import { Content } from 'antd/es/layout/layout';
-import './PUPLStyle.css' ;
-import Table, { ColumnsType } from 'antd/es/table';
-import { Link } from 'react-router-dom';
-import { GetPersonnel } from '../../../services/https';
-import { InterfacePersonnel } from '../../../interfaces';
-
-
-interface DataPickUpParcelList {
-  key: string;
-  Personnel: string;
-  PUPLDate: string;
-  BillNumber: string;
-}
-
-// export interface ParcelList {
-//   ParcelNumber: string;
-//   ParcelName: string;
-//   PricePerPiece: number;
-//   Valume: number;
-//   ParcelDetail: string;
-//   PLDate: string;
-//   ParcelTypeId: number;
-//   ParcelUnitId: number;
-//   RoomId: number;
-//   ParcelType: ParcelType;
-//   ParcelUnit: ParcelUnit;
-//   Room: Room;
-// }
-
-// export interface ExportParcelList {
-//   ExportVolume: number;
-//   Budget: number;
-  
-//   ParcelListId: number;
-//   PickUpParcelListId: number;
-//   ParcelList: ParcelList;
-//   PickUpParcelList: PickUpParcelList;
-// }
-
-
-type DataIndex = keyof DataPickUpParcelList;
-
-const data: DataPickUpParcelList[] = [
-  {
-    key: '1',
-    Personnel: 'John Brown',
-    PUPLDate: '1/5/10',
-    BillNumber: '1225/45',
-  },
-  {
-    key: '2',
-    Personnel: 'Joe Black',
-    PUPLDate: '1/5/10',
-    BillNumber: '1226/68',
-  },
-  {
-    key: '3',
-    Personnel: 'Jim Green',
-    PUPLDate: '1/5/10',
-    BillNumber: '1235/87',
-  },
-  {
-    key: '4',
-    Personnel: 'Jim Red',
-    PUPLDate: '1/5/10',
-    BillNumber: '1234/56',
-  },
-
-  {
-    key: '5',
-    Personnel: 'Jim Red',
-    PUPLDate: '1/5/10',
-    BillNumber: '4562/78',
-  },
-
-  {
-    key: '6',
-    Personnel: 'Jim Red',
-    PUPLDate: '1/5/10',
-    BillNumber: '2364/87',
-  },
-
-  {
-    key: '7',
-    Personnel: 'Jim Red',
-    PUPLDate: '1/5/10',
-    BillNumber: '1452/45',
-  },
-
-];
-
+import './PUPLStyle.css'
+import { Link, useNavigate } from 'react-router-dom';
+import { CreatePickUpParcelListPUP, GetPersonnel, GetPickUpStatus } from '../../../services/https';
+import { InterfacePersonnel, InterfacePickUpStatus, PickUpParcelList } from '../../../interfaces';
 
 
 export default function CreatePinkUpParcelList() {
 
-  const [form] = Form.useForm();
+  const [Addform] = Form.useForm();
+  const navigate = useNavigate();
   const { Option } = Select;
+  const [messageApi, contextHolder] = message.useMessage();
+  
   const [dataPersonnels, setDataPersonnel] = useState<InterfacePersonnel[]>([]);
+  const [dataPinkUpStatus, setDataPinkUpStatus] = useState<InterfacePickUpStatus[]>([]);
+
+  const onFinish = async (values: PickUpParcelList) => {
+    
+    let res = await CreatePickUpParcelListPUP(values);
+    if (res.status) {
+      messageApi.open({
+        type: "success",
+        content: "บันทึกข้อมูลสำเร็จ",
+      });
+      setTimeout(function () {
+        navigate("/pages/pinkUpParcelList");
+      }, 1000);
+    } else {
+      messageApi.open({
+        type: "error",
+        content: res.message,
+      });
+    }
+  };
+
 
   const getPersonnel = async () => {
     let res = await GetPersonnel();
@@ -117,90 +53,24 @@ export default function CreatePinkUpParcelList() {
     }
   };
 
+  const getPinkUpStatus = async () => {
+    let res = await GetPickUpStatus();
+    if (res) {
+      setDataPinkUpStatus(res);
+    }
+  };
+
   useEffect(() => {
     getPersonnel();
-
+    getPinkUpStatus();
   }, []);
 
-  const columns: ColumnsType<DataPickUpParcelList> = [
-    {
-      title: 'ลำดับ',
-      dataIndex: 'key',
-      key: 'key',
-      width: '5%',
-      align: 'center',  
-    },
-    {
-      title: 'รหัสพัสดุ',
-      dataIndex: 'PUPLDate',
-      key: 'PUPLDate',
-      width: '5%',
-      align: 'center',
-    },
-    {
-      title: 'ชื่อรายการพัสดุ',
-      dataIndex: 'BillNumber',
-      key: 'BillNumber',
-      width: '20%',
-      align: 'center',
-    },
-    {
-      title: 'หน่วยนับ',
-      dataIndex: 'Personnel',
-      key: 'Personnel',
-      width: '5%',
-      align: 'center',
-    },
-    {
-      title: 'ราคาต่อชิ้น',
-      dataIndex: 'Personnel',
-      key: 'Personnel',
-      width: '5%',
-      align: 'center',
-    },
-    {
-      title: 'จำนวนคงเหลือ',
-      dataIndex: 'Personnel',
-      key: 'Personnel',
-      width: '5%',
-      align: 'center',
-    },
-    {
-      title: 'จำนวนที่ขอเบิก',
-      dataIndex: 'Personnel',
-      key: 'Personnel',
-      width: '5%',
-      align: 'center',
-    },
-    {
-      title: 'งบประมาณ',
-      dataIndex: 'Personnel',
-      key: 'Personnel',
-      width: '5%',
-      align: 'center',
-    },
-    {
-      title: 'ลบรายการ',
-      width: '3%',
-      align: 'center',
-      render: (record) => (
-
-        <Space >
-          <Button className='iconDelete'>
-            <DeleteOutlined style={{color: 'white'}}/>
-          </Button>
-        </Space>
-
-      ),
-    },
-  ];
 
   return (
     <> 
     <Headers />
-      <Content style={{ margin: "0 16px", backgroundColor:'darkslategrey' }}>
-        <Breadcrumb style={{ margin: "10px 0" }} />
-          <div style={{padding:15,minHeight: "100%", textAlign:'center'}}>
+      <Content style={{backgroundColor:'darkslategrey' ,minHeight: "100vh"}}>
+          <div style={{padding:30,textAlign:'center'}}>
 
           <Layout style={{ backgroundColor: 'darkslategrey'}}>
             <div className='titleOfPUPL'>
@@ -214,8 +84,12 @@ export default function CreatePinkUpParcelList() {
             </div>
           </Layout>
 
+          <Layout className='titleofPUParcellist' style={{marginTop:'20px'}}>
+              กรอกข้อมูลขอเบิกพัสดุ
+          </Layout> 
+          {contextHolder}
             <Card className='PUPLCard'>
-              <Form form={form} layout="inline" className='PUPLfrom'>
+              <Form form={Addform} layout="inline" className='PUPLfrom' onFinish={onFinish} autoComplete="off">
 
                 <div>
                   <div style={{width:'400px'}}>
@@ -224,16 +98,22 @@ export default function CreatePinkUpParcelList() {
                     </Form.Item>
                   </div>
 
-                  <div style={{marginTop:'10px', marginLeft:'5px'}}>
+                  <div style={{marginTop:'20px', marginLeft:'5px'}}>
                     <Form.Item style={{textAlign: 'left'}} name={['PUPLDate']} label="วันที่ขอเบิก" rules={[{ required: true, message: 'กรุณาเลือกวันที่' }]}>
                       <DatePicker />
+                    </Form.Item>
+                  </div>
+
+                  <div style={{marginTop:'20px', marginLeft:'4px'}}>
+                    <Form.Item style={{justifyContent:'left', textAlign: 'left'}} name={['DetailOfRequest']} label="รายละเอียด" rules={[{ required: true, message: 'กรุณากรอกข้อมูล' }]}>
+                        <Input.TextArea autoSize={{ minRows: 3, maxRows: 8}} placeholder="ระบุรายการที่จะขอเบิก และเหตุผลในการขอเบิก เช่น นำไปใช้ในกิจกรรม"/>
                     </Form.Item>
                   </div>
                 </div>
 
                 <div>
                   <div style={{width:'400px', marginLeft:'18px'}}>
-                    <Form.Item style={{justifyContent:'left', textAlign: 'left'}} name={['Personnel']} label="ผู้ขอเบิก"  rules={[{ required: true, message: 'กรุณากรอกข้อมูล'}]}>
+                    <Form.Item style={{justifyContent:'left', textAlign: 'left'}} name={['PersonnelId']} label="ผู้ขอเบิก"  rules={[{ required: true, message: 'กรุณากรอกข้อมูล'}]}>
                     <Select placeholder="เลือกชื่อผู้ขอเบิก" style={{textAlign:'left'}}>
                       {dataPersonnels.map((item) => (
                               <Option value={item.ID} key={item.ID}>
@@ -244,32 +124,33 @@ export default function CreatePinkUpParcelList() {
                     </Form.Item>
                   </div>
 
-                  <div style={{marginTop:'10px'}}>
-                    <Form.Item style={{justifyContent:'left', textAlign: 'left'}} name={['DetailOfRequest']} label="รายละเอียด" rules={[{ required: true, message: 'กรุณากรอกข้อมูล' }]}>
-                        <Input placeholder="เหตุผลในการขอเบิก เช่น นำไปใช้ในกิจกรรม"/>
-                    </Form.Item>
+                  <div style={{width:'400px', marginLeft:'27px', marginTop:'20px'}}>
+                  <Form.Item
+                    style={{ justifyContent: 'left', textAlign: 'left' }}
+                    name={['PickUpStatusId']}
+                    label="สถานะ"
+                    rules={[{ required: true, message: 'กรุณากรอกข้อมูล' }]}
+                    initialValue={1}>
+                    <Select disabled>
+                      {dataPinkUpStatus.map((item) => (
+                        <Option value={item.ID} key={item.ID}>
+                          {item.PUPLStatus}
+                        </Option>
+                      ))}
+                    </Select>
+                  </Form.Item>
+
                   </div>
-                </div>
 
-                <div style={{marginLeft:'20px', marginTop:'-20px', justifySelf:'center'}}>
-                  <Button className='customAddPUPListButton'>
-                    <PlusOutlined /> สร้างรายการเบิกจ่ายพัสดุ
-                  </Button>
-                </div>
+                  <div style={{marginLeft:'90px'}}>
+                    <Button className='customAddPUPListButton' htmlType="submit">
+                      <PlusOutlined /> สร้างรายการเบิกจ่ายพัสดุ
+                    </Button>
+                  </div>
+              
+                </div> 
               </Form>
-            </Card>
-
-            <Layout className='titleofParcellist'>
-              รายการพัสดุที่ขอเบิก 
-            </Layout> 
-
-            <Card className='parcelListTalble'>
-            <Table 
-                  columns={columns} 
-                  dataSource={data}
-                  pagination={{ pageSize: 2 }}
-                  size='small'/>
-            </Card> 
+            </Card>         
 
           </div>
       </Content>

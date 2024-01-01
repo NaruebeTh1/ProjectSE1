@@ -15,21 +15,30 @@ func main() {
 	router.GET("/parcelTypes", controller.ListParcelType)
 	router.GET("/parcelUnits", controller.ListParcelUnit)
 	router.GET("/parcelLists", controller.ListParcelList)
-	router.GET("/pinkUpParcelLists", controller.ListPinkUpParcelList)
 	router.GET("/parcelList/:id", controller.GetParcelList)
 	router.GET("/importparcelLists/:id", controller.GetImportParcel)
 	router.GET("/importparcelLists", controller.ListImportParcel)
 	router.GET("/rooms", controller.ListRoom)
 	router.GET("/personnelsP", controller.ListPersonnel)
+	router.GET("/getListImportParcel/:id", controller.GetImportParcelListByParcelListId)
 
 	router.POST("/parcelLists", controller.CreateParcelList)
 	router.POST("/importparcelLists", controller.CreateImportParcel)
 	router.DELETE("/parcelList/:id", controller.DeleteParcelList)
 	router.PATCH("/parcelLists", controller.UpdateParcelList)
 
+	router.GET("/pickUpParcelLists", controller.ListPickUpParcelList)
+	router.GET("/pickUpParcelListsByStatusId1", controller.GetPickUpParcelListByPickUpStatusId1)
+	router.GET("/pickUpParcelListsByStatusId2", controller.GetPickUpParcelListByPickUpStatusId2)
+	router.GET("/pickUpParcelLists/:id", controller.GetPickUpParcelListById)
+	router.GET("/pickUpstatuses", controller.ListPickUpParcelStatus)
 
-	router.GET("/getListImportParcel/:id", controller.GetImportParcelListByParcelListId)
+	router.POST("/pickUpParcelLists", controller.CreatePickUpParcelList)
+	router.PATCH("/pickUpParcelLists", controller.UpdatePickUpParcelList)
+	router.DELETE("/pickUpParcelLists/:id", controller.DeletePickUpParcelList)
 
+	router.GET("/exportparcelLists", controller.ListExportParcel)
+	router.POST("/exportparcelLists", controller.CreateExportParcel)
 
 	router.Run(":8080")
 }

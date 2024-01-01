@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import {
   PlusOutlined,
   FileSearchOutlined,
@@ -6,7 +6,7 @@ import {
   DeleteOutlined,
   FilePdfOutlined,
 } from '@ant-design/icons';
-import { Card, Space, Button, Modal, message,Breadcrumb} from 'antd';
+import { Card, Space, Button, message, Modal} from 'antd';
 
 
 import Highlighter from "react-highlight-words";
@@ -18,105 +18,79 @@ import './buttonPUPStyle.css' ;
 import Headers from '../../layout/header';
 import Footers from '../../layout/footer';
 import { Content } from 'antd/es/layout/layout';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import { PickUpParcelList } from '../../interfaces';
+import { DeletePickUpParcelListByID, GetPickUpParcelListByPickUpStatusId1 } from '../../services/https';
 
 
-
-interface PickUpParcelList {
-  key: string;
-  Personnel: string;
-  PUPLDate: string;
-  BillNumber: string;
-}
 
 
 type DataIndex = keyof PickUpParcelList;
 
-const data: PickUpParcelList[] = [
-  {
-    key: '1',
-    Personnel: 'John Brown',
-    PUPLDate: '1/5/10',
-    BillNumber: '1225/45',
-  },
-  {
-    key: '2',
-    Personnel: 'Joe Black',
-    PUPLDate: '1/5/10',
-    BillNumber: '1226/68',
-  },
-  {
-    key: '3',
-    Personnel: 'Jim Green',
-    PUPLDate: '1/5/10',
-    BillNumber: '1235/87',
-  },
-  {
-    key: '4',
-    Personnel: 'Jim Red',
-    PUPLDate: '1/5/10',
-    BillNumber: '1234/56',
-  },
-
-  {
-    key: '5',
-    Personnel: 'Jim Red',
-    PUPLDate: '1/5/10',
-    BillNumber: '4562/78',
-  },
-
-  {
-    key: '6',
-    Personnel: 'Jim Red',
-    PUPLDate: '1/5/10',
-    BillNumber: '2364/87',
-  },
-
-  {
-    key: '7',
-    Personnel: 'Jim Red',
-    PUPLDate: '1/5/10',
-    BillNumber: '1452/45',
-  },
-
-];
-
 
 export default function PinkUpParcelList() {
 
+  const [dataPickUpParcelList, setDataPickUpParcelList] = useState<PickUpParcelList[]>([]);
+  const navigate = useNavigate();
 
   const [searchText, setSearchText] = useState('');
   const [searchedColumn, setSearchedColumn] = useState('');
   const searchInput = useRef<InputRef>(null);
 
-  const { confirm } = Modal;
-  const showDeleteConfirm = () => {
-    confirm({
-      title: (
-        <div style={{ color: 'red', fontSize: '18px' }}>
-          คำเตือน!! คุณแน่ใจหรือไม่ว่าต้องการลบข้อมูล
-        </div>
-      ),
-      content: (
-        <div>
-          <p> ข้อมูลของรายการพัสดุและข้อมูลการนำเข้าจะถูกลบออกทั้งหมด</p>
-          <p></p>
-  
-        </div>
-      ),
-      okText: 'ยืนยันการลบ',
-      okType: 'danger',
-      cancelText: 'ยกเลิก',
-      style:{fontSize:'16px', minWidth: 500},
-      onOk() {
-        console.log('ยืนยันการลบ');
-        message.success('ลบข้อมูลสำเร็จ');
-      },
-      onCancel() {
-        console.log('ยกเลิก');
-      },
-    });
+
+  const getPickUpParcelListWaitingForApproval = async () => {
+    let res = await GetPickUpParcelListByPickUpStatusId1();
+    if (res) {
+      setDataPickUpParcelList(res);
+    }
   };
+  
+
+
+  useEffect(() => {
+    getPickUpParcelListWaitingForApproval();
+  }, []);
+
+
+  const [messageApi] = message.useMessage();
+  const [open, setOpen] = useState(false);
+  const [confirmLoading, setConfirmLoading] = useState(false);
+  const [modalText, setModalText] = useState<String>();
+  const [deleteId, setDeleteId] = useState<Number>();
+
+  const showModal = (val: PickUpParcelList) => {
+    setModalText(
+      `คุณแน่ใจหรือไม่ว่าต้องการลบรายการเบิกจ่ายพัสดุนี้
+        ข้อมูลของรายการเบิกจ่ายพัสดุและข้อมูลรายการพัสดุที่ขอเบิกจะถูกลบออกทั้งหมด`
+    );
+    setDeleteId(val.ID);
+    setOpen(true);
+  };
+
+  const handleOk = async () => {
+    setConfirmLoading(true);
+    let res = await DeletePickUpParcelListByID(deleteId);
+    if (res) {
+      setOpen(false);
+      messageApi.open({
+        type: "success",
+        content: "ลบข้อมูลสำเร็จ",
+      });
+      getPickUpParcelListWaitingForApproval();
+    } else {
+      setOpen(false);
+      messageApi.open({
+        type: "error",
+        content: "เกิดข้อผิดพลาด !",
+      });
+    }
+    setConfirmLoading(false);
+  };
+
+  const handleCancel = () => {
+    setOpen(false);
+  };
+
 
   const handleSearch = (
     selectedKeys: string[],
@@ -178,7 +152,7 @@ export default function PinkUpParcelList() {
       <SearchOutlined style={{ color: filtered ? '#1677ff' : undefined }} />
     ),
     onFilter: (value, record) =>
-      record[dataIndex]
+      (record[dataIndex]?.toString() ?? '')
         .toString()
         .toLowerCase()
         .includes((value as string).toLowerCase()),
@@ -201,39 +175,44 @@ export default function PinkUpParcelList() {
   });
 
   const columns: ColumnsType<PickUpParcelList> = [
-    {
-      title: 'ลำดับ',
-      dataIndex: 'key',
-      key: 'key',
-      width: '10%',
-      align: 'center',
-      sorter: (a, b) => a.key.length - b.key.length,
-      sortDirections: ['descend', 'ascend'],
-      
-    },
+
     {
       title: 'วันที่ขอเบิก',
       dataIndex: 'PUPLDate',
       key: 'PUPLDate',
-      width: '20%',
+      width: '15%',
       align: 'center',
-      sorter: (a, b) => a.PUPLDate.length - b.PUPLDate.length,
-      sortDirections: ['descend', 'ascend'],
     },
     {
       title: 'เลขที่ใบเบิก',
       dataIndex: 'BillNumber',
       key: 'BillNumber',
-      width: '20%',
+      width: '15%',
       align: 'center',
+      ...getColumnSearchProps("BillNumber"),
     },
     {
       title: 'ผู้ขอเบิก',
       dataIndex: 'Personnel',
       key: 'Personnel',
-      width: '40%',
+      width: '20%',
       align: 'center',
-      ...getColumnSearchProps('Personnel'),
+      ...getColumnSearchProps("PersonnelName"),
+      render: (personnel) => {
+        if (personnel) {
+            return `${personnel.TitleName}${personnel.FirstName}  ${personnel.LastName}`;
+        } else {
+            return 'N/A'; 
+        }
+    }
+    },
+    {
+      title: 'สถานะการขอเบิก',
+      dataIndex: 'PickUpStatus',
+      key: 'PickUpStatus',
+      width: '15%',
+      align: 'center',
+      render: (item) => Object.values(item.PUPLStatus),
     },
     {
       title: 'จัดการข้อมูลรายการเบิกจ่ายพัสดุ',
@@ -241,18 +220,25 @@ export default function PinkUpParcelList() {
       
       render: (record) => (
 
-        <Space >
+        <Space style={{flexWrap: 'wrap'}}>
+          <Button className='ApprovalButton' onClick={() =>  navigate(`/pages/pinkUpParcel/forApproval/${record.ID}`)}>
+            อนุมัติรายการ
+          </Button>
+
+          <Button className='AddParcelButton' onClick={() =>  navigate(`/pages/pinkUpParcel/createExportParcel/${record.ID}`)}>
+            เพิ่มพัสดุ
+          </Button>
+
           <Button className='printPDF'>
             <FilePdfOutlined /> พิมพ์เอกสาร
           </Button>
 
-          <Link to={'/pages/pinkUpParcel/editPUPL'}>
-            <Button className='editButtonPUPL'>
-                แก้ไข
-            </Button>
-          </Link>
+          <Button className='editButtonPUPL' onClick={() =>  navigate(`/pages/pinkUpParcel/editPUPL/${record.ID}`)} >
+              แก้ไข
+          </Button>
+          
 
-          <Button onClick={showDeleteConfirm} className='iconDeletePUPL'>
+          <Button className='iconDeletePUPL' onClick={() => showModal(record)}>
             <DeleteOutlined style={{color: 'white'}}/>
           </Button>
         </Space>
@@ -265,40 +251,61 @@ export default function PinkUpParcelList() {
     <> 
         <Headers/>
         
-        <Content style={{ margin: "0 16px", backgroundColor:'darkslategrey'}}>
-        <Breadcrumb style={{ margin: "10px 0" }} />
-        <div style={{padding:15,minHeight: "100%"}}>
-
+        <Content style={{backgroundColor:'darkslategrey',minHeight: "100vh"}}>
+        <div style={{padding:30}}>
 
           <div className='titlePUPL'>
                 <FileSearchOutlined className='iconPUPL'/>
                 รายการเบิกจ่ายพัสดุ
           </div>
 
-          <div>
-              <Link to={'/pages/pinkUpParcelList/createPinkUpParcelList'}>
-                <Button className="AddPUPButton">
-                  <PlusOutlined /> เพิ่มรายการเบิกจ่ายพัสดุ
-                </Button>
-              </Link>
-          </div>
+          <div style={{ display: 'flex'}}>
+            <div>
+                <Link to={'/pages/pinkUpParcelList/createPinkUpParcelList'}>
+                  <Button className="AddPUPButton">
+                    <PlusOutlined /> เพิ่มรายการเบิกจ่ายพัสดุ
+                  </Button>
+                </Link>
+            </div>
 
-          <div>
-              <span className="DatablockPUP" style={{ marginTop: '-63px', marginLeft:'auto'}}> 
-                    จำนวนรายการเบิกจ่ายพัสดุ <></>
-                    <div style={{display:'inline-block'}}> 100 </div> <></>
-                    <div style={{ display: 'inline-block' }}> รายการ </div>
-              </span>
+            <div style={{ display: 'flex', marginLeft:'auto'}}>
+
+              <div style={{ marginLeft:'20px'}}>
+                  <Link to={'/pages/pinkUpParcel/approvedList'}>
+                    <Button className="AddPUPButton">
+                      รายการอนุมัติแล้ว
+                    </Button>
+                  </Link>
+              </div>
+            </div>
           </div>
 
 
         <Card style={{fontSize:'16px', marginTop:20}}>
           <Table 
                   columns={columns} 
-                  dataSource={data}
+                  dataSource={dataPickUpParcelList}
                   pagination={{ pageSize: 4 }}
                   size='small'/>
         </Card>
+
+        <Modal
+
+            open={open}
+            onOk={handleOk}
+            confirmLoading={confirmLoading}
+            onCancel={handleCancel}
+
+            title={<span style={{ color: '#FF4B4B', fontSize:20 }}> คำเตือน !! </span>}
+            style={{fontSize:'16px', minWidth: 400}} 
+            okText= {<span style={{ color: 'white'}}> ลบข้อมูล </span>}
+            okButtonProps={{ style: { background: '#0BB6DC', borderColor: '#0BB6DC' } }}
+            cancelText= {<span style={{ color: 'white'}}> ยกเลิก </span>}
+            cancelButtonProps={{ style: { background: '#FF4B4B', borderColor: '#FF4B4B' } }}>
+
+              <p>{modalText}</p>
+
+          </Modal>
         </div>
         </Content>
       <Footers/>

@@ -2,7 +2,10 @@ package controller
 
 import (
 	"net/http"
+	"time"
+
 	"github.com/NaruebeTh1/ProjectSE1/entity"
+	"github.com/asaskevich/govalidator"
 	"github.com/gin-gonic/gin"
 )
 
@@ -53,6 +56,11 @@ func CreateImportParcel(c *gin.Context) {
 		return
 	}
 
+	if _, err := govalidator.ValidateStruct(importparcels); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+
 	if tx := entity.DB().Where("id = ?", importparcels.ParcelListId).First(&parcellists); tx.RowsAffected == 0 {
 		c.JSON(http.StatusBadRequest, gin.H{"error": "ParcelList not found"})
 		return
@@ -69,7 +77,7 @@ func CreateImportParcel(c *gin.Context) {
 		ImportNumber: importparcels.ImportNumber,
 		ImportValume: importparcels.ImportValume,
 		Seller:       importparcels.Seller,
-		ImportDate:   importparcels.ImportDate,
+		ImportDate:   time.Now(),
 	}
 
 	// บวกค่า ImportValume กับ Valume

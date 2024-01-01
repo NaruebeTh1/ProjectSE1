@@ -175,6 +175,21 @@
     justify-content:center;
   }
 
+  .titleOfExportParcelList {
+    font-size: 16px;
+    font-weight: bold;
+    display: flex;
+    padding: 15px;
+    background-color: rgb(169, 241, 217);
+    border-radius: 10px;
+
+  }
+
+  .titleOfExportParcelList div {
+    display: flex;
+    justify-content:center;
+  }
+
 
 
 .ButtonImportHistory {

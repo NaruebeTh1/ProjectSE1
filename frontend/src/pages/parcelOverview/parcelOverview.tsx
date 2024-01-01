@@ -7,7 +7,7 @@ import Headers from '../../layout/header';
 import Footers from '../../layout/footer';
 import { Content } from 'antd/es/layout/layout';
 
-import { GetParcelList, GetParcelType, GetParcelUnit, GetPinkUpParcelList } from '../../services/https';
+import { GetParcelList, GetParcelType, GetParcelUnit, GetPickUpParcelList } from '../../services/https';
 import { ParcelList, InterfaceParcelType, InterfaceParcelUnit, PickUpParcelList } from '../../interfaces';
 
 
@@ -17,7 +17,7 @@ export default function ParcelOverview() {
   const [dataParcelUnit, setDataParcelUnit] = useState<InterfaceParcelUnit[]>([]);
 
   const [dataParcelList, setDataParcelList] = useState<ParcelList[]>([]);
-  const [dataPinkUpParcelList, setDataPinkUpParcelList] = useState<PickUpParcelList[]>([]);
+  const [dataPinkUpParcelList, setDataPickUpParcelList] = useState<PickUpParcelList[]>([]);
 
 
   useEffect(() => {
@@ -57,11 +57,11 @@ export default function ParcelOverview() {
       }
     };
 
-    const fetchPinkUpParcelList = async () => {
+    const fetchPickUpParcelList = async () => {
       try {
-        const res = await GetPinkUpParcelList();
+        const res = await GetPickUpParcelList();
         if (res) {
-          setDataPinkUpParcelList(res);
+          setDataPickUpParcelList(res);
         }
       } catch (error) {
         console.error('Error fetching ParcelUnit data:', error);
@@ -70,7 +70,7 @@ export default function ParcelOverview() {
 
     // Call the fetch functions
     fetchParcelList();
-    fetchPinkUpParcelList();
+    fetchPickUpParcelList();
     fetchParcelType();
     fetchParcelUnit();
   }, []);
@@ -108,13 +108,12 @@ const columnsParcelUnit: ColumnsType<InterfaceParcelUnit> = [
   return (
     <> 
     <Headers />
-      <Content style={{ margin: "0 16px", backgroundColor:'darkslategray'}}>
-        <Breadcrumb style={{ margin: "10px 0" }} />
-          <div style={{padding:30,minHeight: "100%",background: '', textAlign:'center'}}>
+      <Content style={{backgroundColor:'darkslategray', minHeight:'100vh'}}>
+          <div style={{padding:30, textAlign:'center'}}>
 
-            <Space direction="horizontal" size="middle" style={{ display: 'flex', justifyContent:'center'}}>
+            <Space direction="horizontal" size="middle" style={{flexWrap: 'wrap', justifyContent: 'center'}}>
 
-              <Card title="ภาพรวมข้อมูลจำนวนรายการของงานพัสดุโรงเรียน">
+              <Card title="ภาพรวมข้อมูลจำนวนรายการของงานพัสดุโรงเรียน" style={{marginTop:'33px'}}>
 
 
                 <div style={{marginTop:'0px'}}>

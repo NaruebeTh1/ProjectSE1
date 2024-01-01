@@ -5,7 +5,7 @@ import {
     PlusOutlined
 } from '@ant-design/icons';
 
-import { Breadcrumb, Button, Card, Form, Input, InputNumber, Layout, Select, message} from 'antd';
+import { Button, Card, Form, Input, InputNumber, Layout, Select, message} from 'antd';
 import '../buttonStyle.css' ;
 import Headers from '../../../layout/header';
 import Footers from '../../../layout/footer';
@@ -39,7 +39,7 @@ export default function CreateParcelListPage() {
         } else {
           messageApi.open({
             type: "error",
-            content: "บันทึกข้อมูลไม่สำเร็จ",
+            content: res.message,
           });
         }
       };
@@ -72,23 +72,12 @@ export default function CreateParcelListPage() {
         getRoom();
       }, []);
     
-      //ไม่ใช้
-    //   const validateParcelNumber = (rule:any, value: string, callback:any) => {
-    //     const regex = /^P\d{5}$/;
-    //     if (!regex.test(value)) {
-    //       callback('รหัสพัสดุต้องขึ้นต้นด้วย "P" ตามด้วยเลข 5 หลัก');
-    //     } else {
-    //       callback(); 
-    //     }
-    //   };
-      
 
     return (
         <> 
         <Headers />
-            <Content style={{ margin: "0 16px", backgroundColor:'darkslategrey' }}>
-            <Breadcrumb style={{ margin: "10px 0" }} />
-            <div style={{padding:15,minHeight: "100%", textAlign:'center'}}>
+            <Content style={{backgroundColor:'darkslategrey' , minHeight:'100vh'}}>
+            <div style={{padding:30,minHeight: "100%", textAlign:'center'}}>
 
                 <Layout style={{ backgroundColor: 'darkslategrey'}}>
                     <div className='titleOfCreateParcel'>
@@ -129,12 +118,13 @@ export default function CreateParcelListPage() {
                                                 if (value === undefined || value === null || value === '') {
                                                     return Promise.reject('กรุณากรอกข้อมูล');
                                                 }
-                                                if (value < 0) {
-                                                    return Promise.reject('มากกว่าหรือเท่ากับ 0 เท่านั้น');
+                                                if (value <= 0) {
+                                                    return Promise.reject('มากกว่า 0 เท่านั้น');
                                                 }
                                                 return Promise.resolve();
                                                 },
-                                            }]}>
+                                            }]}
+                                            >
                                     <InputNumber />
                                 </Form.Item>
                             </div>
@@ -209,9 +199,6 @@ export default function CreateParcelListPage() {
                         
                     </Form>
                 </Card>
-
-                
-
 
             </div>
         </Content>

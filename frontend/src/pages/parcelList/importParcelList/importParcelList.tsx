@@ -49,7 +49,7 @@ export default function ImportParcelLists() {
       } else {
         messageApi.open({
           type: "error",
-          content: "บันทึกข้อมูลไม่สำเร็จ",
+          content: res.message,
         });
       }
     } catch (error) {
@@ -113,9 +113,8 @@ export default function ImportParcelLists() {
   return (
     <> 
     <Headers />
-        <Content style={{ margin: "0 16px", backgroundColor:'darkslategrey' }}>
-        <Breadcrumb style={{ margin: "10px 0" }} />
-        <div style={{padding:15,minHeight: "100%", textAlign:'center'}}>
+        <Content style={{backgroundColor:'darkslategrey' , minHeight:'100vh' }}>
+        <div style={{padding:30,textAlign:'center'}}>
 
             <Layout style={{ backgroundColor: 'darkslategrey'}}>
                 <div className='titleOfCreateParcel'>
@@ -195,9 +194,9 @@ export default function ImportParcelLists() {
                     <div style={{marginRight:'30px'}}>
 
                       <div style={{marginTop:'30px',marginLeft:'11px'}}>
-                      <Form.Item style={{ textAlign: 'left'}} name='ID' label="ID รายการพัสดุ" >
-                        <Input  disabled />
-                      </Form.Item>
+                        <Form.Item style={{ textAlign: 'left'}} name='ID' label="ID รายการพัสดุ" >
+                          <Input  disabled />
+                        </Form.Item>
                       </div>
 
                         <div style={{marginTop:'30px', marginLeft:'-8px'}}>  

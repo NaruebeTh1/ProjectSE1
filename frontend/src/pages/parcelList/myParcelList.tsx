@@ -5,7 +5,7 @@ import {
   SearchOutlined,
   DeleteOutlined,
 } from '@ant-design/icons';
-import { Card, Space, Button, Modal, message, Breadcrumb} from 'antd';
+import { Card, Space, Button, Modal, message} from 'antd';
 
 import Highlighter from "react-highlight-words";
 import type { InputRef } from 'antd';
@@ -216,7 +216,7 @@ export default function MyParcelList() {
       
       render: (record) => (
 
-        <Space >
+        <Space style={{flexWrap: 'wrap', justifyContent: 'center'}}>
           
           <Button className='importButton' onClick={() =>  navigate(`/pages/myParcelList/importParcelList/${record.ID}`)}>
                 นำเข้าพัสดุ
@@ -245,9 +245,8 @@ export default function MyParcelList() {
     <> 
         <Headers/>
         
-        <Content style={{ margin: "0 16px", backgroundColor:'darkslategrey'}}>
-        <Breadcrumb style={{ margin: "10px 0" }} />
-        <div style={{padding:15,minHeight: "100%"}}>
+        <Content style={{backgroundColor:'darkslategrey', minHeight:'100vh'}}>
+        <div style={{padding:30}}>
 
         <div className='parcelListStyle'>
             <FileDoneOutlined className='iconparcelListStyle'/>
