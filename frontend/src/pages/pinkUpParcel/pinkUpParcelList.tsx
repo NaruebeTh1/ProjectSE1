@@ -1,13 +1,12 @@
 import React, { useState, useRef, useEffect } from 'react';
 import {
   PlusOutlined,
-  FileSearchOutlined,
+  FileDoneOutlined,
   SearchOutlined,
   DeleteOutlined,
   FilePdfOutlined,
 } from '@ant-design/icons';
 import { Card, Space, Button, message, Modal} from 'antd';
-
 
 import Highlighter from "react-highlight-words";
 import type { InputRef } from 'antd';
@@ -20,10 +19,15 @@ import Footers from '../../layout/footer';
 import { Content } from 'antd/es/layout/layout';
 import { Link, useNavigate } from 'react-router-dom';
 import { PickUpParcelList } from '../../interfaces';
-import { DeletePickUpParcelListByID, GetPickUpParcelListByPickUpStatusId1 } from '../../services/https';
+import { 
+  DeleteExportParcelListByPickUpParcelListID, 
+  DeletePickUpParcelListByID, 
+  GetPickUpParcelListByPickUpStatusId1 
+} from '../../services/https';
 
-
-
+import moment from 'moment-timezone';
+import 'moment/locale/th'; // Import Thai locale
+moment.locale('th'); // Set Thai locale
 
 type DataIndex = keyof PickUpParcelList;
 
@@ -37,7 +41,6 @@ export default function PinkUpParcelList() {
   const [searchedColumn, setSearchedColumn] = useState('');
   const searchInput = useRef<InputRef>(null);
 
-
   const getPickUpParcelListWaitingForApproval = async () => {
     let res = await GetPickUpParcelListByPickUpStatusId1();
     if (res) {
@@ -45,12 +48,9 @@ export default function PinkUpParcelList() {
     }
   };
   
-
-
   useEffect(() => {
     getPickUpParcelListWaitingForApproval();
   }, []);
-
 
   const [messageApi] = message.useMessage();
   const [open, setOpen] = useState(false);
@@ -69,8 +69,9 @@ export default function PinkUpParcelList() {
 
   const handleOk = async () => {
     setConfirmLoading(true);
-    let res = await DeletePickUpParcelListByID(deleteId);
-    if (res) {
+    let res1 = await DeletePickUpParcelListByID(deleteId);
+    let res2 = await DeleteExportParcelListByPickUpParcelListID(deleteId);
+    if (res1 && res2) {
       setOpen(false);
       messageApi.open({
         type: "success",
@@ -90,7 +91,6 @@ export default function PinkUpParcelList() {
   const handleCancel = () => {
     setOpen(false);
   };
-
 
   const handleSearch = (
     selectedKeys: string[],
@@ -175,13 +175,16 @@ export default function PinkUpParcelList() {
   });
 
   const columns: ColumnsType<PickUpParcelList> = [
-
     {
       title: 'วันที่ขอเบิก',
       dataIndex: 'PUPLDate',
       key: 'PUPLDate',
       width: '15%',
       align: 'center',
+      render: (text, record) => {
+        const thaiYear = moment(record.PUPLDate).add(543, 'years').format('YYYY');
+        return moment(record.PUPLDate).format(`วันที่ D เดือน MMMM ปี ${thaiYear}`);
+      },
     },
     {
       title: 'เลขที่ใบเบิก',
@@ -197,7 +200,6 @@ export default function PinkUpParcelList() {
       key: 'Personnel',
       width: '20%',
       align: 'center',
-      ...getColumnSearchProps("PersonnelName"),
       render: (personnel) => {
         if (personnel) {
             return `${personnel.TitleName}${personnel.FirstName}  ${personnel.LastName}`;
@@ -228,8 +230,8 @@ export default function PinkUpParcelList() {
           <Button className='AddParcelButton' onClick={() =>  navigate(`/pages/pinkUpParcel/createExportParcel/${record.ID}`)}>
             เพิ่มพัสดุ
           </Button>
-
-          <Button className='printPDF'>
+          
+          <Button className='printPDF'  onClick={() =>  navigate(`/pages/pinkUpParcelList/PDFReader/${record.ID}`)}>
             <FilePdfOutlined /> พิมพ์เอกสาร
           </Button>
 
@@ -255,7 +257,7 @@ export default function PinkUpParcelList() {
         <div style={{padding:30}}>
 
           <div className='titlePUPL'>
-                <FileSearchOutlined className='iconPUPL'/>
+                <FileDoneOutlined className='iconPUPL'/>
                 รายการเบิกจ่ายพัสดุ
           </div>
 

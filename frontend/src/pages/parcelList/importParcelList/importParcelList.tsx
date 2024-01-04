@@ -2,17 +2,16 @@ import React, { useEffect, useState } from 'react';
 import {
   ImportOutlined,
   ArrowLeftOutlined,
-  FileSearchOutlined,
 } from '@ant-design/icons';
 
-import { Breadcrumb, Card, DatePicker, Form, Input, InputNumber, Layout, Select, message, Button} from 'antd';
-import locale from 'antd/es/date-picker/locale/th_TH';
+import { Card, DatePicker, Form, Input, InputNumber, Layout, Select, message, Button} from 'antd';
 import Headers from '../../../layout/header';
 import Footers from '../../../layout/footer';
 import { Content } from 'antd/es/layout/layout';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import { CreateImportParcelList, GetParcelListById, GetParcelUnit, GetPersonnel } from '../../../services/https';
 import { ImportParcelList, InterfaceParcelUnit, InterfacePersonnel, ParcelList } from '../../../interfaces';
+import locale from 'antd/lib/date-picker/locale/th_TH'; // Import Thai locale
 
 const { Option } = Select;
 
@@ -88,7 +87,7 @@ export default function ImportParcelLists() {
           ParcelNumber: res.ParcelNumber,
           ParcelName: res.ParcelName,
           PricePerPiece: res.PricePerPiece,
-          Valume: res.Valume,
+          Volume: res.Volume,
           ParcelDetail: res.ParcelDetail,
           ParcelTypeId: res.ParcelTypeId,
           ParcelUnitId: res.ParcelUnitId,
@@ -99,16 +98,12 @@ export default function ImportParcelLists() {
       console.error('Error fetching parcel list:', error);
     }
   };
-  
-
 
   useEffect(() => {
     getPersonnel();
     getParcelListById();
     getParcelUnit();
   }, []);
-
-
 
   return (
     <> 
@@ -124,44 +119,45 @@ export default function ImportParcelLists() {
                     <span > Back </span>
                 </Link>
 
-                <FileSearchOutlined style={{ fontSize: '30px', marginRight: '10px' }}/> การนำเข้าพัสดุ
+                <ImportOutlined style={{ fontSize: '30px', marginRight: '10px' }}/> การนำเข้าพัสดุ
                 </div>
 
             </Layout>
 
-            <Card className='CreatePLCard'>
+            <Card className='CreatePLCard' style={{ height: 'auto' , minHeight:'400px'}}>
 
-            <Layout className='titleOfImportParcelList' >
-              <div>
+              <Layout className='titleOfImportParcelList' 
+                      style={{ maxWidth: '1000px', margin: 'auto'}}>
                 <div>
-                  <div> รายการพัสดุ : </div>
-                  <div style={{ marginLeft: '10px', color: 'red' }}>
-                    {dataParcelList.length > 0 && dataParcelList[0].ParcelName}
+                  <div>
+                    <div> รายการพัสดุ : </div>
+                    <div style={{ marginLeft: '10px', color: 'red' }}>
+                      {dataParcelList.length > 0 && dataParcelList[0].ParcelName}
+                    </div>
                   </div>
                 </div>
-              </div>
 
-              <div style={{ marginTop: '10px'}}>
-                <div>
-                  <div> รหัสพัสดุ : </div>
-                  <div style={{ marginLeft: '10px', color: 'red' }}>
-                    {dataParcelList.length > 0 && dataParcelList[0].ParcelNumber}
+                <div style={{ marginTop: '10px'}}>
+                  <div>
+                    <div> รหัสพัสดุ : </div>
+                    <div style={{ marginLeft: '10px', color: 'red' }}>
+                      {dataParcelList.length > 0 && dataParcelList[0].ParcelNumber}
+                    </div>
+                  </div>
+                  <div>
+                    <div style={{ marginLeft: '10px' }}> จำนวนปัจจุบัน : </div>
+                    <div style={{ marginLeft: '10px', color: 'red' }}>
+                      {dataParcelList.length > 0 && dataParcelList[0].Volume}
+                    </div>
+                    <div style={{ marginLeft: '10px' }}>
+                      {dataParcelList.length > 0 && (
+                        <span>{getParcelUnitName(dataParcelList[0].ParcelUnitId)}</span>)}
+                    </div>
                   </div>
                 </div>
-                <div>
-                  <div style={{ marginLeft: '10px' }}> จำนวนปัจจุบัน : </div>
-                  <div style={{ marginLeft: '10px', color: 'red' }}>
-                    {dataParcelList.length > 0 && dataParcelList[0].Valume}
-                  </div>
-                  <div style={{ marginLeft: '10px' }}>
-                    {dataParcelList.length > 0 && (
-                      <span>{getParcelUnitName(dataParcelList[0].ParcelUnitId)}</span>)}
-                  </div>
-                </div>
-              </div>
-            </Layout>
+              </Layout>
 
-            {contextHolder}
+              {contextHolder}
                 <Form layout="inline" name="parcel-form" form={Importform} className='CreatePLfrom' onFinish={onFinish} autoComplete="off">
                     <div style={{marginRight:'30px', width:'400px'}}>
                     
@@ -200,7 +196,7 @@ export default function ImportParcelLists() {
                       </div>
 
                         <div style={{marginTop:'30px', marginLeft:'-8px'}}>  
-                          <Form.Item style={{ textAlign: 'left'}} name='ImportValume' label="จำนวนการนำเข้า" 
+                          <Form.Item style={{ textAlign: 'left'}} name='ImportVolume' label="จำนวนการนำเข้า" 
                                     rules={[{
                                       required: true,
                                       validator: (_, value) => {
@@ -220,15 +216,14 @@ export default function ImportParcelLists() {
                         <div style={{marginTop:'30px'}}>
                           <Form.Item style={{ textAlign: 'left'}} name='ImportDate' label="วันที่นำเข้าพัสดุ" rules={[{ required: true, message: "กรุณาเลือกวันที่" }]}>
                           <DatePicker
-                            showTime={{ format: 'HH:mm:ss'}}
-                            format="DD-MM-YYYY HH:mm:ss"
+                            format="DD-MM-YYYY"
                             locale={locale}  
                             style={{color:'red'}}                          
                           />
                           </Form.Item>
                         </div>
                     </div>
-                    <div style={{ display: 'grid', alignItems:'center',marginTop:'110px'}}>
+                    <div style={{ display: 'grid', alignItems:'end'}}>
                       <div>
                         <Button className='AddParcelListButton' htmlType="submit">
                           <ImportOutlined /> บันทึกการนำเข้าพัสดุ

@@ -153,3 +153,16 @@
     color: #ffffff !important; 
     transform: scale(1.01);
 }
+
+
+.showVolume {
+    background-color: #37cb8e;
+    color: #ffffff;
+    border-radius: 5px;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0px 20px;
+    width: 120px;
+}

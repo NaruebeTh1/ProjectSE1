@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import {
-  FileSearchOutlined,
+  EditOutlined,
   ArrowLeftOutlined,
   SaveOutlined,
 } from '@ant-design/icons';
@@ -100,7 +100,7 @@ export default function EditPinkUpParcelList() {
                 <span > Back </span>
               </Link>
 
-              <FileSearchOutlined style={{ fontSize: '30px', marginRight: '10px' }}/> แก้ไขรายการใบเบิกจ่ายพัสดุ      
+              <EditOutlined style={{ fontSize: '30px', marginRight: '10px' }}/> แก้ไขรายการใบเบิกจ่ายพัสดุ      
             </div>
           </Layout>
 
@@ -108,10 +108,10 @@ export default function EditPinkUpParcelList() {
               แก้ไขรายการใบเบิกจ่ายพัสดุ
           </Layout> 
           {contextHolder}
-            <Card className='PUPLCard'>
+            <Card className='PUPLCard' style={{minHeight:'300px', height:'auto'}}>
               <Form form={Addform} layout="inline" className='PUPLfrom' onFinish={onFinish} autoComplete="off">
 
-                <div>
+                <div style={{marginTop:'30px'}}>
                   <div style={{width:'400px'}}>
                     <Form.Item style={{ textAlign: 'left'}} name={['BillNumber']} label="เลขที่ใบเบิก"  rules={[{ required: true, message: 'กรุณากรอกข้อมูล' }]}>
                       <Input placeholder="เช่น  EXP10001"/>
@@ -125,7 +125,7 @@ export default function EditPinkUpParcelList() {
                   </div>
                 </div>
 
-                <div>
+                <div style={{marginTop:'30px'}}>
                   <div style={{width:'400px', marginLeft:'18px'}}>
                     <Form.Item style={{justifyContent:'left', textAlign: 'left'}} name={['PersonnelId']} label="ผู้ขอเบิก"  rules={[{ required: true, message: 'กรุณากรอกข้อมูล'}]}>
                     <Select placeholder="เลือกชื่อผู้ขอเบิก" style={{textAlign:'left'}}>

@@ -1,10 +1,9 @@
-import React, {  } from "react";
+import React from "react";
 import {
   BrowserRouter as Router,
   Routes,
   Route,
 } from "react-router-dom";
-
 
 import LoginUser from "./pages/loginPage/loginPage";
 import HomePage from "./pages/homePage/homePage";
@@ -25,7 +24,7 @@ import EditParcelList from "./pages/parcelList/editParcelList/editParcelList";
 import ImportParcelLists from "./pages/parcelList/importParcelList/importParcelList";
 import ImportHistory from "./pages/parcelList/detailParcelList/importHistory/importHistorys";
 
-
+import PDFReader from "./pages/pinkUpParcel/document/PDFReader";
 
 const App: React.FC = () => {
 
@@ -44,6 +43,7 @@ const App: React.FC = () => {
               <Route path="/pages/myParcelList/editParcelList/:id" element={<EditParcelList />} />
               <Route path="/pages/myParcelList/importParcelList/:id" element={<ImportParcelLists />} />
 
+              <Route path="/pages/pinkUpParcelList/PDFReader/:id" element={<PDFReader />} />
 
               <Route path="/pages/pinkUpParcelList" element={<PinkUpParcelList />} />
               <Route path="/pages/pinkUpParcelList/createPinkUpParcelList" element={<CreatePinkUpParcelList />} />

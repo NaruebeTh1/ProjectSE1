@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import {
     ArrowLeftOutlined,
-    FileSearchOutlined,
     SaveOutlined,
+    EditOutlined,
 } from '@ant-design/icons';
 
-import { Breadcrumb, Button, Card , Form, Input, InputNumber, Layout, Select, message} from 'antd';
+import { Button, Card , Form, Input, InputNumber, Layout, Select, message} from 'antd';
 import '../buttonStyle.css' ;
 import Headers from '../../../layout/header';
 import Footers from '../../../layout/footer';
@@ -80,7 +80,7 @@ export default function EditParcelList() {
             ParcelNumber:   res.ParcelNumber ,
             ParcelName :    res.ParcelName ,
             PricePerPiece:  res.PricePerPiece,
-            Valume:         res.Valume,
+            Volume:         res.Volume,
             ParcelDetail:   res.ParcelDetail,
 
             ParcelTypeId:   res.ParcelTypeId,
@@ -114,14 +114,14 @@ export default function EditParcelList() {
                         <span > Back </span>
                     </Link>
 
-                    <FileSearchOutlined style={{ fontSize: '30px', marginRight: '10px' }}/> แก้ไขรายการพัสดุ     
+                    <EditOutlined style={{ fontSize: '30px', marginRight: '10px' }}/> แก้ไขรายการพัสดุ     
                     </div>
 
                 </Layout>
 
                 {contextHolder}
 
-                <Card className='CreatePLCard'>
+                <Card className='CreatePLCard' style={{ height: 'auto' , minHeight:'400px'}}>
                     <Form layout="inline" name="parcel-form" form={Addform} className='CreatePLfrom' onFinish={onFinish} autoComplete="off" >
 
                         <div style={{marginRight:'30px', width:'400px'}}>
@@ -157,7 +157,7 @@ export default function EditParcelList() {
                             </div>
 
                             <div style={{marginTop:'30px', marginLeft:'7px'}}>  
-                                <Form.Item style={{ textAlign: 'left'}} name='Valume' label="จำนวนทั้งหมด" 
+                                <Form.Item style={{ textAlign: 'left'}} name='Volume' label="จำนวนทั้งหมด" 
                                             rules={[{
                                                 required: true,
                                                 validator: (_, value) => {
@@ -207,22 +207,20 @@ export default function EditParcelList() {
                                     </Select>
                                 </Form.Item>
                             </div>
+
+                            <div style={{ marginTop: '30px', marginLeft:'-19px'}}>
+                                <Form.Item style={{ textAlign: 'left' }} name='ParcelDetail' label="รายละเอียดพัสดุ" rules={[{ required: true, message: "กรุณากรอกข้อมูลเพิ่มเติม" }]}>
+                                <Input.TextArea autoSize={{ minRows: 3, maxRows: 6 }} placeholder="รายละเอียดเพิ่มเติม เช่น สี (ถ้ามี) หรือการนำไปใช้งาน" />
+                                </Form.Item>
+                            </div>
+
+                            <div style={{ float: 'right', marginRight: '18px' }}>
+                                <Button className='AddParcelListButton' htmlType="submit">
+                                <SaveOutlined /> สร้างรายการพัสดุ
+                                </Button>
+                            </div> 
                  
                         </div>
-                
-
-                        <div style={{marginRight:'30px', width:'500px', marginTop:'30px'}}>
-                            <Form.Item style={{ textAlign: 'left'}} name='ParcelDetail' label="รายละเอียดพัสดุ" rules={[{ required: true, message: "กรุณากรอกข้อมูลเพิ่มเติม" }]}>
-                                <Input.TextArea autoSize={{ minRows: 10, maxRows: 6 }} placeholder="รายละเอียดเพิ่มเติม เช่น สี (ถ้ามี) หรือการนำไปใช้งาน"/>
-                            </Form.Item>
-
-                            <div style={{float:'right', marginRight:'18px'}}>
-                                <Button htmlType="submit" className='AddParcelListButton'>
-                                    <SaveOutlined /> บันทึกรายการพัสดุ
-                                </Button>
-                            </div>
-                        </div>
-
                         
                     </Form>
                 </Card>

@@ -13,7 +13,9 @@ import { Link, useParams } from 'react-router-dom';
 import Table, { ColumnsType } from 'antd/es/table';
 import { ImportParcelList } from '../../../../interfaces';
 import { GetImportParcelListByParcelListId } from '../../../../services/https';
-
+import moment from 'moment-timezone';
+import 'moment/locale/th'; // Import Thai locale
+moment.locale('th'); // Set Thai locale
 
 export default function ImportHistory() {
 
@@ -55,6 +57,10 @@ export default function ImportHistory() {
       key: 'ImportDate',
       width: '30%',
       align: 'center',
+      render: (text, record) => {
+        const thaiYear = moment(record.ImportDate).add(543, 'years').format('YYYY');
+        return moment(record.ImportDate).format(`วันที่ D เดือน MMMM ปี ${thaiYear}`);
+      },
     },
     {
       title: 'ผู้ขายพัสดุ',
@@ -79,8 +85,8 @@ export default function ImportHistory() {
     }, 
     {
       title: 'จำนวนการนำเข้า',
-      dataIndex: 'ImportValume',
-      key: 'ImportValume',
+      dataIndex: 'ImportVolume',
+      key: 'ImportVolume',
       width: '10%',
       align: 'center',
     },

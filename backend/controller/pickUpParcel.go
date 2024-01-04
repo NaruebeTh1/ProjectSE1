@@ -2,7 +2,6 @@ package controller
 
 import (
 	"net/http"
-	"time"
 
 	"github.com/NaruebeTh1/ProjectSE1/entity"
 	"github.com/asaskevich/govalidator"
@@ -69,7 +68,7 @@ func CreatePickUpParcelList(c *gin.Context) {
 
 		BillNumber: 		pickUpParcelLists.BillNumber, 
 		DetailOfRequest:  	pickUpParcelLists.DetailOfRequest,  
-		PUPLDate:     		time.Now(),   
+		PUPLDate:     		pickUpParcelLists.PUPLDate,   
 	}
 
 	// บันทึก
@@ -106,7 +105,17 @@ func DeletePickUpParcelList(c *gin.Context) {
 	}
 	c.JSON(http.StatusOK, gin.H{"data": id})
 }
+// DELETE /ExportParcelList/:id
+func DeleteExportParcelListByPUPLID(c *gin.Context) {
+    pickUpParcelListId := c.Param("id")
 
+    // ให้ลบข้อมูลที่มี ParcelListId เท่ากับ parcelListID ออกจากตาราง ImportParcelList
+    if tx := entity.DB().Exec("DELETE FROM export_parcel_lists WHERE pick_up_parcel_list_id = ?", pickUpParcelListId); tx.RowsAffected == 0 {
+        c.JSON(http.StatusBadRequest, gin.H{"error": "ExportParcelList not found"})
+        return
+    }
+    c.JSON(http.StatusOK, gin.H{"data": pickUpParcelListId})
+}
 
 // PATCH /PickUpParcelList
 

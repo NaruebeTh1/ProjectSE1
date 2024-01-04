@@ -17,7 +17,7 @@ import Headers from '../../layout/header';
 import Footers from '../../layout/footer';
 import { Content } from 'antd/es/layout/layout';
 import { Link, useNavigate } from 'react-router-dom';
-import { GetParcelList, DeleteParcelListByID} from '../../services/https';
+import { GetParcelList, DeleteParcelListByID, DeleteImportParcelListByParcelListID} from '../../services/https';
 import { ParcelList } from '../../interfaces';
 
 
@@ -60,8 +60,9 @@ export default function MyParcelList() {
 
   const handleOk = async () => {
     setConfirmLoading(true);
-    let res = await DeleteParcelListByID(deleteId);
-    if (res) {
+    let res1 = await DeleteParcelListByID(deleteId);
+    let res2 = await DeleteImportParcelListByParcelListID(deleteId);
+    if (res1 && res2) {
       setOpen(false);
       messageApi.open({
         type: "success",
@@ -203,11 +204,11 @@ export default function MyParcelList() {
     },
     {
       title: 'จำนวน',
-      dataIndex: 'Valume',
-      key: 'Valume',
+      dataIndex: 'Volume',
+      key: 'Volume',
       width: '10%',
       align: 'center',
-      sorter: (a, b) => a.Valume - b.Valume,
+      sorter: (a, b) => a.Volume - b.Volume,
       sortDirections: ['descend', 'ascend'],
     },
     {

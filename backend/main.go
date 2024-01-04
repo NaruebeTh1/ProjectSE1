@@ -25,6 +25,7 @@ func main() {
 	router.POST("/parcelLists", controller.CreateParcelList)
 	router.POST("/importparcelLists", controller.CreateImportParcel)
 	router.DELETE("/parcelList/:id", controller.DeleteParcelList)
+	router.DELETE("/deleteImportparcelLists/:id", controller.DeleteImportParcelListByParcelListID)
 	router.PATCH("/parcelLists", controller.UpdateParcelList)
 
 	router.GET("/pickUpParcelLists", controller.ListPickUpParcelList)
@@ -36,9 +37,11 @@ func main() {
 	router.POST("/pickUpParcelLists", controller.CreatePickUpParcelList)
 	router.PATCH("/pickUpParcelLists", controller.UpdatePickUpParcelList)
 	router.DELETE("/pickUpParcelLists/:id", controller.DeletePickUpParcelList)
+	router.DELETE("/deleteExportparcelLists/:id", controller.DeleteExportParcelListByPUPLID)
 
-	router.GET("/exportparcelLists", controller.ListExportParcel)
+	router.GET("/exportparcelLists/:id", controller.GetExportParcelListByPickUpParcelListId)
 	router.POST("/exportparcelLists", controller.CreateExportParcel)
+	router.DELETE("/exportparcelLists/:id", controller.DeleteExportParcelList)
 
 	router.Run(":8080")
 }

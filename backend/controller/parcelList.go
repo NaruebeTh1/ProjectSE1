@@ -64,7 +64,7 @@ func CreateParcelList(c *gin.Context) {
 		ParcelNumber: 		parcellists.ParcelNumber, 
 		ParcelName:  		parcellists.ParcelName,  
 		PricePerPiece:     	parcellists.PricePerPiece,    
-		Valume:     		parcellists.Valume,   
+		Volume:     		parcellists.Volume,   
 		ParcelDetail:   	parcellists.ParcelDetail,   
 	}
 
@@ -102,6 +102,19 @@ func DeleteParcelList(c *gin.Context) {
 	}
 	c.JSON(http.StatusOK, gin.H{"data": id})
 }
+
+// DELETE /ImportParcelList/:id
+func DeleteImportParcelListByParcelListID(c *gin.Context) {
+    parcelListId := c.Param("id")
+
+    // ให้ลบข้อมูลที่มี ParcelListId เท่ากับ parcelListID ออกจากตาราง ImportParcelList
+    if tx := entity.DB().Exec("DELETE FROM import_parcel_lists WHERE parcel_list_id = ?", parcelListId); tx.RowsAffected == 0 {
+        c.JSON(http.StatusBadRequest, gin.H{"error": "ImportParcelList not found"})
+        return
+    }
+    c.JSON(http.StatusOK, gin.H{"data": parcelListId})
+}
+
 
 // PATCH /ParcelList
 

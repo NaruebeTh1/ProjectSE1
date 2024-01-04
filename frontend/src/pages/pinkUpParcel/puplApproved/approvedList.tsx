@@ -1,12 +1,11 @@
 import React, { useState, useRef, useEffect } from 'react';
 import {
-  PieChartOutlined,
+  FileDoneOutlined,
   SearchOutlined,
   DeleteOutlined,
   ArrowLeftOutlined,
 } from '@ant-design/icons';
 import { Card, Space, Button, Layout, message, Modal} from 'antd';
-
 
 import Highlighter from "react-highlight-words";
 import type { InputRef } from 'antd';
@@ -20,8 +19,6 @@ import { Content } from 'antd/es/layout/layout';
 import { Link } from 'react-router-dom';
 import { PickUpParcelList } from '../../../interfaces';
 import { DeletePickUpParcelListByID, GetPickUpParcelListByPickUpStatusId2 } from '../../../services/https';
-
-
 
 type DataIndex = keyof PickUpParcelList;
 
@@ -170,22 +167,13 @@ export default function ApprovedList() {
   });
 
   const columns: ColumnsType<PickUpParcelList> = [
-
-    {
-      title: 'วันที่ขอเบิก',
-      dataIndex: 'PUPLDate',
-      key: 'PUPLDate',
-      width: '20%',
-      align: 'center',
-      sorter: (a, b) => a.PUPLDate.length - b.PUPLDate.length,
-      sortDirections: ['descend', 'ascend'],
-    },
     {
       title: 'เลขที่ใบเบิก',
       dataIndex: 'BillNumber',
       key: 'BillNumber',
       width: '20%',
       align: 'center',
+      ...getColumnSearchProps("BillNumber"),
     },
     {
       title: 'ผู้ขอเบิก',
@@ -193,7 +181,6 @@ export default function ApprovedList() {
       key: 'Personnel',
       width: '30%',
       align: 'center',
-      ...getColumnSearchProps("PersonnelName"),
       render: (personnel) => {
         if (personnel) {
             return `${personnel.TitleName}${personnel.FirstName}  ${personnel.LastName}`;
@@ -241,7 +228,7 @@ export default function ApprovedList() {
                             <span > Back </span>
                         </Link>
 
-                        <PieChartOutlined style={{ fontSize: '30px', marginRight: '10px' }}/> รายการเบิกจ่ายพัสดุ Approved
+                        <FileDoneOutlined style={{ fontSize: '30px', marginRight: '10px' }}/> รายการเบิกจ่ายพัสดุ Approved
                         </div>
                 </Layout>
 

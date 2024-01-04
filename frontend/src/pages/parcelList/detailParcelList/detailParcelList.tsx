@@ -79,8 +79,8 @@ export default function DetailParcelList() {
     },
     {
       title: 'จำนวน',
-      dataIndex: 'Valume',
-      key: 'Valume',
+      dataIndex: 'Volume',
+      key: 'Volume',
       width: '10%',
       align: 'center',
     },

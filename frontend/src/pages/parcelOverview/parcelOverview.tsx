@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import {Table} from 'antd';
 import type { ColumnsType } from 'antd/es/table';
-import {Breadcrumb, Card, Space} from 'antd';
+import {Card, Space} from 'antd';
 import "./overviewStyle.css";
 import Headers from '../../layout/header';
 import Footers from '../../layout/footer';
@@ -113,7 +113,7 @@ const columnsParcelUnit: ColumnsType<InterfaceParcelUnit> = [
 
             <Space direction="horizontal" size="middle" style={{flexWrap: 'wrap', justifyContent: 'center'}}>
 
-              <Card title="ภาพรวมข้อมูลจำนวนรายการของงานพัสดุโรงเรียน" style={{marginTop:'33px'}}>
+              <Card title="ภาพรวมข้อมูลจำนวนรายการของงานพัสดุโรงเรียน" style={{height:'450px'}}>
 
 
                 <div style={{marginTop:'0px'}}>
@@ -144,7 +144,7 @@ const columnsParcelUnit: ColumnsType<InterfaceParcelUnit> = [
                 </div>
               </Card>
 
-              <Card title="ตารางแสดงรายการประเภทของพัสดุ" style={{width:'400px'}}>
+              <Card title="ตารางแสดงรายการประเภทของพัสดุ" style={{width:'400px', height:'450px'}}>
                 <Table 
                       columns={columnsParcelType} 
                       dataSource={dataParcelType} 
@@ -152,7 +152,7 @@ const columnsParcelUnit: ColumnsType<InterfaceParcelUnit> = [
                       pagination={{ pageSize: 5 }}/>
               </Card>
 
-              <Card title="ตารางแสดงรายการหน่วยนับพัสดุ" style={{width:'400px'}}>
+              <Card title="ตารางแสดงรายการหน่วยนับพัสดุ" style={{width:'400px', height:'450px'}}>
 
                 <Table 
                       columns={columnsParcelUnit} 

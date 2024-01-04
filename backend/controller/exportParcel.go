@@ -8,13 +8,17 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-func ListExportParcel(c *gin.Context) {
-	var exportparcel []entity.ExportParcelList
-	if err := entity.DB().Preload("ParcelList").Preload("PickUpParcelList").Raw("SELECT * FROM export_parcel_lists").Scan(&exportparcel).Error; err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
-		return
-	}
-	c.JSON(http.StatusOK, gin.H{"data": exportparcel})
+
+func GetExportParcelListByPickUpParcelListId(c *gin.Context) {
+    var exportparcel []entity.ExportParcelList
+    pickUpParcelListId := c.Param("id")
+
+    if err := entity.DB().Preload("ParcelList").Preload("PickUpParcelList").Where("pick_up_parcel_list_id = ?", pickUpParcelListId).Find(&exportparcel).Error; err != nil {
+        c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+        return
+    }
+
+    c.JSON(http.StatusOK, gin.H{"data": exportparcel})
 }
 
 
@@ -22,7 +26,7 @@ func ListExportParcel(c *gin.Context) {
 
 func CreateExportParcel(c *gin.Context) {
 	var exportparcel entity.ExportParcelList
-	var parcellists entity.ParcelList
+	var parcelLists entity.ParcelList
 	var pickUpParcelList entity.PickUpParcelList
 
 
@@ -37,7 +41,7 @@ func CreateExportParcel(c *gin.Context) {
 		return
 	}
 
-	if tx := entity.DB().Where("id = ?", exportparcel.ParcelListId).First(&parcellists); tx.RowsAffected == 0 {
+	if tx := entity.DB().Where("id = ?", exportparcel.ParcelListId).First(&parcelLists); tx.RowsAffected == 0 {
 		c.JSON(http.StatusBadRequest, gin.H{"error": "ParcelList not found"})
 		return
 	}
@@ -49,15 +53,15 @@ func CreateExportParcel(c *gin.Context) {
 
 	exportParcelData  := entity.ExportParcelList{
 		PickUpParcelList:   pickUpParcelList,
-		ParcelList:   		parcellists,
+		ParcelList:   		parcelLists,
 		ExportVolume: 		exportparcel.ExportVolume,
 	}
 
 	// นำค่า Valume ลบค่า ExportValume
 
-    newValume := parcellists.Valume - exportparcel.ExportVolume
+    newVolume := parcelLists.Volume - exportparcel.ExportVolume
 
-    if err := entity.DB().Model(&parcellists).Update("Valume", newValume).Error; err != nil {
+    if err := entity.DB().Model(&parcelLists).Update("Volume", newVolume).Error; err != nil {
         c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
         return
     }
@@ -69,4 +73,28 @@ func CreateExportParcel(c *gin.Context) {
 	}
 
 	c.JSON(http.StatusOK, gin.H{"data": exportParcelData})
+}
+
+// DELETE /ParcelList/:id
+// ลบแล้วอัปเดตค่า Volume กลับคืนไป โดย Volume = ExportVolume + Volume
+func DeleteExportParcelList(c *gin.Context) {
+    id := c.Param("id")
+
+    var exportParcel entity.ExportParcelList
+    if result := entity.DB().First(&exportParcel, id); result.Error != nil {
+        c.JSON(http.StatusBadRequest, gin.H{"error": "ExportParcelList not found"})
+        return
+    }
+
+    if tx := entity.DB().Exec("DELETE FROM export_parcel_lists WHERE id = ?", id); tx.RowsAffected == 0 {
+        c.JSON(http.StatusBadRequest, gin.H{"error": "ExportParcelList not found"})
+        return
+    }
+
+    if tx := entity.DB().Exec("UPDATE parcel_lists SET Volume = Volume + ? WHERE id = ?", exportParcel.ExportVolume, exportParcel.ParcelListId); tx.RowsAffected == 0 {
+        c.JSON(http.StatusBadRequest, gin.H{"error": "Corresponding ParcelList not found"})
+        return
+    }
+
+    c.JSON(http.StatusOK, gin.H{"data": id})
 }

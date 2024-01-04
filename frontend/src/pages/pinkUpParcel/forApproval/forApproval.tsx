@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import {
-  FileSearchOutlined,
   ArrowLeftOutlined,
   SaveOutlined,
+  CheckOutlined
 } from '@ant-design/icons';
 
 import {Card, Layout, Form, Input, Select, Button, message} from 'antd';
@@ -101,7 +101,7 @@ export default function ApprovalPinkUpParcelList() {
                 <span > Back </span>
               </Link>
 
-              <FileSearchOutlined style={{ fontSize: '30px', marginRight: '10px' }}/> อนุมัติรายการใบเบิกจ่ายพัสดุ      
+              <CheckOutlined style={{ fontSize: '30px', marginRight: '10px' }}/> อนุมัติรายการใบเบิกจ่ายพัสดุ      
             </div>
           </Layout>
 
@@ -109,10 +109,10 @@ export default function ApprovalPinkUpParcelList() {
               แก้ไขรายการเพื่ออนุมัติใบเบิกจ่ายพัสดุ
           </Layout> 
           {contextHolder}
-            <Card className='PUPLCard'>
+            <Card className='PUPLCard' style={{minHeight:'300px', height:'auto'}}>
               <Form form={Addform} layout="inline" className='PUPLfrom' onFinish={onFinish} autoComplete="off">
 
-                <div>
+                <div style={{marginTop:'30px'}}>
                   <div style={{width:'400px'}}>
                     <Form.Item style={{ textAlign: 'left'}} name={['BillNumber']} label="เลขที่ใบเบิก"  rules={[{ required: true, message: 'กรุณากรอกข้อมูล' }]}>
                       <Input disabled placeholder="เช่น  EXP10001"/>
@@ -126,28 +126,28 @@ export default function ApprovalPinkUpParcelList() {
                   </div>
                 </div>
 
-                <div>
+                <div style={{marginTop:'30px'}}>
                   <div style={{width:'400px', marginLeft:'18px'}}>
                     <Form.Item style={{justifyContent:'left', textAlign: 'left'}} name={['PersonnelId']} label="ผู้ขอเบิก"  rules={[{ required: true, message: 'กรุณากรอกข้อมูล'}]}>
-                    <Select disabled placeholder="เลือกชื่อผู้ขอเบิก" style={{textAlign:'left'}}>
-                      {dataPersonnels.map((item) => (
-                              <Option value={item.ID} key={item.ID}>
-                                {`${item.TitleName} ${item.FirstName} ${item.LastName}`}
-                              </Option>
-                              ))}
-                    </Select>
+                      <Select disabled placeholder="เลือกชื่อผู้ขอเบิก" style={{textAlign:'left'}}>
+                        {dataPersonnels.map((item) => (
+                                <Option value={item.ID} key={item.ID}>
+                                  {`${item.TitleName} ${item.FirstName} ${item.LastName}`}
+                                </Option>
+                                ))}
+                      </Select>
                     </Form.Item>
                   </div>
 
                   <div style={{width:'400px', marginLeft:'27px', marginTop:'20px'}}>
                     <Form.Item style={{justifyContent:'left', textAlign: 'left'}} name={['PickUpStatusId']} label="สถานะ"  rules={[{ required: true, message: 'กรุณากรอกข้อมูล'}]}>
-                    <Select placeholder="กำหนดสถานะการเบิกจ่าย" style={{textAlign:'left'}}>
-                      {dataPinkUpStatus.map((item) => (
-                              <Option value={item.ID} key={item.ID}>
-                                {`${item.PUPLStatus}`}
-                              </Option>
-                              ))}
-                    </Select>
+                      <Select placeholder="กำหนดสถานะการเบิกจ่าย" style={{textAlign:'left'}}>
+                        {dataPinkUpStatus.map((item) => (
+                                <Option value={item.ID} key={item.ID}>
+                                  {`${item.PUPLStatus}`}
+                                </Option>
+                                ))}
+                      </Select>
                     </Form.Item>
                   </div>
 

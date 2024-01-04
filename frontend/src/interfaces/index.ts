@@ -3,7 +3,7 @@ export interface ParcelList {
     ParcelNumber: string;
     ParcelName: string;
     PricePerPiece: number;
-    Valume: number;
+    Volume: number;
     ParcelDetail: string;
 
     ParcelTypeId: number;
@@ -17,7 +17,7 @@ export interface ParcelList {
   
 export interface ImportParcelList  {
     ID: number;
-    ImportValume: number;
+    ImportVolume: number;
     ImportNumber: string;
     Seller: string;
     ImportDate: string;
@@ -43,8 +43,8 @@ export interface ExportParcelList {
 
     ParcelListId: number;
     PickUpParcelListId: number;
-    ParcelList: ParcelList;
-
+    PickUpParcelList: PickUpParcelList;
+    ParcelName: ParcelList;
 }
   
 export interface PickUpParcelList {

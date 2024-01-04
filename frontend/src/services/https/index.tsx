@@ -113,6 +113,24 @@ async function DeleteParcelListByID(id: Number | undefined) {
   return res;
 }
 
+async function DeleteImportParcelListByParcelListID(id: Number | undefined) {
+  const requestOptions = {
+    method: "DELETE"
+  };
+
+  let res = await fetch(`${apiUrl}/deleteImportparcelLists/${id}`, requestOptions)
+    .then((response) => response.json())
+    .then((res) => {
+      if (res.data) {
+        return res.data;
+      } else {
+        return false;
+      }
+    });
+
+  return res;
+}
+
 async function GetParcelListById(id: Number | undefined) {
   const requestOptions = {
     method: "GET"
@@ -309,20 +327,23 @@ async function GetPickUpStatus() {
   return res;
 }
 
-async function GetExportParcelList() {
+async function GetExportParcelListByPickUpParcelListId(id: Number | undefined) {
   const requestOptions = {
-    method: "GET",
-    headers: {
-      "Content-Type": "application/json",
-    },
+    method: "GET"
   };
 
-  let res = await fetch(`${apiUrl}/exportparcelLists`, requestOptions)
+  let res = await fetch(`${apiUrl}/exportparcelLists/${id}`, requestOptions)
     .then((response) => response.json())
-    .then(({ data }) => (data ? data : false));
+    .then((res) => {
+      if (res.data) {
+        return res.data;
+      } else {
+        return false;
+      }
+    });
 
   return res;
-}
+} 
 
 async function CreateExportParcelList(data: ExportParcelList) {
   const requestOptions = {
@@ -405,6 +426,41 @@ async function DeletePickUpParcelListByID(id: Number | undefined) {
   return res;
 }
 
+async function DeleteExportParcelListByPickUpParcelListID(id: Number | undefined) {
+  const requestOptions = {
+    method: "DELETE"
+  };
+
+  let res = await fetch(`${apiUrl}/deleteExportparcelLists/${id}`, requestOptions)
+    .then((response) => response.json())
+    .then((res) => {
+      if (res.data) {
+        return res.data;
+      } else {
+        return false;
+      }
+    });
+
+  return res;
+}
+
+async function DeleteExportParcelListByID(id: Number | undefined) {
+  const requestOptions = {
+    method: "DELETE"
+  };
+
+  let res = await fetch(`${apiUrl}/exportparcelLists/${id}`, requestOptions)
+    .then((response) => response.json())
+    .then((res) => {
+      if (res.data) {
+        return res.data;
+      } else {
+        return false;
+      }
+    });
+
+  return res;
+}
 
 
 export {
@@ -420,6 +476,7 @@ export {
     GetImportParcelListById,
     GetImportParcelList,
     GetImportParcelListByParcelListId,
+    DeleteImportParcelListByParcelListID,
     
   //ระบบเบิกจ่ายพัสดุ
     GetPickUpParcelListByPickUpStatusId1,
@@ -430,8 +487,10 @@ export {
     CreatePickUpParcelListPUP,
     UpdatePickUpParcelList,
     DeletePickUpParcelListByID,
-    GetExportParcelList,
+    GetExportParcelListByPickUpParcelListId,
     CreateExportParcelList,
+    DeleteExportParcelListByID,
+    DeleteExportParcelListByPickUpParcelListID,
     
     GetPersonnel,
     GetRoom,

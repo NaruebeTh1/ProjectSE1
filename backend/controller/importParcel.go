@@ -2,7 +2,6 @@ package controller
 
 import (
 	"net/http"
-	"time"
 
 	"github.com/NaruebeTh1/ProjectSE1/entity"
 	"github.com/asaskevich/govalidator"
@@ -72,19 +71,19 @@ func CreateImportParcel(c *gin.Context) {
 	}
 
 	importParcelData  := entity.ImportParcelList{
-		Personnel:    personnels,
-		ParcelList:   parcellists,
-		ImportNumber: importparcels.ImportNumber,
-		ImportValume: importparcels.ImportValume,
-		Seller:       importparcels.Seller,
-		ImportDate:   time.Now(),
+		Personnel:    	personnels,
+		ParcelList:   	parcellists,
+		ImportNumber: 	importparcels.ImportNumber,
+		ImportVolume: 	importparcels.ImportVolume,
+		Seller:       	importparcels.Seller,
+		ImportDate:		importparcels.ImportDate,
 	}
 
 	// บวกค่า ImportValume กับ Valume
 
-    newValume := parcellists.Valume + importparcels.ImportValume
+    newVolume := parcellists.Volume + importparcels.ImportVolume
 
-    if err := entity.DB().Model(&parcellists).Update("Valume", newValume).Error; err != nil {
+    if err := entity.DB().Model(&parcellists).Update("Volume", newVolume).Error; err != nil {
         c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
         return
     }
