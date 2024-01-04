@@ -52,7 +52,6 @@ export default function PinkUpParcelList() {
     getPickUpParcelListWaitingForApproval();
   }, []);
 
-  const [messageApi] = message.useMessage();
   const [open, setOpen] = useState(false);
   const [confirmLoading, setConfirmLoading] = useState(false);
   const [modalText, setModalText] = useState<String>();
@@ -69,21 +68,15 @@ export default function PinkUpParcelList() {
 
   const handleOk = async () => {
     setConfirmLoading(true);
-    let res1 = await DeletePickUpParcelListByID(deleteId);
-    let res2 = await DeleteExportParcelListByPickUpParcelListID(deleteId);
-    if (res1 && res2) {
+    let res = await DeletePickUpParcelListByID(deleteId);
+    if (res) {
       setOpen(false);
-      messageApi.open({
-        type: "success",
-        content: "ลบข้อมูลสำเร็จ",
-      });
+      message.success("ลบข้อมูลสำเร็จ");
       getPickUpParcelListWaitingForApproval();
+      DeleteExportParcelListByPickUpParcelListID(deleteId);
     } else {
       setOpen(false);
-      messageApi.open({
-        type: "error",
-        content: "เกิดข้อผิดพลาด !",
-      });
+      message.error("เกิดข้อผิดพลาด !");
     }
     setConfirmLoading(false);
   };

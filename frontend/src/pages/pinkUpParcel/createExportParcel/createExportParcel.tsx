@@ -57,9 +57,7 @@ export default function CreateExportParcel() {
 
       let res = await CreateExportParcelList(valueExport);
       console.log('API Response:', res); 
-
-      
-  
+ 
       if (res.status) {
         messageApi.open({
           type: "success",

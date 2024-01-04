@@ -17,7 +17,11 @@ import Headers from '../../layout/header';
 import Footers from '../../layout/footer';
 import { Content } from 'antd/es/layout/layout';
 import { Link, useNavigate } from 'react-router-dom';
-import { GetParcelList, DeleteParcelListByID, DeleteImportParcelListByParcelListID} from '../../services/https';
+import { 
+  GetParcelList, DeleteParcelListByID, 
+  DeleteImportParcelListByParcelListID, 
+  DeleteExportParcelListByParcelListID, 
+} from '../../services/https';
 import { ParcelList } from '../../interfaces';
 
 
@@ -43,11 +47,11 @@ export default function MyParcelList() {
     getParcelList();
   }, []);
 
-  const [messageApi] = message.useMessage();
   const [open, setOpen] = useState(false);
   const [confirmLoading, setConfirmLoading] = useState(false);
   const [modalText, setModalText] = useState<String>();
   const [deleteId, setDeleteId] = useState<Number>();
+
 
   const showModal = (val: ParcelList) => {
     setModalText(
@@ -60,21 +64,17 @@ export default function MyParcelList() {
 
   const handleOk = async () => {
     setConfirmLoading(true);
-    let res1 = await DeleteParcelListByID(deleteId);
-    let res2 = await DeleteImportParcelListByParcelListID(deleteId);
-    if (res1 && res2) {
+    let res = await DeleteParcelListByID(deleteId);
+    if (res) {
+      message.success("ลบข้อมูลสำเร็จ");
       setOpen(false);
-      messageApi.open({
-        type: "success",
-        content: "ลบข้อมูลสำเร็จ",
-      });
       getParcelList();
-    } else {
+        DeleteImportParcelListByParcelListID(deleteId);
+        DeleteExportParcelListByParcelListID(deleteId);
+      
+    } else {    
+      message.error("เกิดข้อผิดพลาด !");
       setOpen(false);
-      messageApi.open({
-        type: "error",
-        content: "เกิดข้อผิดพลาด !",
-      });
     }
     setConfirmLoading(false);
   };
@@ -282,7 +282,7 @@ export default function MyParcelList() {
             <Modal
 
             open={open}
-            onOk={handleOk}
+            onOk={handleOk} 
             confirmLoading={confirmLoading}
             onCancel={handleCancel}
 

@@ -45,7 +45,6 @@ export default function ApprovedList() {
     getPickUpParcelListApproved();
   }, []);
 
-  const [messageApi] = message.useMessage();
   const [open, setOpen] = useState(false);
   const [confirmLoading, setConfirmLoading] = useState(false);
   const [modalText, setModalText] = useState<String>();
@@ -65,17 +64,11 @@ export default function ApprovedList() {
     let res = await DeletePickUpParcelListByID(deleteId);
     if (res) {
       setOpen(false);
-      messageApi.open({
-        type: "success",
-        content: "ลบข้อมูลสำเร็จ",
-      });
+      message.success("ลบข้อมูลสำเร็จ");
       getPickUpParcelListApproved();
     } else {
       setOpen(false);
-      messageApi.open({
-        type: "error",
-        content: "เกิดข้อผิดพลาด !",
-      });
+      message.error("เกิดข้อผิดพลาด !");
     }
     setConfirmLoading(false);
   };

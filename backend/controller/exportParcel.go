@@ -21,6 +21,18 @@ func GetExportParcelListByPickUpParcelListId(c *gin.Context) {
     c.JSON(http.StatusOK, gin.H{"data": exportparcel})
 }
 
+func GetExportParcelListByParcelListId(c *gin.Context) {
+    var exportparcel []entity.ExportParcelList
+    parcelListId := c.Param("id")
+
+    if err := entity.DB().Preload("ParcelList").Preload("PickUpParcelList").Where("parcel_list_id = ?", parcelListId).Find(&exportparcel).Error; err != nil {
+        c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+        return
+    }
+
+    c.JSON(http.StatusOK, gin.H{"data": exportparcel})
+}
+
 
 // POST /ExportParcel
 

@@ -98,19 +98,19 @@ export default function CreateParcelListPage() {
 
                         <div style={{marginRight:'30px', width:'400px'}}>
                         
-                            <div style={{marginTop:'30px'}}>  
+                            <div style={{marginTop:'10px'}}>  
                                 <Form.Item style={{ textAlign: 'left'}} name='ParcelNumber' label="รหัสพัสดุ (PID)" rules={[{ required: true, message: "กรุณากรอกข้อมูล" }]}>
                                     <Input placeholder="เช่น P10001"/>
                                 </Form.Item>
                             </div>
 
-                            <div style={{marginTop:'30px'}}>  
+                            <div style={{marginTop:'10px'}}>  
                                 <Form.Item style={{ textAlign: 'left'}} name='ParcelName' label="ชื่อรายการพัสดุ" rules={[{ required: true, message: "กรุณากรอกข้อมูล" }]}>
                                     <Input placeholder="เช่น กระดาษถ่ายเอกสาร ชนิด 70 แกรม ขนาด A4"/>
                                 </Form.Item>
                             </div>
 
-                            <div style={{marginTop:'30px', marginLeft:'25px'}}>  
+                            <div style={{marginTop:'10px', marginLeft:'25px'}}>  
                                 <Form.Item style={{ textAlign: 'left'}} name='PricePerPiece' label="ราคาต่อชิ้น" 
                                             rules={[{
                                                 required: true,
@@ -129,7 +129,7 @@ export default function CreateParcelListPage() {
                                 </Form.Item>
                             </div>
 
-                            <div style={{marginTop:'30px', marginLeft:'7px'}}>  
+                            <div style={{marginTop:'10px', marginLeft:'7px'}}>  
                                 <Form.Item style={{ textAlign: 'left'}} name='Volume' label="จำนวนทั้งหมด" 
                                             rules={[{
                                                 required: true,
@@ -149,9 +149,9 @@ export default function CreateParcelListPage() {
 
                         </div>
 
-                        <div style={{marginRight:'30px', width:'400px'}}>
+                        <div style={{marginRight:'20px', width:'400px'}}>
 
-                            <div style={{marginTop:'30px'}}>
+                            <div style={{marginTop:'10px'}}>
                                 <Form.Item style={{ textAlign: 'left'}} name='ParcelTypeId' label="ประเภทพัสดุ" rules={[{ required: true, message: "กรุณาเลือกประเภท" }]}>
                                     <Select placeholder="เลือกประเภทพัสดุ"> 
                                     {dataParcelType.map((item) => (
@@ -161,7 +161,7 @@ export default function CreateParcelListPage() {
                                 </Form.Item>
                             </div>
 
-                            <div style={{marginTop:'30px',marginLeft:'-3px'}}>
+                            <div style={{marginTop:'10px',marginLeft:'-3px'}}>
                                 <Form.Item style={{ textAlign: 'left'}} name="ParcelUnitId" label="หน่วยนับพัสดุ" rules={[{ required: true, message: "กรุณาเลือกหน่วยนับ" }]}>
                                     <Select placeholder="เลือกหน่วยนับพัสดุ">
                                     {dataParcelUnit.map((item) => (
@@ -171,7 +171,7 @@ export default function CreateParcelListPage() {
                                 </Form.Item>
                             </div>
 
-                            <div style={{marginTop:'30px'}}>
+                            <div style={{marginTop:'10px'}}>
                                 <Form.Item style={{ textAlign: 'left'}} name='RoomId' label="ห้องเก็บพัสดุ" rules={[{ required: true, message: "กรุณาเลือกสถานที่เก็บพัสดุ" }]}>
                                     <Select placeholder="เลือกสถานที่จัดเก็บพัสดุ">
                                         {dataRoom.map((item) => (
@@ -181,7 +181,7 @@ export default function CreateParcelListPage() {
                                 </Form.Item>
                             </div>    
 
-                            <div style={{ marginTop: '30px', marginLeft:'-19px'}}>
+                            <div style={{ marginTop: '10px', marginLeft:'-19px'}}>
                                 <Form.Item style={{ textAlign: 'left' }} name='ParcelDetail' label="รายละเอียดพัสดุ" rules={[{ required: true, message: "กรุณากรอกข้อมูลเพิ่มเติม" }]}>
                                 <Input.TextArea autoSize={{ minRows: 3, maxRows: 6 }} placeholder="รายละเอียดเพิ่มเติม เช่น สี (ถ้ามี) หรือการนำไปใช้งาน" />
                                 </Form.Item>

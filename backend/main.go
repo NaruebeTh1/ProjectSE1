@@ -21,11 +21,13 @@ func main() {
 	router.GET("/rooms", controller.ListRoom)
 	router.GET("/personnelsP", controller.ListPersonnel)
 	router.GET("/getListImportParcel/:id", controller.GetImportParcelListByParcelListId)
+	router.GET("/getExportParcels/:id", controller.GetExportParcelListByParcelListId)
 
 	router.POST("/parcelLists", controller.CreateParcelList)
 	router.POST("/importparcelLists", controller.CreateImportParcel)
 	router.DELETE("/parcelList/:id", controller.DeleteParcelList)
 	router.DELETE("/deleteImportparcelLists/:id", controller.DeleteImportParcelListByParcelListID)
+	router.DELETE("/deleteExportparcelLists2/:id", controller.DeleteExportParcelListByParcelListID)
 	router.PATCH("/parcelLists", controller.UpdateParcelList)
 
 	router.GET("/pickUpParcelLists", controller.ListPickUpParcelList)

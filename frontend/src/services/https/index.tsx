@@ -167,6 +167,24 @@ async function GetImportParcelListByParcelListId(id: Number | undefined) {
   return res;
 } 
 
+async function GetExportParcelListByParcelListId(id: Number | undefined) {
+  const requestOptions = {
+    method: "GET"
+  };
+
+  let res = await fetch(`${apiUrl}/getExportParcels/${id}`, requestOptions)
+    .then((response) => response.json())
+    .then((res) => {
+      if (res.data) {
+        return res.data;
+      } else {
+        return false;
+      }
+    });
+
+  return res;
+} 
+
 async function CreateParcelList(data: ParcelList) {
   const requestOptions = {
     method: "POST",
@@ -462,6 +480,24 @@ async function DeleteExportParcelListByID(id: Number | undefined) {
   return res;
 }
 
+async function DeleteExportParcelListByParcelListID(id: Number | undefined) {
+  const requestOptions = {
+    method: "DELETE"
+  };
+
+  let res = await fetch(`${apiUrl}/deleteExportparcelLists2/${id}`, requestOptions)
+    .then((response) => response.json())
+    .then((res) => {
+      if (res.data) {
+        return res.data;
+      } else {
+        return false;
+      }
+    });
+
+  return res;
+}
+
 
 export {
   //ระบบจัดการข้อมูลพัสดุ
@@ -476,7 +512,9 @@ export {
     GetImportParcelListById,
     GetImportParcelList,
     GetImportParcelListByParcelListId,
+    GetExportParcelListByParcelListId,
     DeleteImportParcelListByParcelListID,
+    DeleteExportParcelListByParcelListID,
     
   //ระบบเบิกจ่ายพัสดุ
     GetPickUpParcelListByPickUpStatusId1,
