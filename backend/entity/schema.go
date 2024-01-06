@@ -363,11 +363,11 @@ type Room struct {
 type ParcelList struct {
 	gorm.Model
  
-	ParcelNumber 		string 		`gorm:"unique"`
-	ParcelName 			string		
+	ParcelNumber 		string 		//`gorm:"unique" valid:"required~ParcelNumber is required"`
+	ParcelName 			string		//`valid:"required~ParcelName is required"`	
 	PricePerPiece		float32		
 	Volume				int			
-	ParcelDetail 		string		
+	ParcelDetail 		string		//`valid:"required~ParcelDetail is required"`	
 
 	//FK go to ExportParcelList, ImportParcelList
 
@@ -376,13 +376,13 @@ type ParcelList struct {
 
 	//FK ParcelType, Room this here
 	
-	ParcelTypeId uint			
+	ParcelTypeId uint		//`valid:"required~ParcelType is required"`	
 	ParcelType   ParcelType 	`gorm:"foreignKey:ParcelTypeId"`
 
-	ParcelUnitId uint
+	ParcelUnitId uint		//`valid:"required~ParcelUnit is required"`
 	ParcelUnit   ParcelUnit 	`gorm:"foreignKey:ParcelUnitId"`
 
-	RoomId uint				
+	RoomId uint				//`valid:"required~Room is required"`
 	Room   Room 				`gorm:"foreignKey:RoomId"`
 }
 

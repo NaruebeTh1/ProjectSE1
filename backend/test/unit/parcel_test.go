@@ -29,9 +29,9 @@ func TestParcelList(t *testing.T) {
         g.Expect(err).To(BeNil())
     })
 
-    t.Run(`ParcelNumber is required`, func(t *testing.T) {
+    t.Run(`ParcelNumber Not Null`, func(t *testing.T) {
         parcelList := entity.ParcelList{
-            ParcelNumber:  "",
+            ParcelNumber:  "", // not null
             ParcelName:    "parcel name",
             PricePerPiece: 6.5,
             Volume:         2, 
@@ -48,10 +48,10 @@ func TestParcelList(t *testing.T) {
         g.Expect(err.Error()).To(Equal("ParcelNumber is required"))
     })
 
-    t.Run(`ParcelName is required`, func(t *testing.T) {
+    t.Run(`ParcelName Not Null`, func(t *testing.T) {
         parcelList := entity.ParcelList{
             ParcelNumber:  "P10009",
-            ParcelName:    "",
+            ParcelName:    "", //not null
             PricePerPiece: 6.5,
             Volume:         2, 
             ParcelDetail:  "detail",
@@ -67,13 +67,13 @@ func TestParcelList(t *testing.T) {
         g.Expect(err.Error()).To(Equal("ParcelName is required"))
     })
 
-    t.Run(`ParcelDetail is required`, func(t *testing.T) {
+    t.Run(`ParcelDetail Not Null`, func(t *testing.T) {
         parcelList := entity.ParcelList{
             ParcelNumber:  "P10009",
             ParcelName:    "parcel name",
             PricePerPiece: 6.5,
             Volume:         2, 
-            ParcelDetail:  "",
+            ParcelDetail:  "", // not null
             ParcelTypeId:  1,
             ParcelUnitId:  1,
             RoomId:         1,
@@ -89,34 +89,15 @@ func TestParcelList(t *testing.T) {
 
 
 
-
-func TestParcelListValidation(t *testing.T) {
+func TestNumberFromParcelList(t *testing.T) {
     g := NewGomegaWithT(t)
 
-    t.Run("Valume is a positive number", func(t *testing.T) {
+    t.Run(`PricePerPiece Less Than 0`, func(t *testing.T) {
         parcelList := entity.ParcelList{
             ParcelNumber:  "P10009",
             ParcelName:    "parcel name",
-            PricePerPiece: 6.5,
-            Volume:         5,
-            ParcelDetail:  "detail",
-            ParcelTypeId:  1,
-            ParcelUnitId:  1,
-            RoomId:         1,
-        }
-
-        ok, err := govalidator.ValidateStruct(parcelList)
-
-        g.Expect(ok).To(BeTrue())
-        g.Expect(err).To(BeNil())
-    })
-
-    t.Run("Valume is zero", func(t *testing.T) {
-        parcelList := entity.ParcelList{
-            ParcelNumber:  "P10009",
-            ParcelName:    "parcel name",
-            PricePerPiece: 6.5,
-            Volume:         0,
+            PricePerPiece:  -5, // negative number
+            Volume:         2, 
             ParcelDetail:  "detail",
             ParcelTypeId:  1,
             ParcelUnitId:  1,
@@ -127,14 +108,15 @@ func TestParcelListValidation(t *testing.T) {
 
         g.Expect(ok).NotTo(BeTrue())
         g.Expect(err).NotTo(BeNil())
+        g.Expect(err.Error()).To(Equal("PricePerPiece must be more than 0"))
     })
 
-    t.Run("Valume is required", func(t *testing.T) {
+    t.Run(`PricePerPiece equal 0`, func(t *testing.T) {
         parcelList := entity.ParcelList{
             ParcelNumber:  "P10009",
             ParcelName:    "parcel name",
-            PricePerPiece: 6.5,
-            Volume:         -1,
+            PricePerPiece:  0,
+            Volume:         2, 
             ParcelDetail:  "detail",
             ParcelTypeId:  1,
             ParcelUnitId:  1,
@@ -145,6 +127,44 @@ func TestParcelListValidation(t *testing.T) {
 
         g.Expect(ok).NotTo(BeTrue())
         g.Expect(err).NotTo(BeNil())
-        g.Expect(err.Error()).To(Equal("Valume is required"))
+        g.Expect(err.Error()).To(Equal("PricePerPiece must be more than 0"))
     })
+
+    // t.Run(`Volume Less Than 0`, func(t *testing.T) {
+    //     parcelList := entity.ParcelList{
+    //         ParcelNumber:  "P10009",
+    //         ParcelName:    "parcel name",
+    //         PricePerPiece:  10,
+    //         Volume:         -2, 
+    //         ParcelDetail:  "detail",
+    //         ParcelTypeId:  1,
+    //         ParcelUnitId:  1,
+    //         RoomId:         1,
+    //     }
+
+    //     ok, err := govalidator.ValidateStruct(parcelList)
+
+    //     g.Expect(ok).NotTo(BeTrue())
+    //     g.Expect(err).NotTo(BeNil())
+    //     g.Expect(err.Error()).To(Equal("Volume must be more than or equal 0"))
+    // })
+
+    // t.Run(`Create Success`, func(t *testing.T) {
+    //     parcelList := entity.ParcelList{
+    //         ParcelNumber:  "P10009",
+    //         ParcelName:    "parcel name",
+    //         PricePerPiece:  10,
+    //         Volume:         2, 
+    //         ParcelDetail:  "detail",
+    //         ParcelTypeId:  1,
+    //         ParcelUnitId:  1,
+    //         RoomId:         1,
+    //     }
+
+    //     ok, err := govalidator.ValidateStruct(parcelList)
+
+    //     g.Expect(ok).To(BeTrue())
+    //     g.Expect(err).To(BeNil())
+    // })
 }
+

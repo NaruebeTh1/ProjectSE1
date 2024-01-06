@@ -5,7 +5,7 @@ import {
   SaveOutlined,
 } from '@ant-design/icons';
 
-import {Card, Layout, Form, Input, Select, Button, message} from 'antd';
+import {Card, Layout, Form, Input, Select, Button, message, DatePicker} from 'antd';
 
 import Headers from '../../../layout/header';
 import Footers from '../../../layout/footer';
@@ -147,6 +147,12 @@ export default function EditPinkUpParcelList() {
                               </Option>
                               ))}
                     </Select>
+                    </Form.Item>
+                  </div>
+
+                  <div style={{marginTop:'20px'}}>
+                    <Form.Item style={{textAlign: 'left'}} name={['PUPLDate']} label="วันที่ขอเบิก" rules={[{ required: true, message: 'กรุณาเลือกวันที่' }]}>
+                      <DatePicker format="DD-MM-YYYY"  />
                     </Form.Item>
                   </div>
 
