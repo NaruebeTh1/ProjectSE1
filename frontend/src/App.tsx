@@ -49,6 +49,7 @@ const App: React.FC = () => {
               <Route path="/pages/pickUpParcel/createPickUpParcelList" element={<CreatePickUpParcelList />} />
               <Route path="/pages/pickUpParcel/editPUPL/:id" element={<EditPinkUpParcelList />} />
               <Route path="/pages/pickUpParcel/approvedList" element={<ApprovedList />} />
+              <Route path="/pages/pickUpParcel/approvedList/PDFReader/:id" element={<PDFReader />} />
               <Route path="/pages/pickUpParcel/forApproval/:id" element={<ApprovalPinkUpParcelList />} />
               <Route path="/pages/pickUpParcel/createExportParcel/:id" element={<CreateExportParcel />} /> 
               

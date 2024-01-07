@@ -4,6 +4,7 @@ import {
   SearchOutlined,
   DeleteOutlined,
   ArrowLeftOutlined,
+  FilePdfOutlined,
 } from '@ant-design/icons';
 import { Card, Space, Button, Layout, message, Modal} from 'antd';
 
@@ -16,7 +17,7 @@ import '../buttonPUPStyle.css' ;
 import Headers from '../../../layout/header';
 import Footers from '../../../layout/footer';
 import { Content } from 'antd/es/layout/layout';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { PickUpParcelList } from '../../../interfaces';
 import { DeletePickUpParcelListByID, GetPickUpParcelListByPickUpStatusId2 } from '../../../services/https';
 
@@ -31,7 +32,7 @@ export default function ApprovedList() {
   const [searchText, setSearchText] = useState('');
   const [searchedColumn, setSearchedColumn] = useState('');
   const searchInput = useRef<InputRef>(null);
-
+  const navigate = useNavigate();
 
   const getPickUpParcelListApproved = async () => {
     let res = await GetPickUpParcelListByPickUpStatusId2();
@@ -197,6 +198,9 @@ export default function ApprovedList() {
       render: (record) => (
 
         <Space style={{flexWrap: 'wrap'}}>
+          <Button className='printPDF'  onClick={() =>  navigate(`/pages/pickUpParcel/approvedList/PDFReader/${record.ID}`)}>
+            <FilePdfOutlined /> พิมพ์เอกสาร
+          </Button>
           <Button className='iconDeletePUPL' onClick={() => showModal(record)}>
             <DeleteOutlined style={{color: 'white'}}/>
           </Button>
