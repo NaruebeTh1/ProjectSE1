@@ -32,7 +32,7 @@ moment.locale('th'); // Set Thai locale
 type DataIndex = keyof PickUpParcelList;
 
 
-export default function PinkUpParcelList() {
+export default function PickUpParcelListF() {
 
   const [dataPickUpParcelList, setDataPickUpParcelList] = useState<PickUpParcelList[]>([]);
   const navigate = useNavigate();
@@ -216,19 +216,19 @@ export default function PinkUpParcelList() {
       render: (record) => (
 
         <Space style={{flexWrap: 'wrap'}}>
-          <Button className='ApprovalButton' onClick={() =>  navigate(`/pages/pinkUpParcel/forApproval/${record.ID}`)}>
+          <Button className='ApprovalButton' onClick={() =>  navigate(`/pages/pickUpParcel/forApproval/${record.ID}`)}>
             อนุมัติรายการ
           </Button>
 
-          <Button className='AddParcelButton' onClick={() =>  navigate(`/pages/pinkUpParcel/createExportParcel/${record.ID}`)}>
+          <Button className='AddParcelButton' onClick={() =>  navigate(`/pages/pickUpParcel/createExportParcel/${record.ID}`)}>
             เพิ่มพัสดุ
           </Button>
           
-          <Button className='printPDF'  onClick={() =>  navigate(`/pages/pinkUpParcelList/PDFReader/${record.ID}`)}>
+          <Button className='printPDF'  onClick={() =>  navigate(`/pages/pickUpParcel/PDFReader/${record.ID}`)}>
             <FilePdfOutlined /> พิมพ์เอกสาร
           </Button>
 
-          <Button className='editButtonPUPL' onClick={() =>  navigate(`/pages/pinkUpParcel/editPUPL/${record.ID}`)} >
+          <Button className='editButtonPUPL' onClick={() =>  navigate(`/pages/pickUpParcel/editPUPL/${record.ID}`)} >
               แก้ไข
           </Button>
           
@@ -256,7 +256,7 @@ export default function PinkUpParcelList() {
 
           <div style={{ display: 'flex'}}>
             <div>
-                <Link to={'/pages/pinkUpParcelList/createPinkUpParcelList'}>
+                <Link to={'/pages/pickUpParcel/createPickUpParcelList'}>
                   <Button className="AddPUPButton">
                     <PlusOutlined /> เพิ่มรายการเบิกจ่ายพัสดุ
                   </Button>
@@ -266,7 +266,7 @@ export default function PinkUpParcelList() {
             <div style={{ display: 'flex', marginLeft:'auto'}}>
 
               <div style={{ marginLeft:'20px'}}>
-                  <Link to={'/pages/pinkUpParcel/approvedList'}>
+                  <Link to={'/pages/pickUpParcel/approvedList'}>
                     <Button className="AddPUPButton">
                       รายการอนุมัติแล้ว
                     </Button>

@@ -24,7 +24,7 @@ export default function Headers() {
     <Menu className="SubmenuItem">
       {createMenuItem("/pages/parcelOverview", "ภาพรวมงานพัสดุ")}
       {createMenuItem("/pages/myParcelList", "รายการพัสดุ")}
-      {createMenuItem("/pages/pinkUpParcelList", "รายการเบิกจ่ายพัสดุ")}
+      {createMenuItem("/pages/pickUpParcel", "รายการเบิกจ่ายพัสดุ")}
     </Menu>
   );
 

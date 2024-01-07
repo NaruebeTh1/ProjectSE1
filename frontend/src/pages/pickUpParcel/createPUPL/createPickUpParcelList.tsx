@@ -17,7 +17,7 @@ import { InterfacePersonnel, InterfacePickUpStatus, PickUpParcelList } from '../
 import locale from 'antd/lib/date-picker/locale/th_TH'; // Import Thai locale
 
 
-export default function CreatePinkUpParcelList() {
+export default function CreatePickUpParcelList() {
 
   const [Addform] = Form.useForm();
   const navigate = useNavigate();

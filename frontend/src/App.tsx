@@ -10,13 +10,13 @@ import HomePage from "./pages/homePage/homePage";
 import SettingAccount from "./pages/settingPages/settingAccount";
 import SettingProfile from "./pages/settingPages/settingProfile";
 import MyParcelList from './pages/parcelList/myParcelList';
-import PinkUpParcelList from './pages/pinkUpParcel/pinkUpParcelList';
-import CreatePinkUpParcelList from "./pages/pinkUpParcel/createPUPL/createPinkUpParcelList";
+import PickUpParcelListF from "./pages/pickUpParcel/pickUpParcelList";
+import CreatePickUpParcelList from "./pages/pickUpParcel/createPUPL/createPickUpParcelList";
 import ParcelOverview from "./pages/parcelOverview/parcelOverview";
-import EditPinkUpParcelList from "./pages/pinkUpParcel/editPUPL/editPUPL";
-import ApprovedList from "./pages/pinkUpParcel/puplApproved/approvedList";
-import ApprovalPinkUpParcelList from "./pages/pinkUpParcel/forApproval/forApproval";
-import CreateExportParcel from "./pages/pinkUpParcel/createExportParcel/createExportParcel";
+import EditPinkUpParcelList from "./pages/pickUpParcel/editPUPL/editPUPL";
+import ApprovedList from "./pages/pickUpParcel/puplApproved/approvedList";
+import ApprovalPinkUpParcelList from "./pages/pickUpParcel/forApproval/forApproval";
+import CreateExportParcel from "./pages/pickUpParcel/createExportParcel/createExportParcel";
 
 import CreateParcelListPage from "./pages/parcelList/createParcelList/createParcelList";
 import DetailParcelList from "./pages/parcelList/detailParcelList/detailParcelList";
@@ -24,7 +24,7 @@ import EditParcelList from "./pages/parcelList/editParcelList/editParcelList";
 import ImportParcelLists from "./pages/parcelList/importParcelList/importParcelList";
 import ImportHistory from "./pages/parcelList/detailParcelList/importHistory/importHistorys";
 
-import PDFReader from "./pages/pinkUpParcel/document/PDFReader";
+import PDFReader from "./pages/pickUpParcel/document/PDFReader";
 
 const App: React.FC = () => {
 
@@ -43,14 +43,14 @@ const App: React.FC = () => {
               <Route path="/pages/myParcelList/editParcelList/:id" element={<EditParcelList />} />
               <Route path="/pages/myParcelList/importParcelList/:id" element={<ImportParcelLists />} />
 
-              <Route path="/pages/pinkUpParcelList/PDFReader/:id" element={<PDFReader />} />
+              <Route path="/pages/pickUpParcel/PDFReader/:id" element={<PDFReader />} />
 
-              <Route path="/pages/pinkUpParcelList" element={<PinkUpParcelList />} />
-              <Route path="/pages/pinkUpParcelList/createPinkUpParcelList" element={<CreatePinkUpParcelList />} />
-              <Route path="/pages/pinkUpParcel/editPUPL/:id" element={<EditPinkUpParcelList />} />
-              <Route path="/pages/pinkUpParcel/approvedList" element={<ApprovedList />} />
-              <Route path="/pages/pinkUpParcel/forApproval/:id" element={<ApprovalPinkUpParcelList />} />
-              <Route path="/pages/pinkUpParcel/createExportParcel/:id" element={<CreateExportParcel />} /> 
+              <Route path="/pages/pickUpParcel" element={<PickUpParcelListF />} />
+              <Route path="/pages/pickUpParcel/createPickUpParcelList" element={<CreatePickUpParcelList />} />
+              <Route path="/pages/pickUpParcel/editPUPL/:id" element={<EditPinkUpParcelList />} />
+              <Route path="/pages/pickUpParcel/approvedList" element={<ApprovedList />} />
+              <Route path="/pages/pickUpParcel/forApproval/:id" element={<ApprovalPinkUpParcelList />} />
+              <Route path="/pages/pickUpParcel/createExportParcel/:id" element={<CreateExportParcel />} /> 
               
               <Route path="/pages/homePage" element={<HomePage />} />
 

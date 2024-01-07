@@ -4,7 +4,7 @@ import {
   StyleSheet, PDFViewer, 
   Font,
 } from "@react-pdf/renderer";
-import font from "../../../assets/fonts/THSarabunNew.ttf";
+import fontTHSarabunNew from "../../../assets/fonts/THSarabunNew.ttf";
 import { 
   ExportParcelList, 
   InterfaceParcelUnit, 
@@ -197,7 +197,7 @@ function PDFReader() {
 
 Font.register({
   family: "THSarabunNew",
-  src: font,
+  src: fontTHSarabunNew,
 });
 
 const styles = StyleSheet.create({
