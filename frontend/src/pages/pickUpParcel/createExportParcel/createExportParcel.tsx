@@ -254,7 +254,7 @@ export default function CreateExportParcel() {
           <Layout style={{ backgroundColor: 'darkslategrey' }}>
             <div className='titleOfPUPL'>
               <Link
-                to={'/pages/pinkUpParcelList'}
+                to={'/pages/pickUpParcel'}
                 style={{ marginRight: 'auto', color: 'white', float: 'left' }}>
 
                 <ArrowLeftOutlined style={{ fontSize: '20px' }} />

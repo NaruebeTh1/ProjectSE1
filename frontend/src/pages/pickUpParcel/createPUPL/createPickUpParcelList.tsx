@@ -36,7 +36,7 @@ export default function CreatePickUpParcelList() {
         content: "บันทึกข้อมูลสำเร็จ",
       });
       setTimeout(function () {
-        navigate("/pages/pinkUpParcelList");
+        navigate("/pages/pickUpParcel");
       }, 1000);
     } else {
       messageApi.open({
@@ -76,7 +76,7 @@ export default function CreatePickUpParcelList() {
           <Layout style={{ backgroundColor: 'darkslategrey'}}>
             <div className='titleOfPUPL'>
 
-              <Link to={'/pages/pinkUpParcelList'} style={{marginRight: 'auto', color: 'white', float:'left'}}>
+              <Link to={'/pages/pickUpParcel'} style={{marginRight: 'auto', color: 'white', float:'left'}}>
                 <ArrowLeftOutlined style={{fontSize:'20px'}}/>
                 <span > Back </span>
               </Link>

@@ -216,7 +216,7 @@ export default function ApprovedList() {
                 <Layout style={{ backgroundColor: 'darkslategrey'}}>
                         <div className='titleH1'>
 
-                        <Link to={`/pages/pinkUpParcelList`} style={{marginRight: 'auto', color: 'white', float:'left'}}>
+                        <Link to={`/pages/pickUpParcel`} style={{marginRight: 'auto', color: 'white', float:'left'}}>
                             <ArrowLeftOutlined style={{fontSize:'20px'}}/>
                             <span > Back </span>
                         </Link>
