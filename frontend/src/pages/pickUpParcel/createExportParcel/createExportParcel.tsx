@@ -5,6 +5,7 @@ import {
   PlusOutlined,
   DeleteOutlined,
 } from '@ant-design/icons';
+import '../styles/PUPLStyle.css' ;
 import {
   Layout,
   Table,
@@ -23,7 +24,12 @@ import Headers from '../../../layout/header';
 import Footers from '../../../layout/footer';
 import { Content } from 'antd/es/layout/layout';
 import { Link, useParams } from 'react-router-dom';
-import { ExportParcelList, InterfacePersonnel, InterfacePickUpStatus, ParcelList, PickUpParcelList } from '../../../interfaces';
+import { 
+  ExportParcelList, 
+  InterfacePersonnel, 
+  InterfacePickUpStatus, 
+  ParcelList, 
+  PickUpParcelList } from '../../../interfaces';
 import {
   CreateExportParcelList, 
   DeleteExportParcelListByID, 

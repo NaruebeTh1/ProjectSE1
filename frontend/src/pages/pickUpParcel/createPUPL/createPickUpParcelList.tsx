@@ -10,7 +10,7 @@ import {Card, Layout, Form, Input, DatePicker, Select, Button, message} from 'an
 import Headers from '../../../layout/header';
 import Footers from '../../../layout/footer';
 import { Content } from 'antd/es/layout/layout';
-import './PUPLStyle.css'
+import '../styles/PUPLStyle.css' ;
 import { Link, useNavigate } from 'react-router-dom';
 import { CreatePickUpParcelListPUP, GetPersonnel, GetPickUpStatus } from '../../../services/https';
 import { InterfacePersonnel, InterfacePickUpStatus, PickUpParcelList } from '../../../interfaces';

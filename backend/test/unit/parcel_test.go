@@ -2,14 +2,16 @@ package unit_test
 
 import (
 	"testing"
-
 	"github.com/NaruebeTh1/ProjectSE1/entity"
+    "github.com/NaruebeTh1/ProjectSE1/validator"
 	"github.com/asaskevich/govalidator"
 	."github.com/onsi/gomega"
+
 )
 
 func TestParcelList(t *testing.T) {
-    g := NewGomegaWithT(t)
+
+	g := NewGomegaWithT(t)
 
     t.Run(`Create Success`, func(t *testing.T) {
         parcelList := entity.ParcelList{
@@ -87,16 +89,34 @@ func TestParcelList(t *testing.T) {
     })
 }
 
-
-
 func TestNumberFromParcelList(t *testing.T) {
-    g := NewGomegaWithT(t)
 
-    t.Run(`PricePerPiece Less Than 0`, func(t *testing.T) {
+    validator.Validators()
+	g := NewGomegaWithT(t)
+
+    t.Run(`Create Success`, func(t *testing.T) {
         parcelList := entity.ParcelList{
             ParcelNumber:  "P10009",
             ParcelName:    "parcel name",
-            PricePerPiece:  -5, // negative number
+            PricePerPiece: 6.5,
+            Volume:         2, 
+            ParcelDetail:  "detail",
+            ParcelTypeId:  1,
+            ParcelUnitId:  1,
+            RoomId:         1,
+        }
+
+        ok, err := govalidator.ValidateStruct(parcelList)
+
+        g.Expect(ok).To(BeTrue())
+        g.Expect(err).To(BeNil())
+    })
+
+    t.Run(`PricePerPiece must be more than 0`, func(t *testing.T) {
+        parcelList := entity.ParcelList{
+            ParcelNumber:  "exp1001", 
+            ParcelName:    "parcel name",
+            PricePerPiece: -6, // must be more than 0
             Volume:         2, 
             ParcelDetail:  "detail",
             ParcelTypeId:  1,
@@ -111,11 +131,11 @@ func TestNumberFromParcelList(t *testing.T) {
         g.Expect(err.Error()).To(Equal("PricePerPiece must be more than 0"))
     })
 
-    t.Run(`PricePerPiece equal 0`, func(t *testing.T) {
+    t.Run(`PricePerPiece must be more than 0`, func(t *testing.T) {
         parcelList := entity.ParcelList{
-            ParcelNumber:  "P10009",
+            ParcelNumber:  "exp1001", 
             ParcelName:    "parcel name",
-            PricePerPiece:  0,
+            PricePerPiece: 0, // must be more than 0
             Volume:         2, 
             ParcelDetail:  "detail",
             ParcelTypeId:  1,
@@ -127,44 +147,26 @@ func TestNumberFromParcelList(t *testing.T) {
 
         g.Expect(ok).NotTo(BeTrue())
         g.Expect(err).NotTo(BeNil())
-        g.Expect(err.Error()).To(Equal("PricePerPiece must be more than 0"))
+        g.Expect(err.Error()).To(Equal("PricePerPiece is required"))
     })
 
-    // t.Run(`Volume Less Than 0`, func(t *testing.T) {
-    //     parcelList := entity.ParcelList{
-    //         ParcelNumber:  "P10009",
-    //         ParcelName:    "parcel name",
-    //         PricePerPiece:  10,
-    //         Volume:         -2, 
-    //         ParcelDetail:  "detail",
-    //         ParcelTypeId:  1,
-    //         ParcelUnitId:  1,
-    //         RoomId:         1,
-    //     }
+    t.Run(`Volume must be more than or equal 0`, func(t *testing.T) {
+        parcelList := entity.ParcelList{
+            ParcelNumber:  "exp1001", 
+            ParcelName:    "parcel name",
+            PricePerPiece: 6.5,
+            Volume:         -5, // must be more than 0
+            ParcelDetail:  "detail",
+            ParcelTypeId:  1,
+            ParcelUnitId:  1,
+            RoomId:         1,
+        }
 
-    //     ok, err := govalidator.ValidateStruct(parcelList)
+        ok, err := govalidator.ValidateStruct(parcelList)
 
-    //     g.Expect(ok).NotTo(BeTrue())
-    //     g.Expect(err).NotTo(BeNil())
-    //     g.Expect(err.Error()).To(Equal("Volume must be more than or equal 0"))
-    // })
-
-    // t.Run(`Create Success`, func(t *testing.T) {
-    //     parcelList := entity.ParcelList{
-    //         ParcelNumber:  "P10009",
-    //         ParcelName:    "parcel name",
-    //         PricePerPiece:  10,
-    //         Volume:         2, 
-    //         ParcelDetail:  "detail",
-    //         ParcelTypeId:  1,
-    //         ParcelUnitId:  1,
-    //         RoomId:         1,
-    //     }
-
-    //     ok, err := govalidator.ValidateStruct(parcelList)
-
-    //     g.Expect(ok).To(BeTrue())
-    //     g.Expect(err).To(BeNil())
-    // })
+        g.Expect(ok).NotTo(BeTrue())
+        g.Expect(err).NotTo(BeNil())
+        g.Expect(err.Error()).To(Equal("Volume must be more than or equal 0"))
+    })
+   
 }
-

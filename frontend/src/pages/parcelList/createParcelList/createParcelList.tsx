@@ -6,7 +6,7 @@ import {
 } from '@ant-design/icons';
 
 import { Button, Card, Form, Input, InputNumber, Layout, Select, message} from 'antd';
-import '../buttonStyle.css' ;
+import '../style/buttonStyle.css' ;
 import Headers from '../../../layout/header';
 import Footers from '../../../layout/footer';
 import { Content } from 'antd/es/layout/layout';

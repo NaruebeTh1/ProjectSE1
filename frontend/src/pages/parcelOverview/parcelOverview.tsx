@@ -2,13 +2,21 @@ import React, { useEffect, useState } from 'react';
 import {Table} from 'antd';
 import type { ColumnsType } from 'antd/es/table';
 import {Card, Space} from 'antd';
-import "./overviewStyle.css";
+import "./style/overviewStyle.css";
 import Headers from '../../layout/header';
 import Footers from '../../layout/footer';
 import { Content } from 'antd/es/layout/layout';
 
-import { GetParcelList, GetParcelType, GetParcelUnit, GetPickUpParcelList } from '../../services/https';
-import { ParcelList, InterfaceParcelType, InterfaceParcelUnit, PickUpParcelList } from '../../interfaces';
+import { 
+  GetParcelList, 
+  GetParcelType, 
+  GetParcelUnit, 
+  GetPickUpParcelList } from '../../services/https';
+import { 
+  ParcelList, 
+  InterfaceParcelType, 
+  InterfaceParcelUnit, 
+  PickUpParcelList } from '../../interfaces';
 
 
 export default function ParcelOverview() {

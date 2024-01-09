@@ -13,7 +13,7 @@ import type { InputRef } from 'antd';
 import { Input, Table } from 'antd';
 import type { ColumnType, ColumnsType } from 'antd/es/table';
 import type { FilterConfirmProps } from 'antd/es/table/interface';
-import './buttonPUPStyle.css' ;
+import './styles/buttonPUPStyle.css' ;
 import Headers from '../../layout/header';
 import Footers from '../../layout/footer';
 import { Content } from 'antd/es/layout/layout';

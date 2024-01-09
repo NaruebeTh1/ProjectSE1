@@ -127,6 +127,10 @@ func UpdatePickUpParcelList(c *gin.Context) {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
+	if _, err := govalidator.ValidateStruct(pickUpParcelList); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
 
 	// ค้นหา pickUpParcelList ด้วย id
 	if tx := entity.DB().Where("id = ?", pickUpParcelList.ID).First(&result); tx.RowsAffected == 0 {

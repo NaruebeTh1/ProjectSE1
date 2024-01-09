@@ -3,7 +3,7 @@ import {
   ImportOutlined,
   ArrowLeftOutlined,
 } from '@ant-design/icons';
-
+import '../style/buttonStyle.css' ;
 import { Card, DatePicker, Form, Input, InputNumber, Layout, Select, message, Button} from 'antd';
 import Headers from '../../../layout/header';
 import Footers from '../../../layout/footer';

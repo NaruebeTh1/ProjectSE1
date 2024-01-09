@@ -5,10 +5,7 @@ import {
   Route,
 } from "react-router-dom";
 
-import LoginUser from "./pages/loginPage/loginPage";
-import HomePage from "./pages/homePage/homePage";
-import SettingAccount from "./pages/settingPages/settingAccount";
-import SettingProfile from "./pages/settingPages/settingProfile";
+
 import MyParcelList from './pages/parcelList/myParcelList';
 import PickUpParcelListF from "./pages/pickUpParcel/pickUpParcelList";
 import CreatePickUpParcelList from "./pages/pickUpParcel/createPUPL/createPickUpParcelList";
@@ -32,7 +29,6 @@ const App: React.FC = () => {
     <Router>
             <Routes>
 
-              <Route path="/" element={<LoginUser/>} />
               <Route path="/pages/parcelOverview" element={<ParcelOverview />} />
 
               <Route path="/pages/myParcelList" element={<MyParcelList />} />
@@ -52,11 +48,6 @@ const App: React.FC = () => {
               <Route path="/pages/pickUpParcel/approvedList/PDFReader/:id" element={<PDFReader />} />
               <Route path="/pages/pickUpParcel/forApproval/:id" element={<ApprovalPinkUpParcelList />} />
               <Route path="/pages/pickUpParcel/createExportParcel/:id" element={<CreateExportParcel />} /> 
-              
-              <Route path="/pages/homePage" element={<HomePage />} />
-
-              <Route path="/pages/settingAccount" element={<SettingAccount />} />
-              <Route path="/pages/settingProfile" element={<SettingProfile />} />
 
             </Routes>
     </Router>

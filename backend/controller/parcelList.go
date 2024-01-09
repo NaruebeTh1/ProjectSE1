@@ -139,6 +139,10 @@ func UpdateParcelList(c *gin.Context) {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
+	if _, err := govalidator.ValidateStruct(parcelList); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
 
 	// ค้นหา ParcelList ด้วย id
 	if tx := entity.DB().Where("id = ?", parcelList.ID).First(&result); tx.RowsAffected == 0 {
