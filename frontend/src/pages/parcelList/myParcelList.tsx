@@ -4,8 +4,9 @@ import {
   FileDoneOutlined,
   SearchOutlined,
   DeleteOutlined,
+  FilePdfOutlined,
 } from '@ant-design/icons';
-import { Card, Space, Button, Modal, message} from 'antd';
+import { Card, Space, Button, Modal, message, Layout} from 'antd';
 
 import Highlighter from "react-highlight-words";
 import type { InputRef } from 'antd';
@@ -249,35 +250,43 @@ export default function MyParcelList() {
         <Content style={{backgroundColor:'darkslategrey', minHeight:'100vh'}}>
         <div style={{padding:30}}>
 
-        <div className='parcelListStyle'>
-            <FileDoneOutlined className='iconparcelListStyle'/>
-            รายการพัสดุโรงเรียน
-        </div>
+          <div className='parcelListStyle'>
+              <FileDoneOutlined className='iconparcelListStyle'/>
+              รายการพัสดุโรงเรียน
+          </div>
 
-          <div>
-              <Link to={'/pages/myParcelList/createParcelList'}>
-                <Button className="customAddButton">
-                  <PlusOutlined /> เพิ่มรายการพัสดุ
+          <Layout style={{backgroundColor:'darkslategrey'}}>
+            <div>
+                <Link to={'/pages/myParcelList/createParcelList'}>
+                  <Button className="customAddButton">
+                    <PlusOutlined /> เพิ่มรายการพัสดุ
+                  </Button>
+                </Link>
+
+                <Button className='printParcelListBtn'  onClick={() =>  navigate(`/pages/myParcelList/parcelPDF`)}
+                    >
+                  <FilePdfOutlined /> พิมพ์รายการพัสดุ
                 </Button>
-              </Link>
-          </div>
 
-          <div>
-              <span className="DatablockPL" style={{ marginTop: '-63px', marginLeft:'auto'}}> 
-                    จำนวนรายการพัสดุ <></>
-                    <div style={{display:'inline-block'}}> {dataParcelList.length} </div> <></>
-                    <div style={{ display: 'inline-block' }}> รายการ </div>
-              </span>
-          </div>
+                <div>
+                  <span className="DatablockPL" style={{ marginTop: '-63px', marginLeft:'auto'}}> 
+                        จำนวนรายการพัสดุ <></>
+                        <div style={{display:'inline-block'}}> {dataParcelList.length} </div> <></>
+                        <div style={{ display: 'inline-block' }}> รายการ </div>
+                  </span>  
+                </div>
+            </div>
+            
 
 
-        <Card style={{fontSize:'16px', marginTop:20}}>
-          <Table 
-                  columns={columns} 
-                  dataSource={dataParcelList}
-                  pagination={{ pageSize: 4 }}
-                  size='small'/>
-        </Card>
+            <Card style={{fontSize:'16px', marginTop:20}}>
+              <Table 
+                      columns={columns} 
+                      dataSource={dataParcelList}
+                      pagination={{ pageSize: 4 }}
+                      size='small'/>
+            </Card>
+          </Layout>
 
             <Modal
 

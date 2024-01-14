@@ -37,10 +37,12 @@ export default function CreateParcelListPage() {
             navigate("/pages/myParcelList");
           }, 1000);
         } else {
+            console.log('API Request Payload:', values);         
           messageApi.open({
             type: "error",
-            content: res.message,
+            content: res.message,           
           });
+          
         }
       };
 
@@ -99,7 +101,9 @@ export default function CreateParcelListPage() {
                         <div style={{marginRight:'30px', width:'400px'}}>
                         
                             <div style={{marginTop:'10px'}}>  
-                                <Form.Item style={{ textAlign: 'left'}} name='ParcelNumber' label="รหัสพัสดุ (PID)" rules={[{ required: true, message: "กรุณากรอกข้อมูล" }]}>
+                                <Form.Item style={{ textAlign: 'left'}} name='ParcelNumber' label="รหัสพัสดุ (PID)" 
+                                    rules={[{ required: true, message: "กรุณากรอกข้อมูล" }]}
+                                >
                                     <Input placeholder="เช่น P10001"/>
                                 </Form.Item>
                             </div>
@@ -114,8 +118,8 @@ export default function CreateParcelListPage() {
                                 <Form.Item style={{ textAlign: 'left'}} name='PricePerPiece' label="ราคาต่อชิ้น" 
                                             rules={[{
                                                 required: true,
-                                                validator: (_, value) => {
-                                                if (value === undefined || value === null || value === '') {
+                                                validator: (_, value:number) => {
+                                                if (value === undefined ) {
                                                     return Promise.reject('กรุณากรอกข้อมูล');
                                                 }
                                                 if (value <= 0) {
@@ -125,7 +129,7 @@ export default function CreateParcelListPage() {
                                                 },
                                             }]}
                                             >
-                                    <InputNumber />
+                                    <InputNumber/>
                                 </Form.Item>
                             </div>
 
@@ -133,17 +137,18 @@ export default function CreateParcelListPage() {
                                 <Form.Item style={{ textAlign: 'left'}} name='Volume' label="จำนวนทั้งหมด" 
                                             rules={[{
                                                 required: true,
-                                                validator: (_, value) => {
-                                                if (value === undefined || value === null || value === '') {
+                                                validator: (_, value:number) => {
+                                                if (value === undefined ) {
                                                     return Promise.reject('กรุณากรอกข้อมูล');
                                                 }
-                                                if (value < 0) {
-                                                    return Promise.reject('มากกว่าหรือเท่ากับ 0 เท่านั้น');
+                                                if (value <= 0) {
+                                                    return Promise.reject('มากกว่า 0 เท่านั้น');
                                                 }
                                                 return Promise.resolve();
                                                 },
-                                            }]}>
-                                    <InputNumber />
+                                            }]}
+                                            >
+                                    <InputNumber/>
                                 </Form.Item>
                             </div>
 
@@ -182,8 +187,10 @@ export default function CreateParcelListPage() {
                             </div>    
 
                             <div style={{ marginTop: '10px', marginLeft:'-19px'}}>
-                                <Form.Item style={{ textAlign: 'left' }} name='ParcelDetail' label="รายละเอียดพัสดุ" rules={[{ required: true, message: "กรุณากรอกข้อมูลเพิ่มเติม" }]}>
-                                <Input.TextArea autoSize={{ minRows: 3, maxRows: 6 }} placeholder="รายละเอียดเพิ่มเติม เช่น สี (ถ้ามี) หรือการนำไปใช้งาน" />
+                                <Form.Item style={{ textAlign: 'left' }} name='ParcelDetail' label="รายละเอียดพัสดุ" 
+                                    rules={[{ required: true, message: "กรุณากรอกข้อมูลเพิ่มเติม" }]}
+                                >
+                                <Input.TextArea autoSize={{ minRows: 3, maxRows: 3 }} placeholder="รายละเอียดเพิ่มเติม เช่น สี (ถ้ามี) หรือการนำไปใช้งาน" />
                                 </Form.Item>
                             </div>
 

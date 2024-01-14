@@ -28,7 +28,7 @@
 }
   
 .customAddButton {
-    background-color: #45a;
+    background-color: rgb(56, 172, 192);
     color: #ffffff;
     border: none;
     border-radius: 7px;
@@ -40,7 +40,7 @@
   }
   
 .customAddButton:hover {
-    background-color: rgb(17, 2, 115); 
+    background-color: rgb(6, 104, 134); 
     color: #ffffff !important; 
     transform: scale(1.05);
 }
@@ -218,4 +218,24 @@
     color: aliceblue;
     background-color: rgb(29, 165, 165);
     border-radius: 5px;
+}
+
+
+.printParcelListBtn {
+    background-color: rgb(86, 127, 252);
+    color: #ffffff;
+    border: none;
+    border-radius: 7px;
+    font-size: 16px;
+    margin-top: 20px;
+    padding: 10px 20px;
+    transition: background-color 0.2s, color 0.2s;  
+    height: auto;   
+    margin-left: 10px;
+  }
+  
+.printParcelListBtn:hover {
+    background-color: rgb(7, 31, 212); 
+    color: #ffffff !important; 
+    transform: scale(1.05);
 }

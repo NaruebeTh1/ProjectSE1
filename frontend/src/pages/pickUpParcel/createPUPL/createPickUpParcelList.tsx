@@ -96,7 +96,9 @@ export default function CreatePickUpParcelList() {
 
                 <div style={{marginTop:'30px'}}>
                   <div style={{width:'400px'}}>
-                    <Form.Item style={{ textAlign: 'left'}} name={['BillNumber']} label="เลขที่ใบเบิก"  rules={[{ required: true, message: 'กรุณากรอกข้อมูล' }]}>
+                    <Form.Item style={{ textAlign: 'left'}} name={['BillNumber']} label="เลขที่ใบเบิก"  
+                        rules={[{ required: true, message: 'กรุณากรอกข้อมูล' }]}
+                      >
                       <Input placeholder="เช่น  EXP10001"/>
                     </Form.Item>
                   </div>

@@ -31,10 +31,10 @@ export default function ImportParcelLists() {
   
   const onFinish = async (valueImport: ImportParcelList) => {
     try {
-      const parcelListId = Importform.getFieldValue('ID');
-      valueImport.ParcelListId = parcelListId;
+      //const parcelListId = Importform.getFieldValue('ID');
+      //valueImport.ParcelListId = parcelListId;
       
-      let res = await CreateImportParcelList(valueImport);
+      const res = await CreateImportParcelList(valueImport);
       console.log('API Response:', res); 
   
       if (res.status) {
@@ -46,6 +46,7 @@ export default function ImportParcelLists() {
           navigate("/pages/myParcelList");
         }, 1000);
       } else {
+        console.log('API Request Payload:', valueImport);
         messageApi.open({
           type: "error",
           content: res.message,
@@ -79,19 +80,11 @@ export default function ImportParcelLists() {
   const getParcelListById = async () => {
     try {
       let res = await GetParcelListById(Number(id));
-      if (res && res.ParcelNumber) {
+      if (res) {
         setDataParcelList([res]);
         
         Importform.setFieldsValue({
           ID: res.ID,
-          ParcelNumber: res.ParcelNumber,
-          ParcelName: res.ParcelName,
-          PricePerPiece: res.PricePerPiece,
-          Volume: res.Volume,
-          ParcelDetail: res.ParcelDetail,
-          ParcelTypeId: res.ParcelTypeId,
-          ParcelUnitId: res.ParcelUnitId,
-          RoomId: res.RoomId,
         });
       }
     } catch (error) {
@@ -163,7 +156,7 @@ export default function ImportParcelLists() {
                     
                         <div style={{marginTop:'30px'}}>  
                           <Form.Item style={{ textAlign: 'left'}} name='ImportNumber' label="รหัสการนำเข้า" rules={[{ required: true, message: "กรุณากรอกข้อมูล" }]}>
-                            <Input placeholder="เช่น IMP0001"/>
+                            <Input placeholder="เช่น IMP10001"/>
                           </Form.Item>
                         </div>
 

@@ -21,7 +21,7 @@ export interface ImportParcelList  {
     ImportNumber: string;
     Seller: string;
     ImportDate: string;
-    ParcelList: ParcelList;
+    ParcelList?: ParcelList;
     ParcelListId:number;
     PersonnelId?: number;
     PersonnelName?: InterfacePersonnel;

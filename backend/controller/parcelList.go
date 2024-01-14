@@ -59,7 +59,7 @@ func CreateParcelList(c *gin.Context) {
 	parcel := entity.ParcelList{
 		ParcelUnit: 		parcelunits,         
 		ParcelType: 		parceltype,         
-		Room:    			room,        
+		Room:    			room,     
 
 		ParcelNumber: 		parcellists.ParcelNumber, 
 		ParcelName:  		parcellists.ParcelName,  
@@ -139,6 +139,7 @@ func UpdateParcelList(c *gin.Context) {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
+
 	if _, err := govalidator.ValidateStruct(parcelList); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return

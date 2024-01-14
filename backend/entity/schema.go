@@ -362,12 +362,12 @@ type Room struct {
 
 type ParcelList struct {
 	gorm.Model
- 
-	ParcelNumber 		string 		`gorm:"unique" valid:"required~ParcelNumber is required"`
-	ParcelName 			string		`valid:"required~ParcelName is required"`	
-	PricePerPiece		float32		`valid:"required~PricePerPiece is required,gt=0~PricePerPiece must be more than 0"`
-	Volume				int			`valid:"required~Volume is required,gte=0~Volume must be more than or equal 0"`
-	ParcelDetail 		string		`valid:"required~ParcelDetail is required"`	
+	
+	ParcelNumber 		string 		`gorm:"unique" valid:"required~กรุณากรอกรหัสพัสดุ,matches(^[P]\\d{5}$)~รูปแบบรหัสพัสดุไม่ถูกต้อง"`
+	ParcelName 			string		`valid:"required~กรุณากรอกชื่อรายการพัสดุ"`	
+	PricePerPiece		float32		`valid:"required~ราคาต้องมากกว่า 0 เท่านั้น,isPositivefloat~ราคาต้องมากกว่า 0 เท่านั้น"`
+	Volume				int			` valid:"required~จำนวนต้องมากกว่า 0 เท่านั้น,isPositiveint~จำนวนต้องมากกว่า 0 เท่านั้น"`
+	ParcelDetail 		string		`valid:"required~กรุณากรอกรายละเอียดพัสดุ"`	
 
 	//FK go to ExportParcelList, ImportParcelList
 
@@ -376,30 +376,30 @@ type ParcelList struct {
 
 	//FK ParcelType, Room this here
 	
-	ParcelTypeId uint		`valid:"required~ParcelType is required"`	
+	ParcelTypeId uint			`valid:"required~กรุณาเลือกประเภท"`	
 	ParcelType   ParcelType 	`gorm:"foreignKey:ParcelTypeId"`
 
-	ParcelUnitId uint		`valid:"required~ParcelUnit is required"`
+	ParcelUnitId uint			`valid:"required~กรุณาเลือกหน่วยนับ"`	
 	ParcelUnit   ParcelUnit 	`gorm:"foreignKey:ParcelUnitId"`
 
-	RoomId uint				`valid:"required~Room is required"`
+	RoomId uint					`valid:"required~กรุณาเลือกสถานที่เก็บพัสดุ"`	
 	Room   Room 				`gorm:"foreignKey:RoomId"`
 }
 
 type ImportParcelList struct {
 	gorm.Model
 
-	ImportVolume 		int 		
-	ImportNumber 		string 		`gorm:"unique"`
-	Seller      		string		
+	ImportVolume 		int 		`valid:"required~must be more than 0,isPositiveint~must be more than 0"`
+	ImportNumber 		string 		`gorm:"unique" valid:"required~กรุณากรอกรหัสการนำเข้า,matches(^[I][M][P]\\d{5}$)~รูปแบบรหัสการนำเข้าไม่ถูกต้อง"`
+	Seller      		string		`valid:"required~กรุณากรอกข้อมูลผู้ขาย"`
 	ImportDate			time.Time	
 
 	//FK ParcelList this here 
 
-	ParcelListId *uint		
+	ParcelListId uint			
 	ParcelList   ParcelList 	`gorm:"foreignKey:ParcelListId"`
 
-	PersonnelId *uint			
+	PersonnelId uint			`valid:"required~กรุณาเลือกผู้ตรวจรับพัสดุ"`
 	Personnel   Personnel 		`gorm:"foreignKey:PersonnelId"`
 }
 
@@ -426,31 +426,31 @@ type ParcelType struct {
 type ExportParcelList struct {
 	gorm.Model
 	
-	ExportVolume    	int 		
+	ExportVolume    	int 		`valid:"required~จำนวนต้องมากกว่า 0 เท่านั้น,isPositiveint~จำนวนต้องมากกว่า 0 เท่านั้น"`
 
 	//FK ParcelList, PinkUpParcelList this here
 	
-	ParcelListId *uint						
+	ParcelListId uint						`valid:"required~กรุณาเลือกรายการพัสดุ"`
 	ParcelList   ParcelList 				`gorm:"foreignKey:ParcelListId"`
 
-	PickUpParcelListId *uint				
+	PickUpParcelListId uint				
 	PickUpParcelList   PickUpParcelList 	`gorm:"foreignKey:PickUpParcelListId"`
 }
 
 type PickUpParcelList struct {
 	gorm.Model
 
-	BillNumber			string   	`gorm:"unique"`
-	DetailOfRequest 	string	
+	BillNumber			string   	`gorm:"unique" valid:"required~กรุณากรอกเลขที่ใบเบิก, matches(^[E][X][P]\\d{5}$)~รูปแบบเลขที่ใบเบิกไม่ถูกต้อง"`
+	DetailOfRequest 	string		`valid:"required~กรุณากรอกข้อมูลเหตุผลในการขอเบิก"`
 
-	PUPLDate			time.Time
+	PUPLDate			time.Time   
 
 	//FK PersonnelId this here
 
-	PersonnelId *uint				
+	PersonnelId uint					`valid:"required~กรุณาเลือกผู้ขอเบิกพัสดุ"`
 	Personnel   Personnel 				`gorm:"foreignKey:PersonnelId"`
 
-	PickUpStatusId *uint				
+	PickUpStatusId uint				
 	PickUpStatus   PickUpStatus 		`gorm:"foreignKey:PickUpStatusId"`
 }
 

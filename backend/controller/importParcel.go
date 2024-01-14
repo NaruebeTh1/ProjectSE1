@@ -73,6 +73,7 @@ func CreateImportParcel(c *gin.Context) {
 	importParcelData  := entity.ImportParcelList{
 		Personnel:    	personnels,
 		ParcelList:   	parcellists,
+		
 		ImportNumber: 	importparcels.ImportNumber,
 		ImportVolume: 	importparcels.ImportVolume,
 		Seller:       	importparcels.Seller,

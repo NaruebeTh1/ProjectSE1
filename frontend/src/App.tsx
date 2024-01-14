@@ -22,6 +22,7 @@ import ImportParcelLists from "./pages/parcelList/importParcelList/importParcelL
 import ImportHistory from "./pages/parcelList/detailParcelList/importHistory/importHistorys";
 
 import PDFReader from "./pages/pickUpParcel/document/PDFReader";
+import PDFparcelReader from "./pages/parcelList/docparcelist/parcelPDF";
 
 const App: React.FC = () => {
 
@@ -40,6 +41,8 @@ const App: React.FC = () => {
               <Route path="/pages/myParcelList/importParcelList/:id" element={<ImportParcelLists />} />
 
               <Route path="/pages/pickUpParcel/PDFReader/:id" element={<PDFReader />} />
+
+              <Route path="/pages/myParcelList/parcelPDF" element={<PDFparcelReader />} />
 
               <Route path="/pages/pickUpParcel" element={<PickUpParcelListF />} />
               <Route path="/pages/pickUpParcel/createPickUpParcelList" element={<CreatePickUpParcelList />} />
