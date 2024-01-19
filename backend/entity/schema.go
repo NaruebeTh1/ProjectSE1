@@ -397,10 +397,10 @@ type ImportParcelList struct {
 	//FK ParcelList this here 
 
 	ParcelListId uint			
-	ParcelList   ParcelList 	`gorm:"foreignKey:ParcelListId"`
+	ParcelList   *ParcelList 	`gorm:"foreignKey:ParcelListId"`
 
 	PersonnelId uint			`valid:"required~กรุณาเลือกผู้ตรวจรับพัสดุ"`
-	Personnel   Personnel 		`gorm:"foreignKey:PersonnelId"`
+	Personnel   *Personnel 		`gorm:"foreignKey:PersonnelId"`
 }
 
 type ParcelUnit struct {
@@ -431,10 +431,10 @@ type ExportParcelList struct {
 	//FK ParcelList, PinkUpParcelList this here
 	
 	ParcelListId uint						`valid:"required~กรุณาเลือกรายการพัสดุ"`
-	ParcelList   ParcelList 				`gorm:"foreignKey:ParcelListId"`
+	ParcelList   *ParcelList 				`gorm:"foreignKey:ParcelListId"`
 
 	PickUpParcelListId uint				
-	PickUpParcelList   PickUpParcelList 	`gorm:"foreignKey:PickUpParcelListId"`
+	PickUpParcelList   *PickUpParcelList 	`gorm:"foreignKey:PickUpParcelListId"`
 }
 
 type PickUpParcelList struct {

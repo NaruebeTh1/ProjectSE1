@@ -71,9 +71,8 @@ func CreateImportParcel(c *gin.Context) {
 	}
 
 	importParcelData  := entity.ImportParcelList{
-		Personnel:    	personnels,
-		ParcelList:   	parcellists,
-		
+		PersonnelId: importparcels.PersonnelId,
+		ParcelListId: importparcels.ParcelListId,
 		ImportNumber: 	importparcels.ImportNumber,
 		ImportVolume: 	importparcels.ImportVolume,
 		Seller:       	importparcels.Seller,
@@ -111,3 +110,14 @@ func GetImportParcel(c *gin.Context) {
 	c.JSON(http.StatusOK, gin.H{"data": importparcel})
 }
 
+
+// DELETE /importParcelList/:id
+
+func DeleteImportParcelList(c *gin.Context) {
+	id := c.Param("id")
+	if tx := entity.DB().Exec("DELETE FROM import_parcel_lists WHERE id = ?", id); tx.RowsAffected == 0 {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "ImportParcelList not found"})
+		return
+	}
+	c.JSON(http.StatusOK, gin.H{"data": id})
+}

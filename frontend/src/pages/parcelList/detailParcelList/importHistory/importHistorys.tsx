@@ -2,9 +2,10 @@ import React, { useEffect, useState } from 'react';
 import {
   ArrowLeftOutlined,
   PieChartOutlined,
+  DeleteOutlined,
 } from '@ant-design/icons';
 
-import {Card, Layout} from 'antd';
+import {Button, Card, Layout, Modal, Space, message} from 'antd';
 import '../../style/buttonStyle.css' ;
 import Headers from '../../../../layout/header';
 import Footers from '../../../../layout/footer';
@@ -12,16 +13,45 @@ import { Content } from 'antd/es/layout/layout';
 import { Link, useParams } from 'react-router-dom';
 import Table, { ColumnsType } from 'antd/es/table';
 import { ImportParcelList } from '../../../../interfaces';
-import { GetImportParcelListByParcelListId } from '../../../../services/https';
+import { DeleteImportParcelListById, GetImportParcelListByParcelListId } from '../../../../services/https';
 import moment from 'moment-timezone';
 import 'moment/locale/th'; // Import Thai locale
 moment.locale('th'); // Set Thai locale
 
 export default function ImportHistory() {
 
-    const [dataImportParcelList, setDataImportParcelList] = useState<readonly ImportParcelList[] | undefined>([]);
+  const [dataImportParcelList, setDataImportParcelList] = useState<readonly ImportParcelList[] | undefined>([]);
 
+  const [open, setOpen] = useState(false);
+  const [confirmLoading, setConfirmLoading] = useState(false);
+  const [modalText, setModalText] = useState<String>();
+  const [deleteId, setDeleteId] = useState<Number>();
 
+  const showModal = (val: ImportParcelList) => {
+    setModalText(
+      `คุณแน่ใจหรือไม่ว่าต้องการลบข้อมูลประวัติการนำเข้ารายการพัสดุนี้`
+    );
+    setDeleteId(val.ID);
+    setOpen(true);
+  };
+
+  const handleOk = async () => {
+    setConfirmLoading(true);
+    let res = await DeleteImportParcelListById(deleteId);
+    if (res) {
+      setOpen(false);
+      message.success("ลบข้อมูลสำเร็จ");
+      getImportParcelListByParcelListId();
+    } else {
+      setOpen(false);
+      message.error("เกิดข้อผิดพลาด !");
+    }
+    setConfirmLoading(false);
+  };
+
+  const handleCancel = () => {
+    setOpen(false);
+  };
 
   let { id } = useParams();
 
@@ -90,6 +120,21 @@ export default function ImportHistory() {
       width: '10%',
       align: 'center',
     },
+    {
+      title: 'จัดการข้อมูล',
+      width: '10%',
+      align: 'center',
+
+      render: (record) => (
+
+        <Space style={{flexWrap: 'wrap'}}>
+          <Button className='iconDeletePUPL' onClick={() => showModal(record)}>
+            <DeleteOutlined style={{color: 'white'}}/>
+          </Button>
+        </Space>
+
+      ),
+    },
   ];
 
   return (
@@ -123,6 +168,21 @@ export default function ImportHistory() {
                       size='small'/>
                       
            </Card>
+
+           <Modal
+                  open={open}
+                  onOk={handleOk}
+                  confirmLoading={confirmLoading}
+                  onCancel={handleCancel}
+
+                  title={<span style={{ color: '#FF4B4B', fontSize:20 }}> คำเตือน !! </span>}
+                  style={{fontSize:'16px', minWidth: 400}} 
+                  okText= {<span style={{ color: 'white'}}> ลบข้อมูล </span>}
+                  okButtonProps={{ style: { background: '#0BB6DC', borderColor: '#0BB6DC' } }}
+                  cancelText= {<span style={{ color: 'white'}}> ยกเลิก </span>}
+                  cancelButtonProps={{ style: { background: '#FF4B4B', borderColor: '#FF4B4B' } }}>
+                    <p>{modalText}</p>
+          </Modal>
 
           </div>
       </Content>

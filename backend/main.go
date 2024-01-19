@@ -24,8 +24,9 @@ func main() {
 	router.GET("/getExportParcels/:id", controller.GetExportParcelListByParcelListId)
 
 	router.POST("/parcelLists", controller.CreateParcelList)
-	router.POST("/importparcelLists", controller.CreateImportParcel)
+	router.POST("/importparcelListss", controller.CreateImportParcel)
 	router.DELETE("/parcelList/:id", controller.DeleteParcelList)
+	router.DELETE("/improtparcelList/:id", controller.DeleteImportParcelList)
 	router.DELETE("/deleteImportparcelLists/:id", controller.DeleteImportParcelListByParcelListID)
 	router.DELETE("/deleteExportparcelLists2/:id", controller.DeleteExportParcelListByParcelListID)
 	router.PATCH("/parcelLists", controller.UpdateParcelList)

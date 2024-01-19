@@ -64,8 +64,8 @@ func CreateExportParcel(c *gin.Context) {
 	}
 
 	exportParcelData  := entity.ExportParcelList{
-		PickUpParcelList:   pickUpParcelList,
-		ParcelList:   		parcelLists,
+		ParcelListId: exportparcel.ParcelListId,
+		PickUpParcelListId: exportparcel.PickUpParcelListId,
 		ExportVolume: 		exportparcel.ExportVolume,
 	}
 

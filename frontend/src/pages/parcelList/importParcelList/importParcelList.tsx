@@ -31,8 +31,8 @@ export default function ImportParcelLists() {
   
   const onFinish = async (valueImport: ImportParcelList) => {
     try {
-      //const parcelListId = Importform.getFieldValue('ID');
-      //valueImport.ParcelListId = parcelListId;
+      const parcelListId = Importform.getFieldValue('ID');
+      valueImport.ParcelListId = parcelListId;
       
       const res = await CreateImportParcelList(valueImport);
       console.log('API Response:', res); 

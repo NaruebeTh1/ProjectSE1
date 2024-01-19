@@ -211,8 +211,7 @@ async function CreateImportParcelList(data: ImportParcelList) {
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(data),
   };
-
-  let res = await fetch(`${apiUrl}/importparcelLists`, requestOptions)
+  let res = await fetch(`${apiUrl}/importparcelListss`, requestOptions)
     .then((response) => response.json())
     .then((res) => {
       if (res.data) {
@@ -499,6 +498,25 @@ async function DeleteExportParcelListByParcelListID(id: Number | undefined) {
 }
 
 
+async function DeleteImportParcelListById(id: Number | undefined) {
+  const requestOptions = {
+    method: "DELETE"
+  };
+
+  let res = await fetch(`${apiUrl}/improtparcelList/${id}`, requestOptions)
+    .then((response) => response.json())
+    .then((res) => {
+      if (res.data) {
+        return res.data;
+      } else {
+        return false;
+      }
+    });
+
+  return res;
+}
+
+
 export {
   //ระบบจัดการข้อมูลพัสดุ
     GetParcelType,
@@ -515,6 +533,7 @@ export {
     GetExportParcelListByParcelListId,
     DeleteImportParcelListByParcelListID,
     DeleteExportParcelListByParcelListID,
+    DeleteImportParcelListById,
     
   //ระบบเบิกจ่ายพัสดุ
     GetPickUpParcelListByPickUpStatusId1,
