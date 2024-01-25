@@ -3,9 +3,8 @@
     border-radius: 3px;
     font-size: 16px;
     padding: 20px 40px;
-    margin-right: 10px;
     float:inline-end;
-    background-color:rgb(0, 144, 163);
+    background-color:rgb(52, 192, 211);
     color: #ffffff;
     font-weight: bolder;
     text-align: center;
@@ -28,21 +27,29 @@
 }
   
 .customAddButton {
-    background-color: rgb(56, 172, 192);
+    background-color: #15D0C5;
+    text-shadow: 0em 0 0.5em rgb(92, 92, 92);
     color: #ffffff;
+    font-weight: 500;
     border: none;
     border-radius: 7px;
     font-size: 16px;
     margin-top: 20px;
-    padding: 10px 20px;
-    transition: background-color 0.2s, color 0.2s;  
+    padding: 10px 20px;  
     height: auto;   
+    text-align: center;
+    display:flex;
+    align-items: center;
+    justify-content: center;
   }
   
 .customAddButton:hover {
-    background-color: rgb(6, 104, 134); 
+    background-color: #00b1a5; 
     color: #ffffff !important; 
     transform: scale(1.05);
+}
+.customAddButton:active { 
+    transform: scale(0.95);
 }
   
 
@@ -61,11 +68,14 @@
 .importButton:hover {
     background-color: rgb(54, 191, 255); 
     color: #ffffff !important; 
-    transform: scale(1.01);
+    transform: scale(1.02);
+}
+.importButton:active { 
+    transform: scale(0.95);
 }
 
 .detailButton {
-    background-color: #039b00;
+    background-color: #00919b;
     color: #ffffff;
     border: none;
     border-radius: 7px;
@@ -77,9 +87,12 @@
 }
   
 .detailButton:hover {
-    background-color: rgb(0, 89, 30); 
+    background-color: rgb(0, 98, 110); 
     color: #ffffff !important; 
-    transform: scale(1.01);
+    transform: scale(1.02);
+}
+.detailButton:active { 
+    transform: scale(0.95);
 }
 
 .editButton {
@@ -95,21 +108,31 @@
 }
   
 .editButton:hover {
-    background-color: #775fff; 
+    background-color: #775fff!important;
     color: #ffffff !important; 
-    transform: scale(1.01);
+    transform: scale(1.02);
+}
+.editButton:active { 
+    transform: scale(0.95);
 }
 
 .iconDelete {
     background-color: #FF6060;
     border: none;
     border-radius: 7px;
+    text-align: center;
+    display:flex;
+    align-items: center;
+    justify-content: center;
     transition: background-color 0.2s, color 0.2s; 
 }
   
 .iconDelete:hover {
     background-color: #ee3e3e; 
-    transform: scale(1.01);
+    transform: scale(1.02);
+}
+.iconDelete:active { 
+    transform: scale(0.95);
 }
 
 
@@ -128,8 +151,8 @@
 
 .CreatePLCard {
     margin-top: 20px;
-    box-shadow: 0em 0 0.5em rgb(255, 94, 0);
-    height: 400px;
+    box-shadow: 0em 0 0.5em rgb(190, 190, 190);
+    height: auto;
 }
 
 .CreatePLfrom {
@@ -138,7 +161,7 @@
 
 
 .AddParcelListButton {
-    background-color: rgb(184, 50, 105);
+    background-color: #E63373 ;
     color: #ffffff;
     border: none;
     border-radius: 7px;
@@ -149,13 +172,15 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    transition: background-color 0.2s, color 0.2s; 
   }
   
 .AddParcelListButton:hover {
-    background-color: rgb(155, 1, 65); 
+    background-color: #ac2252; 
     color: #ffffff !important; 
     transform: scale(1.05);
+}
+.AddParcelListButton:active { 
+    transform: scale(0.95);
 }
 
 
@@ -163,9 +188,9 @@
     font-size: 18px;
     font-weight: bold;
     display: flex;
-    padding: 20px;
-    background-color: rgb(169, 241, 217);
-    border-radius: 10px;
+    padding: 15px;
+    background-color: rgb(126, 247, 206);
+    border-radius: 8px;
   }
 
   .titleOfImportParcelList div {
@@ -178,7 +203,7 @@
     font-weight: bold;
     display: flex;
     padding: 16px;
-    background-color: rgb(169, 241, 217);
+    background-color: rgb(126, 247, 206);
     border-radius: 10px;
 
   }
@@ -191,7 +216,7 @@
 
 
 .ButtonImportHistory {
-    background-color: rgb(50, 153, 184);
+    background-color: rgb(35, 189, 189);
     color: #ffffff;
     border: none;
     border-radius: 3px;
@@ -203,9 +228,12 @@
   }
   
 .ButtonImportHistory:hover {
-    background-color: rgb(1, 93, 155); 
+    background-color: rgb(11, 126, 134); 
     color: #ffffff !important; 
     transform: scale(1.05);
+}
+.ButtonImportHistory:active { 
+    transform: scale(0.95);
 }
 
 
@@ -213,29 +241,56 @@
     margin-top: 10px;
     font-size: 20px;
     text-align: left;
-    padding: 20px;
+    padding: 25px;
     padding-left: 20px !important;
     color: aliceblue;
-    background-color: rgb(29, 165, 165);
+    background-color: rgb(1, 175, 175);
     border-radius: 5px;
 }
 
 
 .printParcelListBtn {
-    background-color: rgb(86, 127, 252);
+    background-color: #02c292;
+    text-shadow: 0em 0 0.5em rgb(92, 92, 92);
     color: #ffffff;
     border: none;
     border-radius: 7px;
     font-size: 16px;
     margin-top: 20px;
-    padding: 10px 20px;
-    transition: background-color 0.2s, color 0.2s;  
+    padding: 10px 20px; 
     height: auto;   
     margin-left: 10px;
+    text-align: center;
+    display:flex;
+    align-items: center;
+    justify-content: center;
   }
   
 .printParcelListBtn:hover {
-    background-color: rgb(7, 31, 212); 
+    background-color: rgb(15, 146, 124); 
     color: #ffffff !important; 
     transform: scale(1.05);
+}
+.printParcelListBtn:active { 
+    transform: scale(0.95);
+}
+
+.BGstyle2 {
+    min-height: 100vh;
+    background-color: rgb(30, 105, 105);
+  }
+
+  .BGstyle3 {
+    background-color: rgb(30, 105, 105);
+  }
+
+.cardParcelList {
+    box-shadow: 0em 0 0.5em rgb(185, 247, 255);
+    font-size: 16px;
+    margin-top: 20px;
+    height: auto;
+}
+
+.test {
+    background-color: #ecfffd;
 }

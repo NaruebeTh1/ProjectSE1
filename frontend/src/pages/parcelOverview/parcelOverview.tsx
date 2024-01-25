@@ -18,7 +18,6 @@ import {
   InterfaceParcelUnit, 
   PickUpParcelList } from '../../interfaces';
 
-
 export default function ParcelOverview() {
 
   const [dataParcelType, setDataParcelType] = useState<InterfaceParcelType[]>([]);
@@ -110,23 +109,22 @@ const columnsParcelUnit: ColumnsType<InterfaceParcelUnit> = [
     align: 'center',
   },
 ];
-
-
   
   return (
     <> 
     <Headers />
-      <Content style={{backgroundColor:'darkslategray', minHeight:'100vh'}}>
+      <Content className='BGstyle'>
           <div style={{padding:30, textAlign:'center'}}>
 
-            <Space direction="horizontal" size="middle" style={{flexWrap: 'wrap', justifyContent: 'center'}}>
+            <Space direction="horizontal" size="middle" 
+                   style={{flexWrap: 'wrap', justifyContent: 'center',margin:'4%'}}>
 
               <Card title="ภาพรวมข้อมูลจำนวนรายการของงานพัสดุโรงเรียน" style={{height:'450px'}}>
 
 
                 <div style={{marginTop:'0px'}}>
 
-                <div className="titleValueParcelLIST"> 
+                  <div className="titleValueParcelLIST"> 
                         จำนวนรายการข้อมูลพัสดุ
                         <div className="counttitleValueParcelLIST"> {dataParcelList.length} </div>
                         <div style={{ display: 'inline-block', fontSize:'14px'}}> รายการ </div>
@@ -157,7 +155,7 @@ const columnsParcelUnit: ColumnsType<InterfaceParcelUnit> = [
                       columns={columnsParcelType} 
                       dataSource={dataParcelType} 
                       size="small"
-                      pagination={{ pageSize: 5 }}/>
+                      pagination={{ pageSize: 7 }}/>
               </Card>
 
               <Card title="ตารางแสดงรายการหน่วยนับพัสดุ" style={{width:'400px', height:'450px'}}>
@@ -166,7 +164,7 @@ const columnsParcelUnit: ColumnsType<InterfaceParcelUnit> = [
                       columns={columnsParcelUnit} 
                       dataSource={dataParcelUnit} 
                       size="small" 
-                      pagination={{ pageSize: 5 }}/>
+                      pagination={{ pageSize: 7 }}/>
 
               </Card>
             </Space>

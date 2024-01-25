@@ -4,8 +4,9 @@ import {
   PieChartOutlined,
   DeleteOutlined,
 } from '@ant-design/icons';
-
-import {Button, Card, Layout, Modal, Space, message} from 'antd';
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import {Button, Card, Layout, Modal, Space} from 'antd';
 import '../../style/buttonStyle.css' ;
 import Headers from '../../../../layout/header';
 import Footers from '../../../../layout/footer';
@@ -22,6 +23,7 @@ export default function ImportHistory() {
 
   const [dataImportParcelList, setDataImportParcelList] = useState<readonly ImportParcelList[] | undefined>([]);
 
+ 
   const [open, setOpen] = useState(false);
   const [confirmLoading, setConfirmLoading] = useState(false);
   const [modalText, setModalText] = useState<String>();
@@ -40,11 +42,11 @@ export default function ImportHistory() {
     let res = await DeleteImportParcelListById(deleteId);
     if (res) {
       setOpen(false);
-      message.success("ลบข้อมูลสำเร็จ");
+      toast.success("ลบข้อมูลสำเร็จ");
       getImportParcelListByParcelListId();
     } else {
       setOpen(false);
-      message.error("เกิดข้อผิดพลาด !");
+      toast.error("เกิดข้อผิดพลาด ! " + res.message);
     }
     setConfirmLoading(false);
   };
@@ -128,7 +130,7 @@ export default function ImportHistory() {
       render: (record) => (
 
         <Space style={{flexWrap: 'wrap'}}>
-          <Button className='iconDeletePUPL' onClick={() => showModal(record)}>
+          <Button className='iconDelete' onClick={() => showModal(record)}>
             <DeleteOutlined style={{color: 'white'}}/>
           </Button>
         </Space>
@@ -140,9 +142,20 @@ export default function ImportHistory() {
   return (
     <> 
     <Headers />
-      <Content style={{ backgroundColor:'darkslategrey', minHeight:'100vh' }}>
+        <ToastContainer
+          position="top-center"
+          autoClose={2000}
+          hideProgressBar={false}
+          newestOnTop={false}
+          closeOnClick
+          rtl={false}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
+          theme="light"/>
+      <Content className='BGstyle2'>
           <div style={{padding:30, textAlign:'center'}}>
-            <Layout style={{ backgroundColor: 'darkslategrey'}}>
+            <Layout className='BGstyle3'>
                 <div className='titleOfCreateParcel'>
 
                 <Link to={`/pages/myParcelList/detailParcelList/${id}`} style={{marginRight: 'auto', color: 'white', float:'left'}}>
@@ -160,7 +173,7 @@ export default function ImportHistory() {
                 </div>
             </Layout>
 
-           <Card style={{fontSize:'16px', marginTop:10}}>
+           <Card style={{fontSize:'16px', marginTop:10, minHeight:'400px',boxShadow: '0em 0 0.5em rgb(185, 247, 255)', height:'auto'}}>
               <Table 
                       columns={columnsImport} 
                       dataSource={dataImportParcelList}
@@ -176,7 +189,7 @@ export default function ImportHistory() {
                   onCancel={handleCancel}
 
                   title={<span style={{ color: '#FF4B4B', fontSize:20 }}> คำเตือน !! </span>}
-                  style={{fontSize:'16px', minWidth: 400}} 
+                  style={{fontSize:'16px', minWidth: 500}} 
                   okText= {<span style={{ color: 'white'}}> ลบข้อมูล </span>}
                   okButtonProps={{ style: { background: '#0BB6DC', borderColor: '#0BB6DC' } }}
                   cancelText= {<span style={{ color: 'white'}}> ยกเลิก </span>}

@@ -11,17 +11,18 @@
     margin-top: 5px;
     font-size: 18px;
     text-align: left;
-    padding: 20px;
+    padding: 25px;
     padding-left: 20px !important;
     color: aliceblue;
-    background-color: rgb(69, 122, 122);
+    background-color: rgb(2, 189, 189);
     border-radius: 5px;
 }
 
 
 .PUPLCard {
     margin-top: 20px;
-    box-shadow: 0em 0 0.5em rgb(0, 208, 255);
+    box-shadow: 0em 0 0.5em rgb(67, 235, 221);
+    height: auto;
 }
 
 .PUPLfrom {
@@ -34,7 +35,7 @@
 
 
 .customAddPUPListButton {
-    background-color: rgb(184, 50, 105);
+    background-color: #E63373;
     color: #ffffff;
     border: none;
     border-radius: 7px;
@@ -45,13 +46,15 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    transition: background-color 0.2s, color 0.2s; 
   }
   
 .customAddPUPListButton:hover {
-    background-color: rgb(155, 1, 65); 
+    background-color: #ac2252; 
     color: #ffffff !important; 
     transform: scale(1.05);
+}
+.customAddPUPListButton:active { 
+    transform: scale(0.95);
 }
 
 
@@ -75,6 +78,9 @@
     color: #ffffff !important; 
     transform: scale(1.05);
 }
+.AddListPL:active { 
+    transform: scale(0.95);
+}
 
 
 .AddParcelListforExport{
@@ -88,11 +94,44 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    transition: background-color 0.2s, color 0.2s; 
   }
   
 .AddParcelListforExport:hover {
     background-color: rgb(24, 142, 172); 
     color: #ffffff !important; 
     transform: scale(1.05);
+}
+
+.AddParcelListforExport:active {
+    transform: scale(0.95);
+}
+
+
+.BGPpuplstyle2 {
+    min-height: 100vh;
+    background-color: rgb(30, 105, 105);
+  }
+
+  .BGPpuplstyle3 {
+    background-color: rgb(30, 105, 105);
+  }
+
+  .cardPupl {
+    box-shadow: 0em 0 0.5em rgb(185, 247, 255);
+    font-size: 16px;
+    margin-top: 20px;
+    height: auto;
+}
+
+.DatablockPupl {
+    border: none;
+    border-radius: 3px;
+    font-size: 16px;
+    padding: 20px 40px;
+    float: right; 
+    background-color:rgb(52, 192, 211);
+    color: #ffffff;
+    font-weight: bolder;
+    text-align: center;
+    margin-left: auto 
 }

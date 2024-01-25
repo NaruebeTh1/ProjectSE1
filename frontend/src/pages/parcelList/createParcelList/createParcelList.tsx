@@ -4,8 +4,9 @@ import {
     FileAddOutlined,
     PlusOutlined,
 } from '@ant-design/icons';
-
-import { Button, Card, Form, Input, InputNumber, Layout, Select, message} from 'antd';
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { Button, Card, Form, Input, InputNumber, Layout, Select} from 'antd';
 import '../style/buttonStyle.css' ;
 import Headers from '../../../layout/header';
 import Footers from '../../../layout/footer';
@@ -20,7 +21,6 @@ export default function CreateParcelListPage() {
 
     const [Addform] = Form.useForm();
     const navigate = useNavigate();
-    const [messageApi, contextHolder] = message.useMessage();
     const [dataParcelType, setDataParcelType] = useState<InterfaceParcelType[]>([]);
     const [dataParcelUnit, setDataParcelUnit] = useState<InterfaceParcelUnit[]>([]);
     const [dataRoom, setDataRoom] = useState<InterfaceRoom[]>([]);
@@ -29,20 +29,12 @@ export default function CreateParcelListPage() {
     
         let res = await CreateParcelList(values);
         if (res.status) {
-          messageApi.open({
-            type: "success",
-            content: "บันทึกข้อมูลสำเร็จ",
-          });
+          toast.success("บันทึกข้อมูลสำเร็จ");
           setTimeout(function () {
             navigate("/pages/myParcelList");
           }, 1000);
         } else {
-            console.log('API Request Payload:', values);         
-          messageApi.open({
-            type: "error",
-            content: res.message,           
-          });
-          
+          toast.error(res.message);
         }
       };
 
@@ -78,10 +70,21 @@ export default function CreateParcelListPage() {
     return (
         <> 
         <Headers />
-            <Content style={{backgroundColor:'darkslategrey' , minHeight:'100vh'}}>
+            <ToastContainer
+            position="top-center"
+            autoClose={2000}
+            hideProgressBar={false}
+            newestOnTop={false}
+            closeOnClick
+            rtl={false}
+            pauseOnFocusLoss
+            draggable
+            pauseOnHover
+            theme="light"/>
+            <Content className='BGstyle2'>
             <div style={{padding:30,minHeight: "100%", textAlign:'center'}}>
 
-                <Layout style={{ backgroundColor: 'darkslategrey'}}>
+                <Layout className='BGstyle3'>
                     <div className='titleOfCreateParcel'>
 
                     <Link to={'/pages/myParcelList'} style={{marginRight: 'auto', color: 'white', float:'left'}}>
@@ -91,83 +94,127 @@ export default function CreateParcelListPage() {
                    
                     <FileAddOutlined style={{ fontSize: '30px', marginRight: '10px' }}/> สร้างรายการพัสดุ      
                     </div>
-                </Layout>
+                </Layout>         
 
-                {contextHolder}
-
-                <Card className='CreatePLCard' style={{ height: 'auto' , minHeight:'400px'}}>
+                <Card className='CreatePLCard' style={{ height: 'auto' , minHeight:'510px', background:'#e3f7f5' }}>
                     <Form layout="inline" name="parcel-form" form={Addform} className='CreatePLfrom' onFinish={onFinish} autoComplete="off">
 
-                        <div style={{marginRight:'30px', width:'400px'}}>
+                        <div style={{width:'420px',marginTop:'20px'}}>
                         
-                            <div style={{marginTop:'10px'}}>  
-                                <Form.Item style={{ textAlign: 'left'}} name='ParcelNumber' label="รหัสพัสดุ (PID)" 
-                                    rules={[{ required: true, message: "กรุณากรอกข้อมูล" }]}
+                            <div style={{ marginTop: '10px'}}>
+                                <Form.Item
+                                    style={{ textAlign: 'left', background: '#27948b', padding: '8px', borderRadius: '4px', color: 'white' }}
+                                    name='ParcelNumber'
+                                    label={
+                                        <div style={{ display: 'flex', alignItems: 'center' }}>
+                                            <span style={{ fontWeight: 'bold', color:'white'}}>รหัสพัสดุ (PID)</span>
+                                        </div>
+                                    }
+                                    rules={[{ required: true, message: 'กรุณากรอกข้อมูล' }]}
                                 >
-                                    <Input placeholder="เช่น P10001"/>
+                                    <Input placeholder='เช่น P10001' />
                                 </Form.Item>
                             </div>
 
+
                             <div style={{marginTop:'10px'}}>  
-                                <Form.Item style={{ textAlign: 'left'}} name='ParcelName' label="ชื่อรายการพัสดุ" rules={[{ required: true, message: "กรุณากรอกข้อมูล" }]}>
+                                <Form.Item 
+                                    style={{ textAlign: 'left', background: '#27948b', padding: '8px', borderRadius: '4px', color: 'white' }}
+                                    name='ParcelName' 
+                                    label={
+                                        <div style={{ display: 'flex', alignItems: 'center' }}>
+                                          <span style={{ fontWeight: 'bold', color:'white'}}> ชื่อรายการพัสดุ </span>
+                                        </div>
+                                    }
+                                    rules={[{ required: true, message: "กรุณากรอกข้อมูล" }]}>
                                     <Input placeholder="เช่น กระดาษถ่ายเอกสาร ชนิด 70 แกรม ขนาด A4"/>
                                 </Form.Item>
                             </div>
 
-                            <div style={{marginTop:'10px', marginLeft:'25px'}}>  
-                                <Form.Item style={{ textAlign: 'left'}} name='PricePerPiece' label="ราคาต่อชิ้น" 
-                                            rules={[{
-                                                required: true,
-                                                validator: (_, value:number) => {
-                                                if (value === undefined ) {
-                                                    return Promise.reject('กรุณากรอกข้อมูล');
+                            <div style={{marginTop:'10px'}}>  
+                                <Form.Item 
+                                    style={{ textAlign: 'left', background: '#27948b', padding: '8px', borderRadius: '4px', color: 'white'}}
+                                    name='PricePerPiece' 
+                                    label={
+                                        <div style={{ display: 'flex', alignItems: 'center' , marginLeft:'25px'}}>
+                                          <span style={{ fontWeight: 'bold', color:'white'}}> ราคาต่อชิ้น </span>
+                                        </div>
+                                    }                                            
+                                    rules={[{                                                
+                                        required: true,                                               
+                                        validator: (_, value) => {                                      
+                                            if (value === undefined || value === null || value === '') {
+                                                    return Promise.reject('กรุณากรอกข้อมูล');                                           
                                                 }
-                                                if (value <= 0) {
-                                                    return Promise.reject('มากกว่า 0 เท่านั้น');
-                                                }
+                                                // if (value <= 0) {
+                                                //     return Promise.reject('มากกว่า 0 เท่านั้น');
+                                                // }
                                                 return Promise.resolve();
-                                                },
-                                            }]}
-                                            >
-                                    <InputNumber/>
+                                            },
+                                        }]}
+                                >
+                                    <InputNumber placeholder="เช่น 1, 2"/>
                                 </Form.Item>
                             </div>
 
-                            <div style={{marginTop:'10px', marginLeft:'7px'}}>  
-                                <Form.Item style={{ textAlign: 'left'}} name='Volume' label="จำนวนทั้งหมด" 
-                                            rules={[{
-                                                required: true,
-                                                validator: (_, value:number) => {
-                                                if (value === undefined ) {
+                            <div style={{marginTop:'10px'}}>  
+                                <Form.Item 
+                                    style={{ textAlign: 'left', background: '#27948b', padding: '8px', borderRadius: '4px', color: 'white'}}
+                                    name='Volume' 
+                                    label={
+                                        <div style={{ display: 'flex', alignItems: 'center' , marginLeft:'7px'}}>
+                                          <span style={{ fontWeight: 'bold', color:'white'}}> จำนวนทั้งหมด </span>
+                                        </div>
+                                    }  
+                                        rules={[{
+                                            required: true,
+                                            validator: (_, value) => {
+                                                if (value === undefined || value === null || value === '') {
                                                     return Promise.reject('กรุณากรอกข้อมูล');
                                                 }
-                                                if (value <= 0) {
-                                                    return Promise.reject('มากกว่า 0 เท่านั้น');
-                                                }
+                                                // if (value < 0) {
+                                                //     return Promise.reject('มากกว่าหรือเท่ากับ 0 เท่านั้น');
+                                                // }
                                                 return Promise.resolve();
-                                                },
-                                            }]}
-                                            >
-                                    <InputNumber/>
+                                            },
+                                        }]}
+                                >
+                                    <InputNumber placeholder="เช่น 1, 2"/>
                                 </Form.Item>
                             </div>
 
                         </div>
 
-                        <div style={{marginRight:'20px', width:'400px'}}>
+                        <div style={{width:'420px',marginTop:'20px'}}>
 
                             <div style={{marginTop:'10px'}}>
-                                <Form.Item style={{ textAlign: 'left'}} name='ParcelTypeId' label="ประเภทพัสดุ" rules={[{ required: true, message: "กรุณาเลือกประเภท" }]}>
+                                <Form.Item 
+                                    style={{ textAlign: 'left', background: '#27948b', padding: '8px', borderRadius: '4px', color: 'white'}}
+                                    name='ParcelTypeId' 
+                                    label={
+                                        <div style={{ display: 'flex', alignItems: 'center',marginRight:'20px'}}>
+                                          <span style={{ fontWeight: 'bold', color:'white'}}> ประเภทพัสดุ </span>
+                                        </div>
+                                    }
+                                    rules={[{ required: true, message: "กรุณาเลือกประเภท",  }]} >
                                     <Select placeholder="เลือกประเภทพัสดุ"> 
-                                    {dataParcelType.map((item) => (
-                                        <Option value={item.ID} key={item.ParcelType}>{item.ParcelType}</Option>
-                                    ))}
+                                        {dataParcelType.map((item) => (
+                                            <Option value={item.ID} key={item.ParcelType}>{item.ParcelType}</Option>
+                                        ))}
                                     </Select>
                                 </Form.Item>
                             </div>
 
-                            <div style={{marginTop:'10px',marginLeft:'-3px'}}>
-                                <Form.Item style={{ textAlign: 'left'}} name="ParcelUnitId" label="หน่วยนับพัสดุ" rules={[{ required: true, message: "กรุณาเลือกหน่วยนับ" }]}>
+                            <div style={{marginTop:'10px'}}>
+                                <Form.Item 
+                                    style={{ textAlign: 'left', background: '#27948b', padding: '8px', borderRadius: '4px', color: 'white'}}
+                                    name="ParcelUnitId" 
+                                    label={
+                                        <div style={{ display: 'flex', alignItems: 'center',marginRight:'17px'}}>
+                                          <span style={{ fontWeight: 'bold', color:'white'}}> หน่วยนับพัสดุ </span>
+                                        </div>
+                                    } 
+                                    rules={[{ required: true, message: "กรุณาเลือกหน่วยนับ" }]}>
                                     <Select placeholder="เลือกหน่วยนับพัสดุ">
                                     {dataParcelUnit.map((item) => (
                                         <Option value={item.ID} key={item.ParcelUnit}>{item.ParcelUnit}</Option>
@@ -177,7 +224,16 @@ export default function CreateParcelListPage() {
                             </div>
 
                             <div style={{marginTop:'10px'}}>
-                                <Form.Item style={{ textAlign: 'left'}} name='RoomId' label="ห้องเก็บพัสดุ" rules={[{ required: true, message: "กรุณาเลือกสถานที่เก็บพัสดุ" }]}>
+                                <Form.Item 
+                                    style={{ textAlign: 'left', background: '#27948b', padding: '8px', borderRadius: '4px', color: 'white'}}
+                                    name='RoomId' 
+                                    label={
+                                        <div style={{ display: 'flex', alignItems: 'center',marginRight:'22px'}}>
+                                          <span style={{ fontWeight: 'bold', color:'white'}}> ห้องเก็บพัสดุ </span>
+                                        </div>
+                                    }  
+                                    rules={[{ required: true, message: "กรุณาเลือกสถานที่เก็บพัสดุ" }]}>
+
                                     <Select placeholder="เลือกสถานที่จัดเก็บพัสดุ">
                                         {dataRoom.map((item) => (
                                             <Option value={item.ID} key={item.RoomName}>{item.RoomName}</Option>
@@ -186,17 +242,23 @@ export default function CreateParcelListPage() {
                                 </Form.Item>
                             </div>    
 
-                            <div style={{ marginTop: '10px', marginLeft:'-19px'}}>
-                                <Form.Item style={{ textAlign: 'left' }} name='ParcelDetail' label="รายละเอียดพัสดุ" 
-                                    rules={[{ required: true, message: "กรุณากรอกข้อมูลเพิ่มเติม" }]}
-                                >
-                                <Input.TextArea autoSize={{ minRows: 3, maxRows: 3 }} placeholder="รายละเอียดเพิ่มเติม เช่น สี (ถ้ามี) หรือการนำไปใช้งาน" />
+                            <div style={{ marginTop: '10px'}}>
+                                <Form.Item 
+                                    style={{ textAlign: 'left', background: '#27948b', padding: '8px', borderRadius: '4px', color: 'white'}}
+                                    name='ParcelDetail' 
+                                    label={
+                                        <div style={{ display: 'flex', alignItems: 'center'}}>
+                                          <span style={{ fontWeight: 'bold', color:'white'}}> รายละเอียดพัสดุ </span>
+                                        </div>
+                                    } 
+                                    rules={[{ required: true, message: "กรุณากรอกข้อมูลเพิ่มเติม" }]}>
+                                    <Input.TextArea autoSize={{ minRows: 3, maxRows: 6 }} placeholder="รายละเอียดเพิ่มเติม เช่น สี (ถ้ามี) หรือการนำไปใช้งาน" />
                                 </Form.Item>
                             </div>
 
                             <div style={{ float: 'right', marginRight: '18px' }}>
                                 <Button className='AddParcelListButton' htmlType="submit">
-                                <PlusOutlined /> สร้างรายการพัสดุ
+                                <PlusOutlined /> บันทึกรายการพัสดุ
                                 </Button>
                             </div>      
                         </div>

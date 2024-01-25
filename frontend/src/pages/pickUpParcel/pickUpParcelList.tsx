@@ -6,8 +6,10 @@ import {
   DeleteOutlined,
   FilePdfOutlined,
 } from '@ant-design/icons';
-import { Card, Space, Button, message, Modal} from 'antd';
+import { Card, Space, Button, Modal} from 'antd';
 
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import Highlighter from "react-highlight-words";
 import type { InputRef } from 'antd';
 import { Input, Table } from 'antd';
@@ -71,12 +73,12 @@ export default function PickUpParcelListF() {
     let res = await DeletePickUpParcelListByID(deleteId);
     if (res) {
       setOpen(false);
-      message.success("ลบข้อมูลสำเร็จ");
+      toast.success("ลบข้อมูลสำเร็จ");
       getPickUpParcelListWaitingForApproval();
       DeleteExportParcelListByPickUpParcelListID(deleteId);
     } else {
       setOpen(false);
-      message.error("เกิดข้อผิดพลาด !");
+      toast.error("เกิดข้อผิดพลาด ! " + res.message);
     }
     setConfirmLoading(false);
   };
@@ -245,8 +247,18 @@ export default function PickUpParcelListF() {
   return (
     <> 
         <Headers/>
-        
-        <Content style={{backgroundColor:'darkslategrey',minHeight: "100vh"}}>
+            <ToastContainer
+              position="top-center"
+              autoClose={2000}
+              hideProgressBar={false}
+              newestOnTop={false}
+              closeOnClick
+              rtl={false}
+              pauseOnFocusLoss
+              draggable
+              pauseOnHover
+              theme="light"/>     
+        <Content className='BGPpuplstyle2'>
         <div style={{padding:30}}>
 
           <div className='titlePUPL'>
@@ -254,7 +266,7 @@ export default function PickUpParcelListF() {
                 รายการเบิกจ่ายพัสดุ
           </div>
 
-          <div style={{ display: 'flex'}}>
+          <div style={{ display: 'flex', flexWrap:'wrap'}}>
             <div>
                 <Link to={'/pages/pickUpParcel/createPickUpParcelList'}>
                   <Button className="AddPUPButton">
@@ -263,24 +275,31 @@ export default function PickUpParcelListF() {
                 </Link>
             </div>
 
-            <div style={{ display: 'flex', marginLeft:'auto'}}>
-
-              <div style={{ marginLeft:'20px'}}>
+            <div style={{ display: 'flex'}}>
+              <div style={{ marginLeft:'10px'}}>
                   <Link to={'/pages/pickUpParcel/approvedList'}>
-                    <Button className="AddPUPButton">
+                    <Button className="AddPUPButton2">
                       รายการอนุมัติแล้ว
                     </Button>
                   </Link>
               </div>
             </div>
+
+            <div style={{marginLeft:'auto'}}>
+              <span className="DatablockPupl" style={{ marginLeft:'10px'}}> 
+                  จำนวนรายการเบิกจ่ายพัสดุ <></>
+                  <div style={{display:'inline-block'}}> {dataPickUpParcelList.length} </div> <></>
+                  <div style={{ display: 'inline-block' }}> รายการ </div>
+              </span>  
+            </div>
           </div>
 
 
-        <Card style={{fontSize:'16px', marginTop:20}}>
+        <Card className='cardPupl' style={{minHeight:'440px'}}>
           <Table 
                   columns={columns} 
                   dataSource={dataPickUpParcelList}
-                  pagination={{ pageSize: 4 }}
+                  pagination={{ pageSize: 6 }}
                   size='small'/>
         </Card>
 

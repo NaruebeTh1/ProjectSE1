@@ -28,23 +28,52 @@
 }
   
 .AddPUPButton {
-    background-color: #45a;
+    background-color: #15D0C5;
     color: #ffffff;
     border: none;
     border-radius: 7px;
     font-size: 16px;
     margin-top: 20px;
-    padding: 10px 20px;
-    transition: background-color 0.2s, color 0.2s;  
+    padding: 10px 20px; 
     height: auto;  
+    text-align: center;
+    display:flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .AddPUPButton:hover {
-    background-color: rgb(17, 2, 115);
+    background-color: #00b1a5;
     color: #ffffff !important;
     transform: scale(1.05);
 }
+.AddPUPButton:active { 
+    transform: scale(0.95);
+}
 
+.AddPUPButton2 {
+    background-color: #8943fa;
+    color: #ffffff;
+    border: none;
+    border-radius: 7px;
+    font-size: 16px;
+    margin-top: 20px;
+    padding: 10px 20px; 
+    height: auto;  
+    text-align: center;
+    display:flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.AddPUPButton2:hover {
+    background-color: #6c35c5;
+    color: #ffffff !important;
+    transform: scale(1.05);
+}
+.AddPUPButton2:active { 
+    transform: scale(0.95);
+}
   
 
 .printPDF {
@@ -63,6 +92,9 @@
     background-color: rgb(0, 71, 104); 
     color: #ffffff !important; 
     transform: scale(1.01);
+}
+.printPDF:active { 
+    transform: scale(0.95);
 }
 
 
@@ -83,17 +115,27 @@
     color: #ffffff !important; 
     transform: scale(1.01);
 }
+.editButtonPUPL:active {
+    transform: scale(0.95);
+}
 
 .iconDeletePUPL {
     background-color: #FF6060;
     border: none;
     border-radius: 7px;
     transition: background-color 0.2s, color 0.2s; 
+    text-align: center;
+    display:flex;
+    align-items: center;
+    justify-content: center;
 }
   
 .iconDeletePUPL:hover {
     background-color: #ee3e3e; 
     transform: scale(1.01);
+}
+.iconDeletePUPL:active { 
+    transform: scale(0.95);
 }
 
 
@@ -127,13 +169,15 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    transition: background-color 0.2s, color 0.2s; 
 }
   
 .ApprovalButton:hover {
     background-color: #d62f67; 
     color: #ffffff !important; 
     transform: scale(1.01);
+}
+.ApprovalButton:active { 
+    transform: scale(0.95);
 }
 
 .AddParcelButton {
@@ -144,14 +188,16 @@
     text-align: center;
     display: flex;
     align-items: center;
-    justify-content: center;
-    transition: background-color 0.2s, color 0.2s; 
+    justify-content: center; 
 }
   
 .AddParcelButton:hover {
     background-color: #856c00; 
     color: #ffffff !important; 
     transform: scale(1.01);
+}
+.AddParcelButton:active { 
+    transform: scale(0.95);
 }
 
 
@@ -164,5 +210,5 @@
     align-items: center;
     justify-content: center;
     padding: 0px 20px;
-    width: 120px;
+    width: 170px;
 }

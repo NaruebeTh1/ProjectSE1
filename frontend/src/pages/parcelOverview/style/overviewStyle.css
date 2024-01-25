@@ -1,9 +1,12 @@
-
+.BGstyle {
+  min-height: 100vh;
+  background-color: rgb(30, 105, 105);
+}
 .titleValueParcel {
     margin-bottom: 20px;
     padding: 10px;
     color: aliceblue;
-    background-color: #9e1040;
+    background-color: #c52b61;
     border-radius: 7px;
     font-size: 14px;
 }
@@ -12,14 +15,14 @@
   margin-bottom: 20px;
   padding: 10px;
   color: aliceblue;
-  background-color: #125780;
+  background-color: #05cec0;
   border-radius: 7px;
   font-size: 14px;
 }
 .counttitleValueParcelLIST {
   display: inline-block;
   background-color: #ffffff;
-  color: rgb(8, 153, 197);
+  color: rgb(15, 80, 100);
   padding: 10px 15px;
   font-size: 14px;
   font-weight: bold;

@@ -66,108 +66,91 @@ func TestImportNumberPattern(t *testing.T) {
 
 
 
-// func TestImportParcelList(t *testing.T) {
+func TestImportParcelList(t *testing.T) {
 
-// 	g := NewGomegaWithT(t)
+	g := NewGomegaWithT(t)
 
-    // t.Run(`Create Success`, func(t *testing.T) {
-    //     importparcelList := entity.ImportParcelList{
-    //         ImportVolume:  10,
-    //         ImportNumber:   "ImportNumber",
-    //         Seller: "Seller",    
-    //         ImportDate: time.Now(),
-    //         ParcelListId:  1,
-    //         PersonnelId:  1,
-    //     }
+    t.Run(`Create Success`, func(t *testing.T) {
+        importparcelList := entity.ImportParcelList{
+            ImportVolume:  10,
+            ImportNumber:   "IMP12345",
+            Seller: "Seller",    
+            ImportDate: time.Now(),
+            ParcelListId:  1,
+            PersonnelId:  1,
+        }
 
-    //     ok, err := govalidator.ValidateStruct(importparcelList)
+        ok, err := govalidator.ValidateStruct(importparcelList)
 
-    //     g.Expect(ok).To(BeTrue())
-    //     g.Expect(err).To(BeNil())
-    // })
+        g.Expect(ok).To(BeTrue())
+        g.Expect(err).To(BeNil())
+    })
 
-//     t.Run(`ImportVolume is zero`, func(t *testing.T) {
-//         importparcelList := entity.ImportParcelList{
-//             ImportVolume:  0,
-//             ImportNumber:   "ImportNumber",
-//             Seller: "Seller",    
-//             ImportDate: time.Now(),
-//             ParcelListId:  1,
-//             PersonnelId:  1,
-//         }
+    t.Run(`ImportVolume is zero`, func(t *testing.T) {
+        importparcelList := entity.ImportParcelList{
+            ImportVolume:  0,
+            ImportNumber:   "IMP12345",
+            Seller: "Seller",    
+            ImportDate: time.Now(),
+            ParcelListId:  1,
+            PersonnelId:  1,
+        }
 
-//         ok, err := govalidator.ValidateStruct(importparcelList)
+        ok, err := govalidator.ValidateStruct(importparcelList)
 
-//         g.Expect(ok).NotTo(BeTrue())
-//         g.Expect(err).NotTo(BeNil())
-//         g.Expect(err.Error()).To(Equal("must be more than 0"))
-//     })
+        g.Expect(ok).NotTo(BeTrue())
+        g.Expect(err).NotTo(BeNil())
+        g.Expect(err.Error()).To(Equal("จำนวนต้องมากกว่า 0 เท่านั้น"))
+    })
 
-// 	t.Run(`ImportVolume is nagative number`, func(t *testing.T) {
-//         importparcelList := entity.ImportParcelList{
-//             ImportVolume:  -5,
-//             ImportNumber:   "ImportNumber",
-//             Seller: "Seller",    
-//             ImportDate: time.Now(),
-//             ParcelListId:  1,
-//             PersonnelId:  1,
-//         }
+	t.Run(`ImportVolume is nagative number`, func(t *testing.T) {
+        importparcelList := entity.ImportParcelList{
+            ImportVolume:  -5,
+            ImportNumber:   "IMP12345",
+            Seller: "Seller",    
+            ImportDate: time.Now(),
+            ParcelListId:  1,
+            PersonnelId:  1,
+        }
 
-//         ok, err := govalidator.ValidateStruct(importparcelList)
+        ok, err := govalidator.ValidateStruct(importparcelList)
 
-//         g.Expect(ok).NotTo(BeTrue())
-//         g.Expect(err).NotTo(BeNil())
-//         g.Expect(err.Error()).To(Equal("จำนวนต้องมากกว่า 0 เท่านั้น"))
-//     })
+        g.Expect(ok).NotTo(BeTrue())
+        g.Expect(err).NotTo(BeNil())
+        g.Expect(err.Error()).To(Equal("จำนวนต้องมากกว่า 0 เท่านั้น"))
+    })
 
-// 	t.Run(`Seller not null`, func(t *testing.T) {
-//         importparcelList := entity.ImportParcelList{
-//             ImportVolume:  10,
-//             ImportNumber:   "ImportNumber",
-//             Seller: "",    
-//             ImportDate: time.Now(),
-//             ParcelListId:  1,
-//             PersonnelId:  1,
-//         }
+	t.Run(`Seller not null`, func(t *testing.T) {
+        importparcelList := entity.ImportParcelList{
+            ImportVolume:  10,
+            ImportNumber:   "IMP12345",
+            Seller: "",    
+            ImportDate: time.Now(),
+            ParcelListId:  1,
+            PersonnelId:  1,
+        }
 
-//         ok, err := govalidator.ValidateStruct(importparcelList)
+        ok, err := govalidator.ValidateStruct(importparcelList)
 
-//         g.Expect(ok).NotTo(BeTrue())
-//         g.Expect(err).NotTo(BeNil())
-//         g.Expect(err.Error()).To(Equal("กรุณากรอกข้อมูลผู้ขาย"))
-//     })
+        g.Expect(ok).NotTo(BeTrue())
+        g.Expect(err).NotTo(BeNil())
+        g.Expect(err.Error()).To(Equal("กรุณากรอกข้อมูลผู้ขาย"))
+    })
 
-// 	t.Run(`ImportDate not null`, func(t *testing.T) {
-//         importparcelList := entity.ImportParcelList{
-//             ImportVolume:  10,
-//             ImportNumber:   "ImportNumber",
-//             Seller: "Seller",    
-//             //ImportDate: time.Now(),
-//             ParcelListId:  1,
-//             PersonnelId:  1,
-//         }
+	t.Run(`Personnel not null`, func(t *testing.T) {
+        importparcelList := entity.ImportParcelList{
+            ImportVolume:  10,
+            ImportNumber:   "IMP12345",
+            Seller: "Seller",    
+            ImportDate: time.Now(),
+            ParcelListId:  1,
+        }
 
-//         ok, err := govalidator.ValidateStruct(importparcelList)
+        ok, err := govalidator.ValidateStruct(importparcelList)
 
-//         g.Expect(ok).NotTo(BeTrue())
-//         g.Expect(err).NotTo(BeNil())
-//         g.Expect(err.Error()).To(Equal("กรุณาเลือกวันที่นำเข้า"))
-//     })
+        g.Expect(ok).NotTo(BeTrue())
+        g.Expect(err).NotTo(BeNil())
+        g.Expect(err.Error()).To(Equal("กรุณาเลือกผู้ตรวจรับพัสดุ"))
+    })
 
-// 	t.Run(`Personnel not null`, func(t *testing.T) {
-//         importparcelList := entity.ImportParcelList{
-//             ImportVolume:  10,
-//             ImportNumber:   "ImportNumber",
-//             Seller: "Seller",    
-//             ImportDate: time.Now(),
-//             ParcelListId:  1,
-//         }
-
-//         ok, err := govalidator.ValidateStruct(importparcelList)
-
-//         g.Expect(ok).NotTo(BeTrue())
-//         g.Expect(err).NotTo(BeNil())
-//         g.Expect(err.Error()).To(Equal("กรุณาเลือกผู้ตรวจรับพัสดุ"))
-//     })
-
-// }
+}
