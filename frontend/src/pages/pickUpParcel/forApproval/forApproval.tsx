@@ -5,8 +5,10 @@ import {
   CheckOutlined
 } from '@ant-design/icons';
 
-import {Card, Layout, Form, Input, Select, Button, message} from 'antd';
+import {Card, Layout, Form, Input, Select, Button, message, DatePicker} from 'antd';
 
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import Headers from '../../../layout/header';
 import Footers from '../../../layout/footer';
 import { Content } from 'antd/es/layout/layout';
@@ -31,7 +33,7 @@ export default function ApprovalPinkUpParcelList() {
   const [Addform] = Form.useForm();
   const navigate = useNavigate();
   const { Option } = Select;
-  const [messageApi, contextHolder] = message.useMessage();
+  const [, contextHolder] = message.useMessage();
   
   const [dataPersonnels, setDataPersonnel] = useState<InterfacePersonnel[]>([]);
   const [dataPinkUpStatus, setDataPinkUpStatus] = useState<InterfacePickUpStatus[]>([]);
@@ -44,18 +46,13 @@ export default function ApprovalPinkUpParcelList() {
         values.ID = dataPickUpParcelList?.ID;
         let res = await UpdatePickUpParcelList(values);
         if (res.status) {
-          messageApi.open({
-            type: "success",
-            content: "อนุมัติรายการสำเร็จ",
-          });
+          toast.success("อนุมัติรายการสำเร็จ");
           setTimeout(function () {
             navigate("/pages/pickUpParcel");
           }, 1000);
         } else {
-          messageApi.open({
-            type: "error",
-            content: "อนุมัติรายการไม่สำเร็จ",
-          });
+
+          toast.error("อนุมัติรายการไม่สำเร็จ !" + res.message);
         }
       };
 
@@ -99,10 +96,21 @@ export default function ApprovalPinkUpParcelList() {
   return (
     <> 
     <Headers />
-      <Content style={{backgroundColor:'darkslategrey' ,minHeight: "100vh"}}>
+        <ToastContainer
+            position="top-center"
+            autoClose={2000}
+            hideProgressBar={false}
+            newestOnTop={false}
+            closeOnClick
+            rtl={false}
+            pauseOnFocusLoss
+            draggable
+            pauseOnHover
+            theme="light"/>
+      <Content className='BGPpuplstyle2'>
           <div style={{padding:30,textAlign:'center'}}>
 
-          <Layout style={{ backgroundColor: 'darkslategrey'}}>
+          <Layout className='BGPpuplstyle3'>
             <div className='titleOfPUPL'>
 
               <Link to={'/pages/pickUpParcel'} style={{marginRight: 'auto', color: 'white', float:'left'}}>
@@ -118,45 +126,94 @@ export default function ApprovalPinkUpParcelList() {
               แก้ไขรายการเพื่ออนุมัติใบเบิกจ่ายพัสดุ
           </Layout> 
           {contextHolder}
-            <Card className='PUPLCard' style={{minHeight:'300px', height:'auto'}}>
+            <Card className='PUPLCard' style={{minHeight:'400px', height:'auto', background:'#e3f7f5' }}>
               <Form form={Addform} layout="inline" className='PUPLfrom' onFinish={onFinish} autoComplete="off">
 
                 <div style={{marginTop:'30px'}}>
                   <div style={{width:'400px'}}>
-                    <Form.Item style={{ textAlign: 'left'}} name={['BillNumber']} label="เลขที่ใบเบิก"  rules={[{ required: true, message: 'กรุณากรอกข้อมูล' }]}>
-                      <Input disabled placeholder="เช่น  EXP10001"/>
+                    <Form.Item 
+                      style={{ textAlign: 'left', background: '#27948b', padding: '8px', borderRadius: '4px', color: 'white' }}
+                      name={['BillNumber']} 
+                      label={
+                        <div style={{ display: 'flex', alignItems: 'center' }}>
+                          <span style={{ fontWeight: 'bold', color:'white'}}> เลขที่ใบเบิก </span>
+                        </div>
+                      }  
+                      rules={[{ required: true, message: 'กรุณากรอกข้อมูล' }]}>
+                      <Input disabled placeholder="เช่น  EXP10001" style={{ fontWeight: 'bold', color:'white'}}/>
                     </Form.Item>
                   </div>
 
-                  <div style={{marginTop:'20px', marginLeft:'4px'}}>
-                    <Form.Item style={{justifyContent:'left', textAlign: 'left'}} name={['DetailOfRequest']} label="รายละเอียด" rules={[{ required: true, message: 'กรุณากรอกข้อมูล' }]}>
-                        <Input.TextArea disabled autoSize={{ minRows: 4, maxRows: 8}} placeholder="ระบุรายการที่จะขอเบิก และเหตุผลในการขอเบิก เช่น นำไปใช้ในกิจกรรม"/>
+                  <div style={{marginTop:'20px'}}>
+                    <Form.Item 
+                      style={{ textAlign: 'left', background: '#27948b', padding: '8px', borderRadius: '4px', color: 'white' }}
+                      name={['DetailOfRequest']}                  
+                      label={
+                        <div style={{ display: 'flex', alignItems: 'center', marginLeft:'4px'}}>
+                          <span style={{ fontWeight: 'bold', color:'white'}}> รายละเอียด </span>
+                        </div>
+                      } 
+                      rules={[{ required: true, message: 'กรุณากรอกข้อมูล' }]}>
+                        <Input.TextArea disabled autoSize={{ minRows: 3, maxRows: 8}} 
+                                        placeholder="ระบุรายการที่จะขอเบิก และเหตุผลในการขอเบิก เช่น นำไปใช้ในกิจกรรม"
+                                        style={{ fontWeight: 'bold', color:'white'}}/>
                     </Form.Item>
                   </div>
                 </div>
 
                 <div style={{marginTop:'30px'}}>
-                  <div style={{width:'400px', marginLeft:'18px'}}>
-                    <Form.Item style={{justifyContent:'left', textAlign: 'left'}} name={['PersonnelId']} label="ผู้ขอเบิก"  rules={[{ required: true, message: 'กรุณากรอกข้อมูล'}]}>
+                  <div style={{width:'400px'}}>
+                    <Form.Item 
+                      style={{ textAlign: 'left', background: '#27948b', padding: '8px', borderRadius: '4px', color: 'white' }}
+                      name={['PersonnelId']} 
+                      label={
+                        <div style={{ display: 'flex', alignItems: 'center' }}>
+                          <span style={{ fontWeight: 'bold', color:'white'}}> ผู้ขอเบิก </span>
+                        </div>
+                      }   
+                      rules={[{ required: true, message: 'กรุณากรอกข้อมูล'}]}>
                       <Select disabled placeholder="เลือกชื่อผู้ขอเบิก" style={{textAlign:'left'}}>
                         {dataPersonnels.map((item) => (
-                                <Option value={item.ID} key={item.ID}>
-                                  {`${item.TitleName} ${item.FirstName} ${item.LastName}`}
-                                </Option>
-                                ))}
+                          <Option value={item.ID} key={item.ID}>                         
+                            <span style={{ fontWeight: 'bold', color:'white'}}> {`${item.TitleName} ${item.FirstName} ${item.LastName}`} </span>
+                          </Option>
+                        ))}
                       </Select>
                     </Form.Item>
                   </div>
 
-                  <div style={{width:'400px', marginLeft:'27px', marginTop:'20px'}}>
-                    <Form.Item style={{justifyContent:'left', textAlign: 'left'}} name={['PickUpStatusId']} label="สถานะ"  rules={[{ required: true, message: 'กรุณากรอกข้อมูล'}]}>
-                      <Select placeholder="กำหนดสถานะการเบิกจ่าย" style={{textAlign:'left'}}>
-                        {dataPinkUpStatus.map((item) => (
-                                <Option value={item.ID} key={item.ID}>
-                                  {`${item.PUPLStatus}`}
-                                </Option>
-                                ))}
-                      </Select>
+                  <div style={{width:'400px', marginTop:'20px'}}>
+                    <Form.Item
+                      style={{ textAlign: 'left', background: '#27948b', padding: '8px', borderRadius: '4px', color: 'white' }}
+                      name={['PickUpStatusId']}
+                      label={
+                        <div style={{ display: 'flex', alignItems: 'center', marginLeft:'12px' }}>
+                          <span style={{ fontWeight: 'bold', color:'white'}}> สถานะ </span>
+                        </div>
+                      }                     
+                      rules={[{ required: true, message: 'กรุณากรอกข้อมูล' }]}
+                      initialValue={2}>
+                        <Select >
+                          {dataPinkUpStatus.map((item) => (
+                            <Option value={item.ID} key={item.ID}> 
+                              <span style={{ fontWeight: 'bold'}}> {item.PUPLStatus} </span>                             
+                            </Option>
+                          ))}
+                        </Select>
+                    </Form.Item>
+                  </div>
+
+                  <div style={{marginTop:'20px'}}>
+                    <Form.Item 
+                      style={{ textAlign: 'left', background: '#27948b', padding: '8px', borderRadius: '4px', color: 'white' }}
+                      name={['PUPLDate']} 
+                      label={
+                        <div style={{ display: 'flex', alignItems: 'center',marginLeft:'5px'}}>
+                          <span style={{ fontWeight: 'bold', color:'white'}}> วันที่อนุมัติ </span>
+                        </div>
+                      } 
+                      rules={[{ required: true, message: 'กรุณาเลือกวันที่' }]}>
+                      <DatePicker format="DD-MM-YYYY"  />
                     </Form.Item>
                   </div>
 

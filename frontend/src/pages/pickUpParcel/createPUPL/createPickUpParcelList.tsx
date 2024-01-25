@@ -7,6 +7,8 @@ import {
 
 import {Card, Layout, Form, Input, DatePicker, Select, Button, message} from 'antd';
 
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import Headers from '../../../layout/header';
 import Footers from '../../../layout/footer';
 import { Content } from 'antd/es/layout/layout';
@@ -22,7 +24,7 @@ export default function CreatePickUpParcelList() {
   const [Addform] = Form.useForm();
   const navigate = useNavigate();
   const { Option } = Select;
-  const [messageApi, contextHolder] = message.useMessage();
+  const [, contextHolder] = message.useMessage();
   
   const [dataPersonnels, setDataPersonnel] = useState<InterfacePersonnel[]>([]);
   const [dataPinkUpStatus, setDataPinkUpStatus] = useState<InterfacePickUpStatus[]>([]);
@@ -31,18 +33,12 @@ export default function CreatePickUpParcelList() {
     
     let res = await CreatePickUpParcelListPUP(values);
     if (res.status) {
-      messageApi.open({
-        type: "success",
-        content: "บันทึกข้อมูลสำเร็จ",
-      });
+      toast.success("บันทึกข้อมูลสำเร็จ");
       setTimeout(function () {
         navigate("/pages/pickUpParcel");
       }, 1000);
     } else {
-      messageApi.open({
-        type: "error",
-        content: res.message,
-      });
+      toast.error(res.message);
     }
   };
 
@@ -70,17 +66,26 @@ export default function CreatePickUpParcelList() {
   return (
     <> 
     <Headers />
-      <Content style={{backgroundColor:'darkslategrey' ,minHeight: "100vh"}}>
+          <ToastContainer
+            position="top-center"
+            autoClose={2000}
+            hideProgressBar={false}
+            newestOnTop={false}
+            closeOnClick
+            rtl={false}
+            pauseOnFocusLoss
+            draggable
+            pauseOnHover
+            theme="light"/>
+      <Content className='BGPpuplstyle2'>
           <div style={{padding:30,textAlign:'center'}}>
 
-          <Layout style={{ backgroundColor: 'darkslategrey'}}>
+          <Layout className='BGPpuplstyle3'>
             <div className='titleOfPUPL'>
-
               <Link to={'/pages/pickUpParcel'} style={{marginRight: 'auto', color: 'white', float:'left'}}>
                 <ArrowLeftOutlined style={{fontSize:'20px'}}/>
                 <span > Back </span>
               </Link>
-
               <FileAddOutlined style={{ fontSize: '30px', marginRight: '10px' }}/> สร้างรายการใบเบิกจ่ายพัสดุ      
             </div>
           </Layout>
@@ -90,35 +95,63 @@ export default function CreatePickUpParcelList() {
           </Layout> 
 
           {contextHolder}
-
-            <Card className='PUPLCard' style={{minHeight:'300px', height:'auto'}}>
+            <Card className='PUPLCard' style={{minHeight:'400px', height:'auto', background:'#e3f7f5' }}>
               <Form form={Addform} layout="inline" className='PUPLfrom' onFinish={onFinish} autoComplete="off">
-
                 <div style={{marginTop:'30px'}}>
                   <div style={{width:'400px'}}>
-                    <Form.Item style={{ textAlign: 'left'}} name={['BillNumber']} label="เลขที่ใบเบิก"  
-                        rules={[{ required: true, message: 'กรุณากรอกข้อมูล' }]}
-                      >
+                    <Form.Item 
+                      style={{ textAlign: 'left', background: '#27948b', padding: '8px', borderRadius: '4px', color: 'white' }}
+                      name={['BillNumber']} 
+                      label={
+                        <div style={{ display: 'flex', alignItems: 'center' }}>
+                          <span style={{ fontWeight: 'bold', color:'white'}}> เลขที่ใบเบิก </span>
+                        </div>
+                      }  
+                      rules={[{ required: true, message: 'กรุณากรอกข้อมูล' }]}>
                       <Input placeholder="เช่น  EXP10001"/>
                     </Form.Item>
                   </div>
 
-                  <div style={{marginTop:'20px', marginLeft:'5px'}}>
-                    <Form.Item style={{textAlign: 'left'}} name={['PUPLDate']} label="วันที่ขอเบิก" rules={[{ required: true, message: 'กรุณาเลือกวันที่' }]}>
+                  <div style={{marginTop:'20px'}}>
+                    <Form.Item 
+                      style={{ textAlign: 'left', background: '#27948b', padding: '8px', borderRadius: '4px', color: 'white' }}
+                      name={['PUPLDate']} 
+                      label={
+                        <div style={{ display: 'flex', alignItems: 'center', marginLeft:'5px'}}>
+                          <span style={{ fontWeight: 'bold', color:'white'}}> วันที่ขอเบิก </span>
+                        </div>
+                      } 
+                      rules={[{ required: true, message: 'กรุณาเลือกวันที่' }]}>
                       <DatePicker format="DD-MM-YYYY" locale={locale} />
                     </Form.Item>
                   </div>
 
-                  <div style={{marginTop:'20px', marginLeft:'4px'}}>
-                    <Form.Item style={{justifyContent:'left', textAlign: 'left'}} name={['DetailOfRequest']} label="รายละเอียด" rules={[{ required: true, message: 'กรุณากรอกข้อมูล' }]}>
+                  <div style={{marginTop:'20px'}}>
+                    <Form.Item 
+                      style={{ textAlign: 'left', background: '#27948b', padding: '8px', borderRadius: '4px', color: 'white' }}
+                      name={['DetailOfRequest']}                  
+                      label={
+                        <div style={{ display: 'flex', alignItems: 'center', marginLeft:'4px'}}>
+                          <span style={{ fontWeight: 'bold', color:'white'}}> รายละเอียด </span>
+                        </div>
+                      } 
+                      rules={[{ required: true, message: 'กรุณากรอกข้อมูล' }]}>
                         <Input.TextArea autoSize={{ minRows: 3, maxRows: 8}} placeholder="ระบุรายการที่จะขอเบิก และเหตุผลในการขอเบิก เช่น นำไปใช้ในกิจกรรม"/>
                     </Form.Item>
                   </div>
                 </div>
 
                 <div style={{marginTop:'30px'}}>
-                  <div style={{width:'400px', marginLeft:'18px'}}>
-                    <Form.Item style={{justifyContent:'left', textAlign: 'left'}} name={['PersonnelId']} label="ผู้ขอเบิก"  rules={[{ required: true, message: 'กรุณากรอกข้อมูล'}]}>
+                  <div style={{width:'400px'}}>
+                    <Form.Item 
+                      style={{ textAlign: 'left', background: '#27948b', padding: '8px', borderRadius: '4px', color: 'white' }}
+                      name={['PersonnelId']} 
+                      label={
+                        <div style={{ display: 'flex', alignItems: 'center' }}>
+                          <span style={{ fontWeight: 'bold', color:'white'}}> ผู้ขอเบิก </span>
+                        </div>
+                      }   
+                      rules={[{ required: true, message: 'กรุณากรอกข้อมูล'}]}>
                       <Select placeholder="เลือกชื่อผู้ขอเบิก" style={{textAlign:'left'}}>
                         {dataPersonnels.map((item) => (
                                 <Option value={item.ID} key={item.ID}>
@@ -129,24 +162,28 @@ export default function CreatePickUpParcelList() {
                     </Form.Item>
                   </div>
 
-                  <div style={{width:'400px', marginLeft:'27px', marginTop:'20px'}}>
+                  <div style={{width:'400px', marginTop:'20px'}}>
                     <Form.Item
-                      style={{ justifyContent: 'left', textAlign: 'left' }}
+                      style={{ textAlign: 'left', background: '#27948b', padding: '8px', borderRadius: '4px', color: 'white' }}
                       name={['PickUpStatusId']}
-                      label="สถานะ"
+                      label={
+                        <div style={{ display: 'flex', alignItems: 'center', marginLeft:'12px' }}>
+                          <span style={{ fontWeight: 'bold', color:'white'}}> สถานะ </span>
+                        </div>
+                      }  
                       rules={[{ required: true, message: 'กรุณากรอกข้อมูล' }]}
                       initialValue={1}>
                         <Select disabled>
                           {dataPinkUpStatus.map((item) => (
-                            <Option value={item.ID} key={item.ID}>
-                              {item.PUPLStatus}
+                            <Option value={item.ID} key={item.ID}> 
+                              <span style={{ fontWeight: 'bold', color:'white'}}> {item.PUPLStatus} </span>                             
                             </Option>
                           ))}
                         </Select>
                     </Form.Item>
                   </div>
 
-                  <div style={{marginLeft:'90px'}}>
+                  <div style={{display:'flex', justifyContent:'center'}}>
                     <Button className='customAddPUPListButton' htmlType="submit">
                       <PlusOutlined /> สร้างรายการเบิกจ่ายพัสดุ
                     </Button>

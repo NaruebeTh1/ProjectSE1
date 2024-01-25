@@ -99,9 +99,9 @@ export default function DetailParcelList() {
   return (
     <> 
     <Headers />
-      <Content style={{backgroundColor:'darkslategrey' , minHeight:'100vh'}}>
+      <Content className='BGstyle2'>
           <div style={{padding:30,textAlign:'center' }}>
-            <Layout style={{ backgroundColor: 'darkslategrey'}}>
+            <Layout className='BGstyle3'>
                 <div className='titleOfCreateParcel'>
 
                 <Link to={'/pages/myParcelList'} style={{marginRight: 'auto', color: 'white', float:'left'}}>
@@ -113,19 +113,20 @@ export default function DetailParcelList() {
                 </div>
             </Layout>
 
-            <Card style={{fontSize:'16px', marginTop:20}}>
+            <Card style={{fontSize:'16px', marginTop:20,boxShadow: '0em 0 0.5em rgb(185, 247, 255)'}}>
               <Table 
                       columns={columnsParcel} 
                       dataSource={dataParcelList ? [dataParcelList] : []}
                       pagination={{ pageSize: 1 }}
-                      size='small'/>
+                      size='middle'/>
            </Card>
 
            <Layout className='titleofImportHistory'>
               ประวัติการนำเข้าพัสดุ 
             </Layout> 
 
-           <Card style={{fontSize:'16px', marginTop:'10px', display: 'flex', justifyContent: 'center' }}>
+           <Card style={{fontSize:'16px', marginTop:'10px', display: 'flex', 
+                          justifyContent: 'center' , background:'#ecfffd',boxShadow: '0em 0 0.5em rgb(185, 247, 255)'}}>
                       <Button className='ButtonImportHistory' onClick={() =>  navigate(`/pages/myParcelList/detailParcelList/importHistorys/${id}`)}>
                         ประวัติการนำเข้าพัสดุ
                       </Button>

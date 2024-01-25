@@ -110,7 +110,6 @@ func GetImportParcel(c *gin.Context) {
 	c.JSON(http.StatusOK, gin.H{"data": importparcel})
 }
 
-
 // DELETE /importParcelList/:id
 
 func DeleteImportParcelList(c *gin.Context) {

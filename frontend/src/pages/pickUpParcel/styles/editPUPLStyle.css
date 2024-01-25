@@ -52,3 +52,6 @@
     color: #ffffff !important; 
     transform: scale(1.05);
 }
+.customSavePUPButton:active { 
+    transform: scale(0.95);
+}

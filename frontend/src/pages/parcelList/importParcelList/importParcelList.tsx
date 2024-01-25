@@ -4,6 +4,8 @@ import {
   ArrowLeftOutlined,
 } from '@ant-design/icons';
 import '../style/buttonStyle.css' ;
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import { Card, DatePicker, Form, Input, InputNumber, Layout, Select, message, Button} from 'antd';
 import Headers from '../../../layout/header';
 import Footers from '../../../layout/footer';
@@ -18,7 +20,7 @@ const { Option } = Select;
 export default function ImportParcelLists() {
   
   const navigate = useNavigate();
-  const [messageApi, contextHolder] = message.useMessage();
+  const [, contextHolder] = message.useMessage();
   
   const [Importform] = Form.useForm();
   const [dataPersonnels, setDataPersonnel] = useState<InterfacePersonnel[]>([]);
@@ -34,23 +36,16 @@ export default function ImportParcelLists() {
       const parcelListId = Importform.getFieldValue('ID');
       valueImport.ParcelListId = parcelListId;
       
-      const res = await CreateImportParcelList(valueImport);
+      let res = await CreateImportParcelList(valueImport);
       console.log('API Response:', res); 
   
       if (res.status) {
-        messageApi.open({
-          type: "success",
-          content: "บันทึกข้อมูลสำเร็จ",
-        });
+        toast.success("บันทึกข้อมูลสำเร็จ");
         setTimeout(function () {
           navigate("/pages/myParcelList");
         }, 1000);
       } else {
-        console.log('API Request Payload:', valueImport);
-        messageApi.open({
-          type: "error",
-          content: res.message,
-        });
+        toast.error(res.message);
       }
     } catch (error) {
       console.error('Error during API request:', error);
@@ -80,11 +75,19 @@ export default function ImportParcelLists() {
   const getParcelListById = async () => {
     try {
       let res = await GetParcelListById(Number(id));
-      if (res) {
+      if (res && res.ParcelNumber) {
         setDataParcelList([res]);
         
         Importform.setFieldsValue({
           ID: res.ID,
+          ParcelNumber: res.ParcelNumber,
+          ParcelName: res.ParcelName,
+          PricePerPiece: res.PricePerPiece,
+          Volume: res.Volume,
+          ParcelDetail: res.ParcelDetail,
+          ParcelTypeId: res.ParcelTypeId,
+          ParcelUnitId: res.ParcelUnitId,
+          RoomId: res.RoomId,
         });
       }
     } catch (error) {
@@ -101,10 +104,21 @@ export default function ImportParcelLists() {
   return (
     <> 
     <Headers />
-        <Content style={{backgroundColor:'darkslategrey' , minHeight:'100vh' }}>
+        <ToastContainer
+          position="top-center"
+          autoClose={2000}
+          hideProgressBar={false}
+          newestOnTop={false}
+          closeOnClick
+          rtl={false}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
+          theme="light"/>
+        <Content className='BGstyle2'>
         <div style={{padding:30,textAlign:'center'}}>
 
-            <Layout style={{ backgroundColor: 'darkslategrey'}}>
+            <Layout className='BGstyle3'>
                 <div className='titleOfCreateParcel'>
 
                 <Link to={'/pages/myParcelList'} style={{marginRight: 'auto', color: 'white', float:'left'}}>
@@ -117,7 +131,7 @@ export default function ImportParcelLists() {
 
             </Layout>
 
-            <Card className='CreatePLCard' style={{ height: 'auto' , minHeight:'400px'}}>
+            <Card className='CreatePLCard' style={{ height: 'auto' , minHeight:'502px', background:'#e3f7f5' }}>
 
               <Layout className='titleOfImportParcelList' 
                       style={{ maxWidth: '1000px', margin: 'auto'}}>
@@ -130,7 +144,7 @@ export default function ImportParcelLists() {
                   </div>
                 </div>
 
-                <div style={{ marginTop: '10px'}}>
+                <div style={{ marginTop: '5px'}}>
                   <div>
                     <div> รหัสพัสดุ : </div>
                     <div style={{ marginLeft: '10px', color: 'red' }}>
@@ -151,28 +165,58 @@ export default function ImportParcelLists() {
               </Layout>
 
               {contextHolder}
-                <Form layout="inline" name="parcel-form" form={Importform} className='CreatePLfrom' onFinish={onFinish} autoComplete="off">
-                    <div style={{marginRight:'30px', width:'400px'}}>
-                    
-                        <div style={{marginTop:'30px'}}>  
-                          <Form.Item style={{ textAlign: 'left'}} name='ImportNumber' label="รหัสการนำเข้า" rules={[{ required: true, message: "กรุณากรอกข้อมูล" }]}>
+                <Form 
+                  layout="inline" name="parcel-form" 
+                  form={Importform} 
+                  className='CreatePLfrom' 
+                  onFinish={onFinish} 
+                  autoComplete="off">
+
+                    <div style={{width:'490px', marginLeft:'15px'}}>               
+                        <div style={{marginTop:'25px'}}>  
+                          <Form.Item 
+                            style={{ textAlign: 'left', background: '#06cfbb', padding: '8px', borderRadius: '4px', color: 'white' }} 
+                            name='ImportNumber' 
+                            label={
+                              <div style={{ display: 'flex', alignItems: 'center' }}>
+                                <span style={{ fontWeight: 'bold', color:'white'}}> รหัสการนำเข้า </span>
+                              </div>
+                            }
+                            rules={[{ required: true, message: "กรุณากรอกข้อมูล" }]}>
                             <Input placeholder="เช่น IMP10001"/>
                           </Form.Item>
                         </div>
 
-                        <div style={{marginTop:'30px', marginLeft:'20px'}}>  
-                          <Form.Item style={{ textAlign: 'left'}} name='Seller' label="ผู้ขายพัสดุ" rules={[{ required: true, message: "กรุณากรอกข้อมูล" }]}>
+                        <div style={{marginTop:'15px'}}>  
+                          <Form.Item 
+                            style={{ textAlign: 'left', background: '#06cfbb', padding: '8px', borderRadius: '4px', color: 'white' }} 
+                            name='Seller' 
+                            label={
+                              <div style={{ display: 'flex', alignItems: 'center', marginLeft:'24px'}}>
+                                <span style={{ fontWeight: 'bold', color:'white'}}> ผู้ขายพัสดุ </span>
+                              </div>
+                            } 
+                            rules={[{ required: true, message: "กรุณากรอกข้อมูล" }]}>
                               <Input placeholder="เช่น ร้านเจริญพัสดุ"/>
                           </Form.Item>
                         </div>
 
-                        <div style={{marginTop:'30px'}}>  
-                          <Form.Item style={{ textAlign: 'left'}} name='PersonnelId' label="ผู้ตรวจรับพัสดุ" rules={[{ required: true, message: "กรุณาเลือกผู้ตรวจรับพัสดุ" }]}>
+                        <div style={{marginTop:'15px'}}>  
+                          <Form.Item 
+                            style={{ textAlign: 'left', background: '#06cfbb', padding: '8px', borderRadius: '4px', color: 'white' }}  
+                            name='PersonnelId' 
+                            label={
+                              <div style={{ display: 'flex', alignItems: 'center'}}>
+                                <span style={{ fontWeight: 'bold', color:'white'}}> ผู้ตรวจรับพัสดุ </span>
+                              </div>
+                            } 
+                            rules={[{ required: true, message: "กรุณาเลือกผู้ตรวจรับพัสดุ" }]}>
+
                             <Select placeholder="เลือกผู้ตรวจรับพัสดุ">
-                            {dataPersonnels.map((item) => (
-                              <Option value={item.ID} key={item.ID}>
-                                {`${item.TitleName} ${item.FirstName} ${item.LastName}`}
-                              </Option>
+                              {dataPersonnels.map((item) => (
+                                <Option value={item.ID} key={item.ID}>
+                                  {`${item.TitleName} ${item.FirstName} ${item.LastName}`}
+                                </Option>
                               ))}
                             </Select>
                           </Form.Item>
@@ -180,51 +224,70 @@ export default function ImportParcelLists() {
 
                     </div>
 
-                    <div style={{marginRight:'30px'}}>
+                    <div style={{width:'490px'}}>
 
-                      <div style={{marginTop:'30px',marginLeft:'11px'}}>
-                        <Form.Item style={{ textAlign: 'left'}} name='ID' label="ID รายการพัสดุ" >
-                          <Input  disabled />
+                      <div style={{marginTop:'25px'}}>
+                        <Form.Item 
+                          style={{ textAlign: 'left', background: '#06cfbb', padding: '8px', borderRadius: '4px', color: 'white' }}
+                          name='ID' 
+                          label={
+                            <div style={{ display: 'flex', alignItems: 'center', marginRight:'10px'}}>
+                              <span style={{ fontWeight: 'bold', color:'white'}}> ID รายการพัสดุ </span>
+                            </div>
+                          } 
+                          rules={[{ required: true, message: "" }]}>
+                          <Input  disabled style={{ fontWeight: 'bold', color:'white'}} />
                         </Form.Item>
                       </div>
 
-                        <div style={{marginTop:'30px', marginLeft:'-8px'}}>  
-                          <Form.Item style={{ textAlign: 'left'}} name='ImportVolume' label="จำนวนการนำเข้า" 
-                                    rules={[{
-                                      required: true,
-                                      validator: (_, value) => {
-                                        if (value === undefined || value === null || value === '') {
-                                          return Promise.reject('กรุณากรอกข้อมูล');
-                                        }
-                                        if (value < 1) {
-                                          return Promise.reject('มากกว่าหรือเท่ากับ 1 เท่านั้น');
-                                        }
-                                        return Promise.resolve();
-                                      },
-                                    }]}>
-                            <InputNumber />
+                        <div style={{marginTop:'15px'}}>  
+                          <Form.Item 
+                            style={{ textAlign: 'left', background: '#06cfbb', padding: '8px', borderRadius: '4px', color: 'white' }}
+                            name='ImportVolume' 
+                            label={
+                              <div style={{ display: 'flex', alignItems: 'center'}}>
+                                <span style={{ fontWeight: 'bold', color:'white'}}> จำนวนการนำเข้า </span>
+                              </div>
+                            } 
+                            rules={[{
+                              required: true,
+                              validator: (_, value) => {
+                                if (value === undefined || value === null || value === '') {
+                                  return Promise.reject('กรุณากรอกข้อมูล');
+                                }
+                                // if (value < 1) {
+                                //   return Promise.reject('มากกว่าหรือเท่ากับ 1 เท่านั้น');
+                                // }
+                                  return Promise.resolve();
+                                },
+                              }]}>
+                            <InputNumber placeholder="เช่น 1, 2"/>
                           </Form.Item>
                         </div>
 
-                        <div style={{marginTop:'30px'}}>
-                          <Form.Item style={{ textAlign: 'left'}} name='ImportDate' label="วันที่นำเข้าพัสดุ" rules={[{ required: true, message: "กรุณาเลือกวันที่" }]}>
-                          <DatePicker
-                            format="DD-MM-YYYY"
-                            locale={locale}  
-                            style={{color:'red'}}                          
-                          />
+                        <div style={{marginTop:'15px'}}>
+                          <Form.Item 
+                            style={{ textAlign: 'left', background: '#06cfbb', padding: '8px', borderRadius: '4px', color: 'white' }}
+                            name='ImportDate' 
+                            label={
+                              <div style={{ display: 'flex', alignItems: 'center', marginRight:'10px'}}>
+                                <span style={{ fontWeight: 'bold', color:'white'}}> วันที่นำเข้าพัสดุ </span>
+                              </div>
+                            }
+                            rules={[{ required: true, message: "กรุณาเลือกวันที่" }]}>
+                            <DatePicker
+                              format="DD-MM-YYYY"
+                              locale={locale}  
+                              style={{color:'red'}}                          
+                            />
                           </Form.Item>
-                        </div>
+                        </div>                       
                     </div>
-                    <div style={{ display: 'grid', alignItems:'end'}}>
-                      <div>
-                        <Button className='AddParcelListButton' htmlType="submit">
-                          <ImportOutlined /> บันทึกการนำเข้าพัสดุ
-                        </Button>
-                      </div>
-                    </div>
-
-                    
+                    <div style={{ width: '1200px', display: 'flex', justifyContent: 'center' }}>    
+                      <Button className='AddParcelListButton' htmlType="submit">
+                        <ImportOutlined /> บันทึกการนำเข้าพัสดุ
+                      </Button>
+                    </div>                 
                 </Form>
             </Card>
 

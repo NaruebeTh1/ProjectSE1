@@ -20,6 +20,8 @@ import {
   message,
   Modal,
 } from 'antd';
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import Headers from '../../../layout/header';
 import Footers from '../../../layout/footer';
 import { Content } from 'antd/es/layout/layout';
@@ -48,7 +50,7 @@ export default function CreateExportParcel() {
   const [dataPickUpParcelList, setDataPickUpParcelList] = useState<PickUpParcelList[]>([]);
   const [exportParcelList, setExportParcelList] = useState<ExportParcelList[]>([]);
   const [selectedParcel, setSelectedParcel] = useState<ParcelList | undefined>(undefined);
-  const [messageApi, contextHolder] = message.useMessage();
+  const [, contextHolder] = message.useMessage();
 
   const [form] = Form.useForm();
   let { id } = useParams();
@@ -65,11 +67,7 @@ export default function CreateExportParcel() {
       console.log('API Response:', res); 
  
       if (res.status) {
-        messageApi.open({
-          type: "success",
-          content: "บันทึกข้อมูลสำเร็จ",
-        });
-
+        toast.success("บันทึกข้อมูลสำเร็จ");
         form.setFieldsValue({
           'ExportVolume': undefined,
           'ParcelListId': undefined,
@@ -81,10 +79,7 @@ export default function CreateExportParcel() {
         getExportParcelListByPickUpParcelListId();
         
       } else {
-        messageApi.open({
-          type: "error",
-          content: res.message,
-        });
+        toast.error(res.message);
       }
     } catch (error) {
       console.error('Error during API request:', error);
@@ -188,18 +183,12 @@ export default function CreateExportParcel() {
     let res = await DeleteExportParcelListByID(deleteId);
     if (res) {
       setOpen(false);
-      messageApi.open({
-        type: "success",
-        content: "ลบข้อมูลสำเร็จ",
-      });
+      toast.success("ลบข้อมูลสำเร็จ");
       getExportParcelListByPickUpParcelListId();
       getParcelList();
     } else {
       setOpen(false);
-      messageApi.open({
-        type: "error",
-        content: "เกิดข้อผิดพลาด !",
-      });
+      toast.error("เกิดข้อผิดพลาด ! " + res.message);
     }
     setConfirmLoading(false);
   };
@@ -249,15 +238,23 @@ export default function CreateExportParcel() {
     },
   ];
 
-
-
-
   return (
     <>
       <Headers />
-      <Content style={{ backgroundColor: 'darkslategrey', minHeight: '100vh' }}>
+          <ToastContainer
+            position="top-center"
+            autoClose={2000}
+            hideProgressBar={false}
+            newestOnTop={false}
+            closeOnClick
+            rtl={false}
+            pauseOnFocusLoss
+            draggable
+            pauseOnHover
+            theme="light"/>
+      <Content className='BGPpuplstyle2'>
         <div style={{ padding: 30, textAlign: 'center' }}>
-          <Layout style={{ backgroundColor: 'darkslategrey' }}>
+          <Layout className='BGPpuplstyle3'>
             <div className='titleOfPUPL'>
               <Link
                 to={'/pages/pickUpParcel'}
@@ -280,7 +277,7 @@ export default function CreateExportParcel() {
 
           <Row gutter={[16, 16]}>
             <Col xs={24} sm={24} md={24} lg={24} xl={14}>
-              <Card  className='PUPLCard' style={{height:'330px'}}>
+              <Card  className='PUPLCard' style={{minHeight:'400px'}}>
 
                 <Layout style={{}} className='titleOfExportParcelList' >
                  
@@ -347,12 +344,12 @@ export default function CreateExportParcel() {
                             rules={[{
                               required: true,
                               validator: (_, value, callback) => {
-                            if (value === undefined || value === null || value === '') {
-                              return Promise.reject('กรุณากรอกข้อมูล');
-                            }
-                            if (value < 1) {
-                              return Promise.reject('มากกว่าหรือเท่ากับ 1 เท่านั้น');
-                            }
+                            // if (value === undefined || value === null || value === '') {
+                            //   return Promise.reject('กรุณากรอกข้อมูล');
+                            // }
+                            // if (value < 1) {
+                            //   return Promise.reject('มากกว่าหรือเท่ากับ 1 เท่านั้น');
+                            // }
                                 
                             const maxVolume = selectedParcel ? selectedParcel.Volume : 0;
                                 
@@ -390,11 +387,11 @@ export default function CreateExportParcel() {
             </Col>
 
             <Col xs={24} sm={24} md={24} lg={24} xl={10}>
-              <Card className='PUPLCard' style={{height:'330px'}}>
+              <Card className='PUPLCard' style={{minHeight:'400px'}}>
                 <Table
                   columns={columnsExport}
                   dataSource={exportParcelList}
-                  pagination={{ pageSize: 4 }}
+                  pagination={{ pageSize: 5 }}
                   size='small'
                 />
               </Card>

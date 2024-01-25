@@ -4,7 +4,7 @@ import {
   StyleSheet, PDFViewer, 
   Font,
 } from "@react-pdf/renderer";
-import fontTHSarabunNew from "../../../assets/fonts/THSarabunNew.ttf";
+import fontTHSarabunNew from "../../../assets/font/THSarabunNew.ttf";
 import { 
   ExportParcelList, 
   InterfaceParcelUnit, 

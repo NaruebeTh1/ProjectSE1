@@ -62,10 +62,9 @@ func CreatePickUpParcelList(c *gin.Context) {
 	}
 
 	// สร้าง PickUpParcelList
-	pupl := entity.PickUpParcelList{
-		Personnel:    		personnels,     
+	pupl := entity.PickUpParcelList{     
 		PickUpStatus: 		pickUpStatus,              
-
+		PersonnelId: 		pickUpParcelLists.PersonnelId,
 		BillNumber: 		pickUpParcelLists.BillNumber, 
 		DetailOfRequest:  	pickUpParcelLists.DetailOfRequest,  
 		PUPLDate:     		pickUpParcelLists.PUPLDate,   

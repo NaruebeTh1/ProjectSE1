@@ -8,6 +8,8 @@ import {
 } from '@ant-design/icons';
 import { Card, Space, Button, Modal, message, Layout} from 'antd';
 
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import Highlighter from "react-highlight-words";
 import type { InputRef } from 'antd';
 import { Input, Table } from 'antd';
@@ -67,14 +69,14 @@ export default function MyParcelList() {
     setConfirmLoading(true);
     let res = await DeleteParcelListByID(deleteId);
     if (res) {
-      message.success("ลบข้อมูลสำเร็จ");
+      toast.success("ลบข้อมูลสำเร็จ");
       setOpen(false);
       getParcelList();
         DeleteImportParcelListByParcelListID(deleteId);
         DeleteExportParcelListByParcelListID(deleteId);
       
     } else {    
-      message.error("เกิดข้อผิดพลาด !");
+      toast.error("เกิดข้อผิดพลาด ! " + res.message);
       setOpen(false);
     }
     setConfirmLoading(false);
@@ -246,8 +248,18 @@ export default function MyParcelList() {
   return (
     <> 
         <Headers/>
-        
-        <Content style={{backgroundColor:'darkslategrey', minHeight:'100vh'}}>
+          <ToastContainer
+              position="top-center"
+              autoClose={2000}
+              hideProgressBar={false}
+              newestOnTop={false}
+              closeOnClick
+              rtl={false}
+              pauseOnFocusLoss
+              draggable
+              pauseOnHover
+              theme="light"/>       
+        <Content className='BGstyle2'>
         <div style={{padding:30}}>
 
           <div className='parcelListStyle'>
@@ -255,18 +267,21 @@ export default function MyParcelList() {
               รายการพัสดุโรงเรียน
           </div>
 
-          <Layout style={{backgroundColor:'darkslategrey'}}>
+          <Layout className='BGstyle3'>
             <div>
+              <div style={{ display: 'flex', alignItems: 'center' }}>
                 <Link to={'/pages/myParcelList/createParcelList'}>
                   <Button className="customAddButton">
-                    <PlusOutlined /> เพิ่มรายการพัสดุ
+                    <PlusOutlined/> เพิ่มรายการพัสดุ
                   </Button>
                 </Link>
 
                 <Button className='printParcelListBtn'  onClick={() =>  navigate(`/pages/myParcelList/parcelPDF`)}
                     >
-                  <FilePdfOutlined /> พิมพ์รายการพัสดุ
+                  <FilePdfOutlined/> พิมพ์รายการพัสดุ
                 </Button>
+              </div>
+                
 
                 <div>
                   <span className="DatablockPL" style={{ marginTop: '-63px', marginLeft:'auto'}}> 
@@ -279,11 +294,11 @@ export default function MyParcelList() {
             
 
 
-            <Card style={{fontSize:'16px', marginTop:20}}>
+            <Card className='cardParcelList' style={{minHeight:'440px'}}>
               <Table 
                       columns={columns} 
                       dataSource={dataParcelList}
-                      pagination={{ pageSize: 4 }}
+                      pagination={{ pageSize: 6 }}
                       size='small'/>
             </Card>
           </Layout>
@@ -296,7 +311,7 @@ export default function MyParcelList() {
             onCancel={handleCancel}
 
             title={<span style={{ color: '#FF4B4B', fontSize:20 }}> คำเตือน !! </span>}
-            style={{fontSize:'16px', minWidth: 400}} 
+            style={{fontSize: '16px', minWidth: '400px'}}
             okText= {<span style={{ color: 'white'}}> ลบข้อมูล </span>}
             okButtonProps={{ style: { background: '#0BB6DC', borderColor: '#0BB6DC' } }}
             cancelText= {<span style={{ color: 'white'}}> ยกเลิก </span>}

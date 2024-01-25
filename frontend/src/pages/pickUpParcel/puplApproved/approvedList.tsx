@@ -6,8 +6,10 @@ import {
   ArrowLeftOutlined,
   FilePdfOutlined,
 } from '@ant-design/icons';
-import { Card, Space, Button, Layout, message, Modal} from 'antd';
+import { Card, Space, Button, Layout, Modal} from 'antd';
 
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import Highlighter from "react-highlight-words";
 import type { InputRef } from 'antd';
 import { Input, Table } from 'antd';
@@ -21,7 +23,12 @@ import { Link, useNavigate } from 'react-router-dom';
 import { PickUpParcelList } from '../../../interfaces';
 import { 
   DeletePickUpParcelListByID, 
-  GetPickUpParcelListByPickUpStatusId2 } from '../../../services/https';
+  GetPickUpParcelListByPickUpStatusId2 
+} from '../../../services/https';
+
+import moment from 'moment-timezone';
+import 'moment/locale/th'; // Import Thai locale
+moment.locale('th'); // Set Thai locale
 
 type DataIndex = keyof PickUpParcelList;
 
@@ -67,11 +74,11 @@ export default function ApprovedList() {
     let res = await DeletePickUpParcelListByID(deleteId);
     if (res) {
       setOpen(false);
-      message.success("ลบข้อมูลสำเร็จ");
+      toast.success("ลบข้อมูลสำเร็จ");
       getPickUpParcelListApproved();
     } else {
       setOpen(false);
-      message.error("เกิดข้อผิดพลาด !");
+      toast.error("เกิดข้อผิดพลาด ! " + res.message);
     }
     setConfirmLoading(false);
   };
@@ -164,6 +171,16 @@ export default function ApprovedList() {
 
   const columns: ColumnsType<PickUpParcelList> = [
     {
+      title: 'วันที่อนุมัติรายการ',
+      dataIndex: 'PUPLDate',
+      key: 'PUPLDate',
+      align: 'center',
+      render: (text, record) => {
+        const thaiYear = moment(record.PUPLDate).add(543, 'years').format('YYYY');
+        return moment(record.PUPLDate).format(`วันที่ D เดือน MMMM ปี ${thaiYear}`);
+      },
+    },
+    {
       title: 'เลขที่ใบเบิก',
       dataIndex: 'BillNumber',
       key: 'BillNumber',
@@ -215,11 +232,21 @@ export default function ApprovedList() {
   return (
     <> 
         <Headers/>
-        
-        <Content style={{backgroundColor:'darkslategrey',minHeight: "100vh"}}>
+          <ToastContainer
+              position="top-center"
+              autoClose={2000}
+              hideProgressBar={false}
+              newestOnTop={false}
+              closeOnClick
+              rtl={false}
+              pauseOnFocusLoss
+              draggable
+              pauseOnHover
+              theme="light"/>
+        <Content className='BGPpuplstyle2'>
 
             <div style={{padding:30, textAlign:'center'}}>
-                <Layout style={{ backgroundColor: 'darkslategrey'}}>
+                <Layout className='BGPpuplstyle3'>
                         <div className='titleH1'>
 
                         <Link to={`/pages/pickUpParcel`} style={{marginRight: 'auto', color: 'white', float:'left'}}>
@@ -237,7 +264,7 @@ export default function ApprovedList() {
                         </div>
                 </Layout>
 
-                <Card style={{fontSize:'16px', marginTop:20}}>
+                <Card className='PUPLCard' style={{fontSize:'16px', marginTop:20, minHeight:'400px', height:'auto'}}>
                 <Table 
                         columns={columns} 
                         dataSource={dataPickUpParcelList}
